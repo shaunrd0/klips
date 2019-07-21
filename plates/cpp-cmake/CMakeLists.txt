@@ -1,4 +1,3 @@
-
 ###############################################################################
 ## Author: Shaun Reed							     ##
 ## Legal: All Content (c) 2019 Shaun Reed, all rights reserved	 	     ##
