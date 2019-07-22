@@ -23,7 +23,6 @@ do
   # If input read is == 2
   if [ $bChoice -eq 2 ]
   then
-    printf "test\n"
     rm -Rv build/*
   fi
 
