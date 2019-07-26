@@ -17,6 +17,7 @@ https://github.com/shaunrd0/...
 klips/
 ├──── plates/
 │       ├── cpp-cmake (Simple cpp executable template, built using cmake)
+│       │
 │       └── cpp-launcher (Simple cpp launcher template, built using cmake. Easily expandable.)
 │
 ├──── refs/
@@ -24,10 +25,15 @@ klips/
 │
 ├──── scripts/
 │       └── cmake-build.sh (Script to toss around and build cmake projects)
+│
+├──── configs/
+│       └──.vimrc (Sets vim tabwidth=2, uses spaces instead of tabs, allows mouse interaction when available.)
+
 
 # Copy / paste below symbols for editing this README / updating hierarchy
 
     │    ├    ─    └ 
+
 ```
 
 ### Scripts
