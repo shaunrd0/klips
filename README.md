@@ -12,18 +12,33 @@ All snippets will be listed below with the directories in the master branch. If 
 ### Contents
 
 ```
-https://github.com/
+https://github.com/shaunrd0/...
 
-shaunrd0/klips/
-
+klips/
+├──── plates/
+│       ├── cpp-cmake (Simple cpp executable template, built using cmake)
+│       └── cpp-launcher (Simple cpp launcher template, built using cmake. Easily expandable.)
 │
-│# Custom Templates
+├──── refs/
+│       └── doxygenROT (Basic rule-of-thumb for Doxygen commenting)
 │
-├── plates/
-    └── cpp-cmake
+├──── scripts/
+│       └── cmake-build.sh (Script to toss around and build cmake projects)
 
 # Copy / paste below symbols for editing this README / updating hierarchy
 
     │    ├    ─    └ 
 ```
+
+###Scripts
+
+I write these scripts for my own use, and you may need to tweak them slightly to suit your needs. 
+
+Never run a script you can't read or understand. Comments can be found in the scripts, usually explaining them block-by-block. Below is my personal use cases for the scripts, to provide further insight into how I use them and how they might be useful to you.
+
+####cmake-build.sh
+
+I usually run this script within whatever directory I'm working in, hence the infinite loop, I leave the script running until I'm done with my work and move to a new directory / cmake project.
+
+
 
