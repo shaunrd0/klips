@@ -1,0 +1,21 @@
+
+###############################################################################
+## Author: Shaun Reed                                                        ##
+## Legal: All Content (c) 2019 Shaun Reed, all rights reserved               ##
+##                                                                           ##
+## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
+##############################################################################
+
+# Define the version of CMake
+cmake_minimum_required(VERSION 2.8)
+
+# Define the your project name
+project(cpp-launcher)
+
+# Include any directories the compiler may need
+include_directories(./include)
+
+# Point CMake to look for more CMakeLists within the following directories
+add_subdirectory(src)
+add_subdirectory(apps)
+
