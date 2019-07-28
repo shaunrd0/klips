@@ -1,3 +1,5 @@
+" Single-quote is a comment written to be read
+" Double-quotes ("") are commented out code and can be removed or added
 
 " Set tabwidth=2, adjust Vim shiftwidth to the same
 set tabstop=2 shiftwidth=2 
@@ -17,10 +19,4 @@ syntax on
 " Enable Pathogen plugin manager
 execute pathogen#infect()
 filetype plugin indent on
-
-" Enable clang_complete plugin for vim
-" https://github.com/xavierd/clang_complete
-" Requires clang to be installed
-" Path to library may change
-let g:clang_library_path='/usr/lib64/libclang.so.8'
 
