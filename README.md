@@ -24,27 +24,20 @@ klips/
 │       └── doxygenROT (Basic rule-of-thumb for Doxygen commenting)
 │
 ├──── scripts/
-│       └── cmake-build.sh (Script to toss around and build cmake projects)
-│
+│       ├── cmake-build.sh (Script to toss around and build cmake projects)
+│       │
+│       ├── setup-vim.sh (Script for setting up vim configuration)
+│       │
+│       └── README.md (Any instructions that might be needed for the scripts within this directory)
+│        
 ├──── configs/
-│       └──.vimrc (Sets vim tabwidth=2, uses spaces instead of tabs, allows mouse interaction when available.)
-
+│       ├──.vimrc (Various settings for vim, can be copied or used with setup-vim.sh)
+        │
+        └──.vimrc-README (What these settings do, output when setup-vim.sh is ran.)
 
 # Copy / paste below symbols for editing this README / updating hierarchy
 
     │    ├    ─    └ 
 
 ```
-
-### Scripts
-
-I write these scripts for my own use, and you may need to tweak them slightly to suit your needs. 
-
-Never run a script you can't read or understand. Comments can be found in the scripts, usually explaining them block-by-block. Below is my personal use cases for the scripts, to provide further insight into how I use them and how they might be useful to you.
-
-#### cmake-build.sh
-
-I usually run this script within whatever directory I'm working in, hence the infinite loop, I leave the script running until I'm done with my work and move to a new directory / cmake project.
-
-
 
