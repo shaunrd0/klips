@@ -11,36 +11,17 @@ do
   printf "\nEnter 1 to build, 2 to cleanup previous build, 0 to exit.\n"
   read bChoice
 
-  # Build loop
-  # If input read is == 1
-  if [ $bChoice -eq 1 ]
+  if [ $bChoice -eq 1 ] # Build project
   then
     mkdir build
     (cd build && cmake .. && cmake --build .)
-  fi
-
-  # Clean-up loop
-  # If input read is == 2
-  if [ $bChoice -eq 2 ]
-  then
+  elif [ $bChoice -eq 2 ] ; then # Cleanup build
     rm -Rv build/*
-  fi
-
-  # Exit loops, all other input - 
-
-  # If input read is >= 3, exit
-  if [ $bChoice -ge 3 ]
-  then
-    break 
+  elif [ $bChoice -eq 0 ] ; then # Exit script
+    break
+  else
+    continue
   fi
   
-  # If input read is <= 0, exit
-  if [ $bChoice -le 0 ]
-  then
-    break
-  fi
-
-  # Bash will print an error if symbol or character input
-
 done
 
