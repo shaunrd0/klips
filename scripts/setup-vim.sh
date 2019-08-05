@@ -10,9 +10,12 @@ RED=$(tput setaf 1)
 UNDERLINE=$(tput smul)
 NORMAL=$(tput sgr0)
 
-printf "\nEnter 1 to configure vim with the Klips repository, any other value to exit."
-printf "\nThe up-to-date .vimrc config can be found here: https://github.com/shaunrd0/klips/tree/master/configs"
-printf "\n${RED}Configuring Vim with this tool will update / upgrade your packages${NORMAL}\n\n"
+
+welcome=( "\nEnter 1 to configure vim with the Klips repository, any other value to exit." \
+  "The up-to-date .vimrc config can be found here: https://github.com/shaunrd0/klips/tree/master/configs" \
+  "${RED}Configuring Vim with this tool will update / upgrade your packages${NORMAL}\n\n")
+
+printf '%b\n' "${welcome[@]}"
 read cChoice
 
 if [ $cChoice -eq 1 ] ; then
@@ -51,7 +54,6 @@ if [ $cChoice -eq 1 ] ; then
   printf "\n${GREEN}Installing Pathogen plugin manager for Vim....\n"\
 	 "\nIf they don't exist, we will create the following directories:\n"\
 	  "~/.vim/autoload/    ~/.vim/bundle/${NORMAL}"
-  # Sudo is required for curl below
   mkdir -pv ~/.vim/autoload ~/.vim/bundle && \
   sudo curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
   printf "\n${GREEN}Pathogen has been installed! Plugins plugins can now be easily installed.\n"\
@@ -63,14 +65,13 @@ if [ $cChoice -eq 1 ] ; then
 
   # Clone plugin repos into pathogen plugin directory 
   printf "\n${GREEN}Installing updated plugins...${NORMAL}\n"
-  (cd ~/.vim/bundle/ && \
-   sudo git clone https://github.com/ervandew/supertab && \
-   printf "\n${GREEN}Supertab plugin has been installed${NORMAL}\n\n" && \
-   sudo git clone https://github.com/xavierd/clang_complete && \
-   printf "\n${GREEN}Clang Completion plugin has been installed${NORMAL}\n\n")
-
-  printf "\n${UNDERLINE}Vim has been configured with the Klips repository.${NORMAL}"
-  printf "\n\nConfiguration Changes: \n"
+  git clone https://github.com/ervandew/supertab ~/.vim/bundle/supertab && \
+  printf "\n${GREEN}Supertab plugin has been installed${NORMAL}\n\n" && \
+  git clone https://github.com/xavierd/clang_complete ~/.vim/bundle/clang_complete && \
+  printf "\n${GREEN}Clang Completion plugin has been installed${NORMAL}\n\n"
+  vimConf=( "\n${UNDERLINE}Vim has been configured with the Klips repository.${NORMAL}" \
+    "\nConfiguration Changes: " )
+  printf '%b\n' "${vimConf[@]}"
   cat config-vim/configs/.vimrc-README
 
 else
