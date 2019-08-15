@@ -1,0 +1,7 @@
+---
+- name: Copy nginx configuration file
+  copy: src=files/nginx.conf dest=/etc/nginx/nginx.conf
+- name: Copy index.html file
+  copy: src=files/index.html dest=/var/www/html
+  notify:
+    - restart nginx

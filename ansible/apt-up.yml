@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Ensure package lists are up-to-date
+      apt:
+        update_cache: yes
+    - name: Ensure packages are up-to-date
+      apt:
+         upgrade: dist
+    - name: Remove unused packages from the cache
+      apt:
+         autoclean: yes
+    - name: Remove dependencies that are no longer required
+      apt:
+         autoremove: yes
+
