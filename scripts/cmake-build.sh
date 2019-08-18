@@ -16,7 +16,7 @@ do
     mkdir build
     (cd build && cmake .. && cmake --build .)
   elif [ $bChoice -eq 2 ] ; then # Cleanup build
-    rm -Rv build/*
+    rm -Rv build/
   elif [ $bChoice -eq 0 ] ; then # Exit script
     break
   else
