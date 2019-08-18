@@ -27,22 +27,25 @@ if [ $cChoice -eq 1 ] ; then
   # Clone klips repository in a temp directory
   git clone https://github.com/shaunrd0/klips temp/
   # Relocate the files we need and remove the temp directory
-  mkdir -pv config-vim
-  mv -fuv temp/README.md config-vim/ && mv temp/configs/ config-vim/
+  sudo mkdir -pv /etc/config-vim
+  sudo cp -fruv temp/README.md /etc/config-vim/
+  
+  sudo cp -fruv temp/configs/ /etc/config-vim/
+  
   rm -Rf temp/
-  printf "\n${GREEN}Klips config files updated"\
-         "\nSee $PWD/config-vim/README.md for more information.${NORMAL}\n\n"
+  printf "\n${GREEN}Klips config files updated"
+  printf "\nSee /etc/config-vim/README.md for more information.${NORMAL}\n\n"
 
   # Create backup dir for .vimrc
-  mkdir -pv config-vim/backup/
-  printf "\n${GREEN}Backup directory created - $PWD/config-vim/backup/${NORMAL}\n"
+  sudo mkdir -pv /etc/config-vim/backup/
+  printf "\n${GREEN}Backup directory created - /etc/config-vim/backup/${NORMAL}\n"
   
   # Stash the current .vimrc
-  mv -bv ~/.vimrc config-vim/backup/
-  printf "${RED}Your local .vimrc has been stashed in $PWD/config-vim/backup/${NORMAL}\n\n"
+  sudo mv -bv ~/.vimrc /etc/config-vim/backup/
+  printf "${RED}Your local .vimrc has been stashed in /etc/config-vim/backup/${NORMAL}\n\n"
 
   # Copy our cloned config into the user home directory
-  cp config-vim/configs/.vimrc ~/
+  sudo cp /etc/config-vim/configs/.vimrc ~/
   printf "${GREEN}New ~/.vimrc configuration installed.${NORMAL}\n"
 
   # Reinstall Pathogen plugin manager for vim
@@ -51,9 +54,9 @@ if [ $cChoice -eq 1 ] ; then
   sudo rm -f ~/.vim/autoload/pathogen.vim
   
   # Install Pathogen
-  printf "\n${GREEN}Installing Pathogen plugin manager for Vim....\n"\
-	 "\nIf they don't exist, we will create the following directories:\n"\
-	  "~/.vim/autoload/    ~/.vim/bundle/${NORMAL}"
+  printf "\n${GREEN}Installing Pathogen plugin manager for Vim....\n"
+	printf "\nIf they don't exist, we will create the following directories:\n"
+	printf  "~/.vim/autoload/    ~/.vim/bundle/${NORMAL}"
   mkdir -pv ~/.vim/autoload ~/.vim/bundle && \
   sudo curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
   printf "\n${GREEN}Pathogen has been installed! Plugins plugins can now be easily installed.\n"\
@@ -72,9 +75,12 @@ if [ $cChoice -eq 1 ] ; then
   vimConf=( "\n${UNDERLINE}Vim has been configured with the Klips repository.${NORMAL}" \
     "\nConfiguration Changes: " )
   printf '%b\n' "${vimConf[@]}"
-  cat config-vim/configs/.vimrc-README
+
 
 else
 printf "\nExiting..\n"
 fi
+
+sudo cat /etc/config-vim/configs/.vimrc-README
+
 
