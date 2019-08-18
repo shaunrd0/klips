@@ -15,6 +15,18 @@ All snippets will be listed below with the directories in the master branch. If 
 https://github.com/shaunrd0/...
 
 klips/
+├──── ansible/ (Ansible roles, playbooks)
+│      │ 
+│      ├── nginx.yml (Playbook example for using nginx role)
+│      │  
+│      ├── hosts (Same ansible hosts file)
+│      │   
+│      ├── apt-up.yml (Playbook to update servers / groups ad hoc)
+│      │  
+│      └──roles  
+│           └── nginx (Basic ansible role created with ansible-galaxy command)
+│      
+│
 ├──── plates/
 │       ├── cpp-cmake (Simple cpp executable template, built using cmake)
 │       │
