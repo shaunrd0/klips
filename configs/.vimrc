@@ -20,3 +20,11 @@ syntax on
 execute pathogen#infect()
 filetype plugin indent on
 
+" Custom Keybindings
+" nnoremap <NEW> <OLD>
+"" nnoremap <C-e> <C-w>
+
+" Set window jumping to custom binding
+" default Ctrl-W conflict - closes browser tabs
+nnoremap <C-e> <C-w>
+

@@ -17,8 +17,16 @@ Plugin Settings:
 - Clang_complete vim plugin has been installed and .vimrc configured for its use.
 - Code-completion is enabled with default clang_complete settings
 -- https://github.com/xavierd/clang_complete
+--If you have issues with Clang_complete library linking / loading, check the directory / commands below - 
+cd /usr/lib/x86_64-unknown-linux
+ln -s libclang.so.1 libclang.so
+
 
 - Supertab vim plugin has been installed and .vimrc configured for its use.
 - Allows the use of TAB to enable code-completion context menu
 -- https://github.com/ervandew/supertab
+
+- Custom Keybindings
+- The keybind (Ctrl-e <ARROW KEY>) allows switching between split vim windows 
+-- Ctrl-w is the default setting, which closes tabbed shells on Chrome OS
 
