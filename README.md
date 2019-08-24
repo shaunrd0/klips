@@ -32,26 +32,26 @@ klips/
     └── setup-vim.sh
 ```
 
-ansible  (Ansible roles, playbooks)
- - nginx.yml (Playbook example for using nginx role)
- - hosts (Same ansible hosts file) 
- - apt-up.yml (Playbook to update servers / groups ad hoc) 
- - roles (Basic ansible role created with ansible-galaxy command) 
+ansible  - Ansible roles, playbooks
+ - nginx.yml - Playbook example for using nginx role
+ - hosts - Same ansible hosts file
+ - apt-up.yml - Playbook to update servers / groups ad hoc
+ - roles - Basic ansible role created with ansible-galaxy command
  -- nginx
 
-plates (Simple cpp executable template, built using cmake) 
- - cpp-cmake  
- - cpp-launcher (Simple cpp launcher template, built using cmake. Easily expandable.) 
+plates  
+ - cpp-cmake - Simple cpp executable template, built using cmake
+ - cpp-launcher - Simple cpp launcher template, built using cmake. Easily expandable.
 
 refs
- - doxygenROT (Basic rule-of-thumb for Doxygen commenting) 
+ - doxygenROT - Basic rule-of-thumb for Doxygen commenting
 
 scripts
- - cmake-build.sh (Script to toss around and build cmake projects) 
- - README.md
- - setup-vim.sh (Script for setting up vim configuration) 
+ - cmake-build.sh - Script to toss around and build cmake projects
+ - README.md - Further clarification of scripts
+ - setup-vim.sh - Script for setting up vim configuration
 
 configs
- - .vimrc (Various settings for vim, can be copied or used with setup-vim.sh) 
- - .vimrc-README (What these settings do, output when setup-vim.sh is ran.) 
+ - .vimrc - Various settings for vim, can be copied or used with setup-vim.sh) 
+ - .vimrc-README - What these settings do, output when setup-vim.sh is ran.) 
 
