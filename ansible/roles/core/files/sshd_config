@@ -1,0 +1,15 @@
+Port {{ ssh_port }}
+AuthenticationMethods {{ auth_methods }}
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication yes
+UsePAM yes
+X11Forwarding yes
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem       sftp    /usr/lib/openssh/sftp-server
+
+
+Match User kansible LocalPort {{ ssh_port }}
+  PasswordAuthentication no
+  AuthenticationMethods publickey

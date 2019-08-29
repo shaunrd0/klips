@@ -1,0 +1,25 @@
+---
+- name: Copy server MOTD
+  template: src=files/motd dest=/etc/motd
+
+- name: Configure PAM
+  template: src=files/sshd dest=/etc/pam.d/sshd
+
+- name: Add authusers file
+  copy:
+    dest: "/etc/authusers"
+    content: |
+      user1
+      user2
+
+- name: Add authorized_yubikeys file
+  copy:
+    dest: "/etc/ssh/authorized_yubikeys"
+    content: |
+      user:cccckey1cccc:cccckey2cccc
+
+- name: Copy ssh configuration file
+  template: src=files/sshd_config dest=/etc/ssh/sshd_config
+  notify:
+  - restart ssh
+

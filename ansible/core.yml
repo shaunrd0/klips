@@ -1,0 +1,5 @@
+---
+- hosts: core
+  become: yes
+  roles:
+  - core

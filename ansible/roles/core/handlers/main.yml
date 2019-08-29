@@ -1,0 +1,4 @@
+---
+# handlers file for /etc/ansible/roles/core
+- name: restart ssh
+  service: name=ssh state=restarted

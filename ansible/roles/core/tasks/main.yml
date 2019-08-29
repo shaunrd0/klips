@@ -1,0 +1,17 @@
+---
+# tasks file for /etc/ansible/roles/core
+#
+
+# Install preferred apps
+- import_tasks: install-apps.yml
+
+# SSH
+- import_tasks: configure-ssh.yml
+- import_tasks: service-ssh.yml
+
+# Git
+- import_tasks: configure-git.yml
+
+# Vim
+- import_tasks: configure-vim.yml
+

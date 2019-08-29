@@ -1,0 +1,10 @@
+---
+- name: Clone github.com/shaunrd0/klips
+  git:
+    repo: https://github.com/shaunrd0/klips.git
+    clone: yes
+    dest: /etc/klips/ 
+
+- name: Vim setup script
+  script: /etc/ansible/roles/core/files/setup-vim.sh
+
