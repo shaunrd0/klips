@@ -1,6 +1,5 @@
 ---
-- hosts: nginx
+- hosts: nginx-server
   become: yes
   roles:
   - nginx
-  - core

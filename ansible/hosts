@@ -19,6 +19,12 @@ sub.domain.com:22
 sub.domain.com:22
 127.0.0.1:22
 
+[nginx-server]
+sub.domain.com:22
+
+[docker-host]
+127.0.0.1:22
+
 ## green.example.com
 ## blue.example.com
 ## 192.168.100.1
