@@ -14,3 +14,6 @@ printf "\nChanging password for $1...\n"
 sudo passwd $1
 fi
 
+printf "\nRun the following command to remove a user -\n"
+printf "\nsudo userdel -r <username>\n"
+
