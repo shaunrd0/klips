@@ -1,2 +1,7 @@
 ---
 # defaults file for /etc/ansible/roles/nginx
+#
+domain_name: "localhost"
+nginx_root_dir: "/var/www/html/"
+index_files: "index.html index.htm"
+
