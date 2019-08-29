@@ -25,6 +25,9 @@ sub.domain.com:22
 [docker-host]
 127.0.0.1:22
 
+[dev]
+sub.domain.com:22
+
 ## green.example.com
 ## blue.example.com
 ## 192.168.100.1

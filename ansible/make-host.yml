@@ -1,0 +1,8 @@
+---
+- hosts: dev
+  become: yes
+  roles:
+    - core
+    - docker
+    - nginx
+
