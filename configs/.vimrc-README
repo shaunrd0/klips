@@ -21,7 +21,6 @@ Plugin Settings:
 cd /usr/lib/x86_64-unknown-linux
 ln -s libclang.so.1 libclang.so
 
-
 - Supertab vim plugin has been installed and .vimrc configured for its use.
 - Allows the use of TAB to enable code-completion context menu
 -- https://github.com/ervandew/supertab

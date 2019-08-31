@@ -2,8 +2,8 @@
 packages: [git, vim, ssh]
 ssh_port: 22
 auth_methods: "publickey,keyboard-interactive"
-git_email: "user@domain.com"
-git_name: "First Last"
 hostname: "localhost"
 domain_name: "www.localhost.com"
+git_email: "user@domain.com"
+git_name: "First Last"
 
