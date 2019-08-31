@@ -5,14 +5,14 @@ A simple role for configuring a set of packages / settings on a new Ubuntu host 
 
 Packages Added / Configured
  - Git
- -- Configure / set user name and email
+  - Configure / set user name and email
  - SSH
- -- MOTD (Template, replacable, displayed on login.)
- -- PAM (Template, replacable, authusers file to bypass)
- -- authusers (Add users to file to bypass PAM settings)
+  - MOTD (Template, replacable, displayed on login.)
+  - PAM (Template, replacable, authusers file to bypass)
+  - authusers (Add users to file to bypass PAM settings)
  - Vim
- -- Install Vim
- -- Run https://github.com/shaunrd0/klips/scripts/setup-vim.sh
+  - Install Vim
+  - Run https://github.com/shaunrd0/klips/scripts/setup-vim.sh
 
 Requirements
 ------------
@@ -34,23 +34,23 @@ hostname: "localhost"
 domain_name: "www.localhost.com"
 ```
 
-Basic package installation variable - 
+#### Basic package installation variable - 
 
 packages - A list of packages to install when running core configuration. Add package to this list and it will be installed on your new host. Further configuration will need to be done manually, unless the role is modified otherwise.
 
-SSH Configuration Variables - 
+#### SSH Configuration Variables - 
 
 ssh_port - The port to configure SSH to listen on
 
 auth_methods - Authentication methods to allow SSH base configuration to use. Otherwise, specify a match within the sshd_config
 
-MOTD Configuration Variables - 
+#### MOTD Configuration Variables - 
 
 hostname - The hostname of the box you are using, used in the MOTD for a host-specific greeting, so you know which host you are logged into when glancing between terminals.
 
 domain_name - The domain name, if available, associated with this host.
 
-Git Configuration Variables - 
+#### Git Configuration Variables - 
 
 git_email - Email address to configure with Git
 

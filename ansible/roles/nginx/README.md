@@ -19,7 +19,7 @@ nginx_root_dir: "/var/www/html/"
 index_files: "index.html index.htm"
 ```
 
-NGINX Configuration Variables - 
+#### NGINX Configuration Variables - 
 
 domain_name - Domain name to be used in nginx.conf, default value is the same as nginx base package default setting (localhost)
 

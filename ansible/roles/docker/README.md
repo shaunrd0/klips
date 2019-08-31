@@ -17,6 +17,8 @@ Found in `.../roles/docker/defaults/main.yml`
 docker_users: [user1, user2]
 ```
 
+#### Docker Group Configuration Variable - 
+
 docker_users - A list of users to configure / add to the docker group
 
 Example Playbook

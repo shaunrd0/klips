@@ -4,27 +4,30 @@ I write these scripts for my own use, and you may need to tweak them slightly to
 
 Never run a script you can't read or understand. Comments can be found in the scripts, usually explaining them block-by-block. Below is my personal use cases for the scripts, to provide further insight into how I use them and how they might be useful to you.
 
-#### adduser.sh
+adduser.sh
+------------
 
 This script was made on Ubuntu when creating a few users across multiple hosts. Syntax requires at least 2 arguments when running the script, otherwise help text will be output warning of correct usage and available options. The script can be used to configure sudo on a new user if the script itself is ran with sudo. Otherwise, creating a default user with or without a password is possible without sudo. If the script is ran on an existing user or a userID that is already in use is passed, no changes will happen in user-creation but you may still allow the user to sudo and change their password. 
 
 Syntax - 
 
-./adduser (Help text)
-./adduser jeff 1005 (Create user jeff with userID 1005, can't configure sudo, prompt for possible password creation)
+`./adduser` (Help text)
+`./adduser jeff 1005` (Create user jeff with userID 1005, can't configure sudo, prompt for possible password creation)
 
-sudo ./adduser (Help text)
-sudo ./adduser jeffy 1010 (Create user jeffy with userID 1010, can configure sudo, possible password creation)
+`sudo ./adduser` (Help text)
+`sudo ./adduser jeffy 1010` (Create user jeffy with userID 1010, can configure sudo, possible password creation)
 
 Didn't configure sudo, and don't want to do so manually? Re-run the script on the existing user just as above, and accept the prompt for sudo configuration.
-sudo ./adduser jeff 1005 (User creation will fail, follow prompts to configure sudo and / or reset user password)
+`sudo ./adduser jeff 1005` (User creation will fail, follow prompts to configure sudo and / or reset user password)
 
-#### cmake-build.sh
+cmake-build.sh
+------------
 
 I usually run this script within whatever directory I'm working in, hence the infinite loop, I leave the script running until I'm done with my work and move to a new directory / cmake project.
 
 
-#### setup-vim.sh
+setup-vim.sh
+------------
 
 To use this script, copy it to a safe directory where we can store previous / future vimrc configurations and run it as a user with sudo privelages. See below for example commands and output.
 
