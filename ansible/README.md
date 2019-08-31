@@ -11,8 +11,8 @@ Playbooks
  - nginx.yml - Playbook example for using nginx role 
 
 Roles 
- - roles - Basic ansible role created with ansible-galaxy command
-  - core - Role to configure a new host with basic authentication / package settings
-  - docker - Role to install docker, docker-compose, configure docker user group (Debian / Ubuntu)
-  - nginx - Role to install and configure a new nginx webserver on a host 
+ - Basic ansible role created with ansible-galaxy command
+ - core - Role to configure a new host with basic authentication / package settings
+ - docker - Role to install docker, docker-compose, configure docker user group (Debian / Ubuntu)
+ - nginx - Role to install and configure a new nginx webserver on a host 
 

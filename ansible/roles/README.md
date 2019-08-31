@@ -9,21 +9,25 @@ klips/ansible/roles/...
 
 All of these roles assume you are using the apt package manager, and running a Debian / Ubuntu system. 
 
+
 core
 ------------
 
 A simple role for configuring a set of packages / settings on a new Ubuntu host using Ansible.
 
-Packages Added / Configured
- - Git
-  - Configure / set user name and email
- - SSH
-  - MOTD (Template, replacable, displayed on login.)
-  - PAM (Template, replacable, authusers file to bypass)
-  - authusers (Add users to file to bypass PAM settings)
- - Vim
-  - Install Vim
-  - Run https://github.com/shaunrd0/klips/blob/master/scripts/setup-vim.sh
+### Packages Added / Configured
+
+Git
+ - Configure / set user name and email
+
+SSH
+ - MOTD (Template, replacable, displayed on login.)
+ - PAM (Template, replacable, authusers file to bypass)
+ - authusers (Add users to file to bypass PAM settings)
+
+Vim
+ - Install Vim
+ - Run https://github.com/shaunrd0/klips/blob/master/scripts/setup-vim.sh
 
 
 docker
