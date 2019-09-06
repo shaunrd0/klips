@@ -18,6 +18,22 @@
     content: |
       user:cccckey1cccc:cccckey2cccc
 
+- name: Add custom /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: '{{ item }}'
+  with_items:
+    - '127.0.0.1 localhost'
+    - '127.0.0.2 www.otherhost.com otherhost'
+
+- name: Add SSH Keys
+  lineinfile:
+    dest: /home/kansible/.ssh/authorized_keys
+    line: '{{ item }}'
+  with_items:
+    - 'ssh-idrsa AAZ1NTE5AAAAIA+ndydG+ddddpdddaabvbumkiuyk7778678676547564563434XwmnYb user@host'
+
+
 - name: Copy ssh configuration file
   template: src=files/sshd_config dest=/etc/ssh/sshd_config
   notify:
