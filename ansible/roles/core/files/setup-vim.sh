@@ -22,37 +22,37 @@ printf "\n${GREEN}Klips config files updated"\
 mkdir -pv /etc/config-vim/backup/
 printf "\n${GREEN}Backup directory created - $PWD/etc/config-vim/backup/${NORMAL}\n"
 
-# Stash the current .vimrc
-mv -bv /home/kansible/.vimrc /etc/config-vim/backup/
-printf "${RED}Your local .vimrc has been stashed in $PWD/etc/config-vim/backup/${NORMAL}\n\n"
+# Copy cloned clonfig into user directory
+cp /etc/config-vim/.vimrc ~/
 
-# Copy our cloned config into the user home directory
-cp /etc/config-vim/.vimrc /home/kansible/
-printf "${GREEN}New /home/kansible/.vimrc configuration installed.${NORMAL}\n"
+# Copy our cloned config into global directories
+cp /etc/config-vim/.vimrc /usr/share/vim/vimfiles/vimrc
+cp /etc/config-vim/.vimrc /etc/vim/vimrc
+printf "${GREEN}New /usr/share/vim/vimfiles configuration installed.${NORMAL}\n"
 
 # Reinstall Pathogen plugin manager for vim
 # https://github.com/tpope/vim-pathogen
 printf "\n${RED}Removing any previous installations of Pathogen...${NORMAL}\n"
-sudo rm -f /home/kansible/.vim/autoload/pathogen.vim
+sudo rm -f /usr/share/vim/vimfiles/autoload/pathogen.vim
 
 # Install Pathogen
 printf "\n${GREEN}Installing Pathogen plugin manager for Vim....\n"\
   "\nIf they don't exist, we will create the following directories:\n"\
-  "/home/kansible/.vim/autoload/    ~/.vim/bundle/${NORMAL}"
-mkdir -pv /home/kansible/.vim/autoload ~/.vim/bundle && \
-  sudo curl -LSso /home/kansible/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+  "/usr/share/vim/vimfiles/autoload/    /usr/share/vim/vimfiles/bundle/${NORMAL}"
+mkdir -pv /usr/share/vim/vimfiles/autoload /usr/share/vim/vimfiles/bundle && \
+  sudo curl -LSso /usr/share/vim/vimfiles/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 printf "\n${GREEN}Pathogen has been installed! Plugins plugins can now be easily installed.\n"\
-  "Clone any plugin repositories into /home/kansible/.vim/bundles${NORMAL}\n"
+  "Clone any plugin repositories into /usr/share/vim/vimfiles/bundles${NORMAL}\n"
 
 # Remove any plugins managed by this config tool (Klips)
 printf "\n${RED}Removing plugins installed by this tool...${NORMAL}\n"
-sudo rm -R /home/kansible/.vim/bundle/*
+sudo rm -R /usr/share/vim/vimfiles/bundle/*
 
 # Clone plugin repos into pathogen plugin directory 
 printf "\n${GREEN}Installing updated plugins...${NORMAL}\n"
-git clone https://github.com/ervandew/supertab /home/kansible/.vim/bundle/supertab && \
+git clone https://github.com/ervandew/supertab /usr/share/vim/vimfiles/bundle/supertab && \
   printf "\n${GREEN}Supertab plugin has been installed${NORMAL}\n\n" && \
-  git clone https://github.com/xavierd/clang_complete /home/kansible/.vim/bundle/clang_complete && \
+  git clone https://github.com/xavierd/clang_complete /usr/share/vim/vimfiles/bundle/clang_complete && \
   printf "\n${GREEN}Clang Completion plugin has been installed${NORMAL}\n\n"
 vimConf=( "\n${UNDERLINE}Vim has been configured with the Klips repository.${NORMAL}" \
   "\nConfiguration Changes: " )
