@@ -16,6 +16,8 @@ set mouse=a
 " Enable Syntax Highlighting in Vim
 syntax on
 
+set nocp
+" set rtp+=/path/to/rtp/that/included/pathogen/vim " if needed
 " Enable Pathogen plugin manager
 execute pathogen#infect()
 filetype plugin indent on

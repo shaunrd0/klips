@@ -39,38 +39,41 @@ if [ $cChoice -eq 1 ] ; then
   # Create backup dir for .vimrc
   sudo mkdir -pv /etc/config-vim/backup/
   printf "\n${GREEN}Backup directory created - /etc/config-vim/backup/${NORMAL}\n"
-  
+
+  # Set global vimrc defaults to klips settings
+  sudo cp /etc/config-vim/configs/.vimrc /usr/share/vim/vimfiles/vimrc
+
   # Stash the current .vimrc
   sudo mv -bv ~/.vimrc /etc/config-vim/backup/
   printf "${RED}Your local .vimrc has been stashed in /etc/config-vim/backup/${NORMAL}\n\n"
 
   # Copy our cloned config into the user home directory
   sudo cp /etc/config-vim/configs/.vimrc ~/
-  printf "${GREEN}New ~/.vimrc configuration installed.${NORMAL}\n"
+  printf "${GREEN}New /usr/share/vim/vimfiles/rc configuration installed.${NORMAL}\n"
 
   # Reinstall Pathogen plugin manager for vim
   # https://github.com/tpope/vim-pathogen
   printf "\n${RED}Removing any previous installations of Pathogen...${NORMAL}\n"
-  sudo rm -f ~/.vim/autoload/pathogen.vim
+  sudo rm -f /usr/share/vim/vimfiles/autoload/pathogen.vim
   
   # Install Pathogen
   printf "\n${GREEN}Installing Pathogen plugin manager for Vim....\n"
 	printf "\nIf they don't exist, we will create the following directories:\n"
-	printf  "~/.vim/autoload/    ~/.vim/bundle/${NORMAL}"
-  mkdir -pv ~/.vim/autoload ~/.vim/bundle && \
-  sudo curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+	printf  "/usr/share/vim/vimfiles//autoload/    ~/.vim/bundle/${NORMAL}"
+  mkdir -pv /usr/share/vim/vimfiles/autoload /usr/share/vim/vimfiles/bundle && \
+  sudo curl -LSso /usr/share/vim/vimfiles/autoload/pathogen.vim https://tpo.pe/pathogen.vim
   printf "\n${GREEN}Pathogen has been installed! Plugins plugins can now be easily installed.\n"\
-         "Clone any plugin repositories into ~/.vim/bundles${NORMAL}\n"
+         "Clone any plugin repositories into /usr/share/vim/vimfiles/bundles${NORMAL}\n"
 
   # Remove any plugins managed by this config tool (Klips)
   printf "\n${RED}Removing plugins installed by this tool...${NORMAL}\n"
-  sudo rm -R ~/.vim/bundle/*
+  sudo rm -R /usr/share/vim/vimfiles/bundle/*
 
   # Clone plugin repos into pathogen plugin directory 
   printf "\n${GREEN}Installing updated plugins...${NORMAL}\n"
-  git clone https://github.com/ervandew/supertab ~/.vim/bundle/supertab && \
+  git clone https://github.com/ervandew/supertab /usr/share/vim/vimfiles/bundle/supertab && \
   printf "\n${GREEN}Supertab plugin has been installed${NORMAL}\n\n" && \
-  git clone https://github.com/xavierd/clang_complete ~/.vim/bundle/clang_complete && \
+  git clone https://github.com/xavierd/clang_complete /usr/share/vim/vimfiles/bundle/clang_complete && \
   printf "\n${GREEN}Clang Completion plugin has been installed${NORMAL}\n\n"
   vimConf=( "\n${UNDERLINE}Vim has been configured with the Klips repository.${NORMAL}" \
     "\nConfiguration Changes: " )
