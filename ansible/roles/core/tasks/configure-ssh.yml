@@ -28,7 +28,7 @@
 
 - name: Add SSH Keys
   lineinfile:
-    dest: /home/kansible/.ssh/authorized_keys
+    dest: /home/ansible/.ssh/authorized_keys
     line: '{{ item }}'
   with_items:
     - 'ssh-idrsa AAZ1NTE5AAAAIA+ndydG+ddddpdddaabvbumkiuyk7778678676547564563434XwmnYb user@host'
