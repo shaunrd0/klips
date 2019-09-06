@@ -40,16 +40,17 @@ if [ $cChoice -eq 1 ] ; then
   sudo mkdir -pv /etc/config-vim/backup/
   printf "\n${GREEN}Backup directory created - /etc/config-vim/backup/${NORMAL}\n"
 
-  # Set global vimrc defaults to klips settings
-  sudo cp /etc/config-vim/configs/.vimrc /usr/share/vim/vimfiles/vimrc
-
   # Stash the current .vimrc
   sudo mv -bv ~/.vimrc /etc/config-vim/backup/
   printf "${RED}Your local .vimrc has been stashed in /etc/config-vim/backup/${NORMAL}\n\n"
 
   # Copy our cloned config into the user home directory
   sudo cp /etc/config-vim/configs/.vimrc ~/
-  printf "${GREEN}New /usr/share/vim/vimfiles/rc configuration installed.${NORMAL}\n"
+  printf "${GREEN}New ~/.vimrc configuration installed.${NORMAL}\n"
+
+  # Copy our cloned config into the global user directories
+  sudo cp /etc/config-vim/configs/.vimrc /usr/share/vim/vimfiles/vimrc
+  sudo cp /etc/config-vim/configs/.vimrc /etc/vim/vimrc
 
   # Reinstall Pathogen plugin manager for vim
   # https://github.com/tpope/vim-pathogen
@@ -59,7 +60,7 @@ if [ $cChoice -eq 1 ] ; then
   # Install Pathogen
   printf "\n${GREEN}Installing Pathogen plugin manager for Vim....\n"
 	printf "\nIf they don't exist, we will create the following directories:\n"
-	printf  "/usr/share/vim/vimfiles//autoload/    ~/.vim/bundle/${NORMAL}"
+	printf  "/usr/share/vim/vimfiles/autoload/    /usr/share/vim/vimfiles/bundle/${NORMAL}"
   mkdir -pv /usr/share/vim/vimfiles/autoload /usr/share/vim/vimfiles/bundle && \
   sudo curl -LSso /usr/share/vim/vimfiles/autoload/pathogen.vim https://tpo.pe/pathogen.vim
   printf "\n${GREEN}Pathogen has been installed! Plugins plugins can now be easily installed.\n"\
