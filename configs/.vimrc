@@ -16,17 +16,19 @@ set mouse=a
 " Enable Syntax Highlighting in Vim
 syntax on
 
+" Fix plugin compatibility issues
 set nocp
+" Allow backspace to remove all types of characters
+set backspace=indent,eol,start
 " set rtp+=/path/to/rtp/that/included/pathogen/vim " if needed
 " Enable Pathogen plugin manager
 execute pathogen#infect()
 filetype plugin indent on
 
 " Custom Keybindings
-" nnoremap <NEW> <OLD>
-"" nnoremap <C-e> <C-w>
+" nnoremap <C-e> <C-w> " Modify and remove leading quotation
 
-" Set window jumping to custom binding
+" Set window jump to custom binding
 " default Ctrl-W conflict - closes browser tabs
 nnoremap <C-e> <C-w>
 
