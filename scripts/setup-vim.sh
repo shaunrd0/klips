@@ -10,6 +10,11 @@ RED=$(tput setaf 1)
 UNDERLINE=$(tput smul)
 NORMAL=$(tput sgr0)
 
+if [ "$(whoami)" != "root" ]; then
+	echo "This script must be ran with sudo..."
+	echo "sudo ./setup-vim.sh"
+  exit 1
+fi
 
 welcome=( "\nEnter 1 to configure vim with the Klips repository, any other value to exit." \
   "The up-to-date .vimrc config can be found here: https://github.com/shaunrd0/klips/tree/master/configs" \
@@ -24,33 +29,37 @@ if [ $cChoice -eq 1 ] ; then
   sudo apt -y update && sudo apt -y upgrade
   sudo apt install vim git 
 
+  printf "\nGathering resources from Klips repository..\n"
   # Clone klips repository in a temp directory
   git clone https://github.com/shaunrd0/klips temp/
   # Relocate the files we need and remove the temp directory
   sudo mkdir -pv /etc/config-vim
   sudo cp -fruv temp/README.md /etc/config-vim/
-  
   sudo cp -fruv temp/configs/ /etc/config-vim/
-  
   rm -Rf temp/
-  printf "\n${GREEN}Klips config files updated"
+  printf "\n${GREEN}Klips configs gathered"
   printf "\nSee /etc/config-vim/README.md for more information.${NORMAL}\n\n"
 
-  # Create backup dir for .vimrc
+  # Create backup dir for .vimrc files
   sudo mkdir -pv /etc/config-vim/backup/
   printf "\n${GREEN}Backup directory created - /etc/config-vim/backup/${NORMAL}\n"
 
-  # Stash the current .vimrc
-  sudo mv -bv ~/.vimrc /etc/config-vim/backup/
-  printf "${RED}Your local .vimrc has been stashed in /etc/config-vim/backup/${NORMAL}\n\n"
+  # Stash current .vimrc configs to protect loss of information
+  sudo mkdir /etc/config-vim/backup/home/ && sudo mv -bv ~/.vimrc /etc/config-vim/backup/home/
+  sudo mkdir /etc/config-vim/backup/skel/ && sudo mv -bv /etc/skel/.vimrc /etc/config-vim/backup/skel/.vimrc
+  sudo mkdir /etc/config-vim/backup/share/ && sudo mv -bv /usr/share/vim/vimrc /etc/config-vim/backup/share/vimrc
+  sudo mkdir /etc/config-vim/backup/etc/ && sudo mv -bv /etc/vim/vimrc /etc/config-vim/backup/etc/vimrc
+  printf "${RED}Your local .vimrc configurations have been stashed in /etc/config-vim/backup/${NORMAL}\n\n"
 
-  # Copy our cloned config into the user home directory
+  # Copy our cloned config into the active user home directory
   sudo cp /etc/config-vim/configs/.vimrc ~/
   printf "${GREEN}New ~/.vimrc configuration installed.${NORMAL}\n"
-
   # Copy our cloned config into the global user directories
-  sudo cp /etc/config-vim/configs/.vimrc /usr/share/vim/vimfiles/vimrc
+  sudo cp /etc/config-vim/configs/.vimrc /etc/skel/.vimrc
+  printf "${GREEN}New /etc/skel/.vimrc configuration installed.${NORMAL}\n"
   sudo cp /etc/config-vim/configs/.vimrc /etc/vim/vimrc
+  printf "${GREEN}New /etc/vim/vimrc configuration installed.${NORMAL}\n"
+
 
   # Reinstall Pathogen plugin manager for vim
   # https://github.com/tpope/vim-pathogen
@@ -71,20 +80,19 @@ if [ $cChoice -eq 1 ] ; then
   sudo rm -R /usr/share/vim/vimfiles/bundle/*
 
   # Clone plugin repos into pathogen plugin directory 
+  pushd /usr/share/vim/vimfiles/bundle/
   printf "\n${GREEN}Installing updated plugins...${NORMAL}\n"
-  git clone https://github.com/ervandew/supertab /usr/share/vim/vimfiles/bundle/supertab && \
+  git clone https://github.com/ervandew/supertab && \
   printf "\n${GREEN}Supertab plugin has been installed${NORMAL}\n\n" && \
-  git clone https://github.com/xavierd/clang_complete /usr/share/vim/vimfiles/bundle/clang_complete && \
+  git clone https://github.com/xavierd/clang_complete && \
   printf "\n${GREEN}Clang Completion plugin has been installed${NORMAL}\n\n"
   vimConf=( "\n${UNDERLINE}Vim has been configured with the Klips repository.${NORMAL}" \
     "\nConfiguration Changes: " )
   printf '%b\n' "${vimConf[@]}"
-
-
+  popd
 else
 printf "\nExiting..\n"
 fi
 
 sudo cat /etc/config-vim/configs/.vimrc-README
-
 

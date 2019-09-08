@@ -25,7 +25,18 @@ ln -s libclang.so.1 libclang.so
 - Allows the use of TAB to enable code-completion context menu
 -- https://github.com/ervandew/supertab
 
+- Enable nocp
+-- Ensures vim is not set to be compatible with older versions of vi
+-- Removing this could diable enhancements on some systems
+-- :help 'compatible' within vim for more information
+
+- Define backspace scope
+-- Ensures that backspace has the permissions to remove all character types
+
 - Custom Keybindings
 - The keybind (Ctrl-e <ARROW KEY>) allows switching between split vim windows 
 -- Ctrl-w is the default setting, which closes tabbed shells on Chrome OS
+
+- Backups previous vimrc configurations
+-- If they were present, previous vim files are stored in /etc/config-vim/backups/
 
