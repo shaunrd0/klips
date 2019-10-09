@@ -1,0 +1,15 @@
+[
+  {
+    "git": {
+      "token": "84014fake588token55b46751for4297u361223",
+      "id": "shaunrd0",
+      "name": "Shaun Reed",
+      "email": "shaunrd0@gmail.com"
+    },
+
+    "repos": {
+        "klips": "/home/kapper/Code/test",
+        "cmake": "/home/kapper/Code/cmake"
+    }
+  }
+]
