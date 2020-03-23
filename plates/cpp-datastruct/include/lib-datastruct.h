@@ -3,36 +3,26 @@
 
 #include <iostream>
 
-enum CONST {
-  MAX=10
-};
-
-template <typename T>
-class ListNode {
+class StackArray {
   public:
-    ListNode() : next(NULL) {};
-    ListNode(T val) : data(val), next(NULL) {};
-    // Sneak more of Push() through node concstr?
-    // ListNode(T val, LinkedList& l) data(val), next(l.Top());
-  private:
-    T data;
-    ListNode* next;
-
-};
-
-template <typename T>
-class LinkedList {
-
-  public:
-    LinkedList() {};
-    void Push(T val) {};
-    T Pop();
-    T Top();
+    StackArray() : top(EMPTY) {};
+    void Push(char val);
+    char Pop();
+    char Top() const;
     void Display() const;
+    bool isEmpty() const;
 
   private:
-    // ListNode data[MAX];
-
+    enum { EMPTY=-1, MAX=10 };
+    class ListNode {
+      public:
+        ListNode() : next(NULL) {};
+        ListNode(char val) : data(val), next(NULL) {};
+        char data;
+        ListNode* next;
+    };
+    ListNode list[MAX];
+    int top;
 };
 
 #endif
