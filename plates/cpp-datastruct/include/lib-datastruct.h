@@ -14,14 +14,14 @@ class StackArray {
 
   private:
     enum { EMPTY=-1, MAX=10 };
-    class ListNode {
+    class Node {
       public:
-        ListNode() : next(NULL) {};
-        ListNode(char val) : data(val), next(NULL) {};
+        Node() : next(NULL) {};
+        Node(char val) : data(val), next(NULL) {};
         char data;
-        ListNode* next;
+        Node* next;
     };
-    ListNode list[MAX];
+    Node stack[MAX];
     int top;
 };
 

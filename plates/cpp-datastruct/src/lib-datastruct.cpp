@@ -4,13 +4,13 @@ void StackArray::Push(char val)
 {
   
   if (top < MAX && !isEmpty()) {
-    this->list[++top].data = val;
+    this->stack[++top].data = val;
   }
   else if (isEmpty()) {
-    this->list[++top].data = val;
+    this->stack[++top].data = val;
   }
   else {
-    std::cout << "Error: List is full!\n";
+    std::cout << "Error: stack is full!\n";
   }
   return;
 }
@@ -28,7 +28,7 @@ char StackArray::Pop()
 
 char StackArray::Top() const
 {
-  return this->list[top].data;
+  return this->stack[top].data;
 }
 
 void StackArray::Display() const
@@ -37,11 +37,11 @@ void StackArray::Display() const
     std::cout << "Error: Stack is empty\n";
     return;
   }
-  
+
   int tempTop = this->top;
   while (tempTop >= 0) {
-    std::cout << "Value at list [" << tempTop << "]: " 
-      << this->list[tempTop].data << std::endl;
+    std::cout << "Value at stack [" << tempTop << "]: " 
+      << this->stack[tempTop].data << std::endl;
     tempTop--;
   }
   
