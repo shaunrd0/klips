@@ -30,3 +30,34 @@ target_include_directories(lib-ds PUBLIC ${INCLUDE_DIR})
 
 # configure_file(${INCLUDE_DIR}/lib-datastruct.h.in ${CMAKE_BINARY_DIR}/generated/lib-datastruct.h)
 # include_directories( ${CMAKE_BINARY_DIR}/generated/ )
+
+# # Location of our header files
+# # include_directories(./include)
+# include_directories(${PROJECT_BINARY_DIR})
+# include_directories( ${CMAKE_BINARY_DIR}/generated/ )
+
+
+# # Additional directories to expect a CMakeLists.txt
+# # add_subdirectory(src)
+# # add_subdirectory(apps)
+
+# # Configure includes to consider cmake variables
+# configure_file(${INCLUDE_DIR}/lib-datastruct.h.in ${CMAKE_BINARY_DIR}/generated/lib-datastruct.h)
+
+# # /apps/CMakeLists.txt
+# # Create a variable to reference any sources to add
+# set(LIB_DS_SRC ${SRC_DIR}/lib-datastruct.cpp)
+# # Create our library
+# add_library(lib-datastruct ${LIB_DS_SRC})
+# # Point the library to directories containing any includes it might need
+# target_include_directories(lib-datastruct PUBLIC "${INCLUDE_DIR}")
+
+# # /src/CMakeLists.txt
+# # Create a variable to reference our driver program source code
+# set(DRIVER_SRC ${APPS_DIR}/driver.cpp)
+# # Add the executable to the build list
+# add_executable(Driver ${DRIVER_SRC})
+# # Link custom libraries to our executable
+# target_link_libraries(Driver lib-datastruct)
+
+# # target_include_directories(Driver PUBLIC "${INCLUDE_DIR}")
