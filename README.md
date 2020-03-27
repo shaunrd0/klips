@@ -25,8 +25,7 @@ klips/
 │       ├── docker
 │       └── nginx
 ├── configs
-│   ├── .vimrc
-│   └── .vimrc-README
+│   └── .vimrc
 ├── plates
 │   ├── cpp-cmake
 │   └── cpp-launcher
@@ -60,17 +59,12 @@ Roles
 
 ### configs
  - .vimrc - Various settings for vim, can be copied or used with setup-vim.sh) 
- - .vimrc-README - What these settings do, output when setup-vim.sh is ran.) 
 
 ### plates  
  - cpp-cmake - Simple cpp executable template, built using cmake
  - cpp-launcher - Simple cpp launcher template, built using cmake. Easily expandable.
 
-### refs
- - doxygenROT - Basic rule-of-thumb for Doxygen commenting
-
 ### scripts
-
 adduser.sh - Script to add new user, run with sudo if you want to configure / allow user to sudo
  - `./adduser` - (Print help text)
  - `./adduser <name> <userID>` - (Don't need sudo if new user doesn't need it)
@@ -78,21 +72,3 @@ adduser.sh - Script to add new user, run with sudo if you want to configure / al
  - `sudo ./adduser jeff 1005` - (Create jeff user and assign userID to 1005)
  - Follow prompts to configure password / sudo depending on needs of new user 
  
-cmake-build.sh 
- - Script to toss around and build cmake projects
- 
-README.md
- - Further clarification of scripts
-
-setup-vim.sh
- - Script for setting up vim configuration
- - Includes Pathogen Plugin manager
- - Includes auto-completion (Clang_completion)
- - Supertab completion interaction (Tab to interact with completion context)
- - Syntax highlighting
- - Tabsize 2, use spaces in place of tabs
- - auto indentation, mouse interaction when supported
- - Custom keybind (Ctrl-e for jumping windows || Ctrl-w still works if not in a tabbed terminal where the same will close the tab)
- - See klips/configs/.vimrc-README for more information
-
-
