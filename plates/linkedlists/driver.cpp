@@ -12,7 +12,7 @@
 #include <iostream>
 
 enum OPS {
-  EXIT, INSERT, INSERTAT, EMPTY, PEEK, PRINT, FIND
+  EXIT, INSERT, INSERTAT, EMPTY, PEEK, PRINT, FIND, REMOVE, REPLACE
 };
 
 int main()
@@ -22,12 +22,12 @@ int main()
   SingleList testList;
   bool exit = false;
   int choice = -1;
-  int val, ins;
+  int val, key;
   while (!exit)
   {
     std::cout << "##### Singly Linked List Menu #####\n\t0. Exit"
       << "\n\t1. Insert\n\t2. Insert at\n\t3. Empty list\n\t4. Peek top of list"
-      << "\n\t5. Print list\n\t6. Find\n";
+      << "\n\t5. Print list\n\t6. Find\n\t7. Remove\n\t8. Replace\n";
     std::cin >> choice;
     std::cin.clear();
     switch (choice)
@@ -44,18 +44,15 @@ int main()
       break;
 
     case INSERTAT:
-      std::cout << "Enter a value to insert at within our list: ";
-      std::cin >> ins;
-      std::cin.clear();
-      std::cout << "Enter a value to add to our list: ";
+      std::cout << "Enter a new value to add to our list: ";
       std::cin >> val;
       std::cin.clear();
-      if (!testList.insert(val, ins)) {
-        std::cout << "No changes made, [" << ins << "] was not found in our list\n";
-      }
-      else {
+      std::cout << "Enter an existing value to insert at within our list: ";
+      std::cin >> key;
+      std::cin.clear();
+      if (testList.insert(val, key)) {
         std::cout << "List after inserting [" 
-          << val << "] at [" << ins << "]: \n";
+          << val << "] at [" << key << "]: \n";
         testList.print();
       }
       break;
@@ -65,18 +62,41 @@ int main()
       break;
 
     case PEEK:
-      std::cout << "[" << testList.peek() << "] is at the top of our list\n";
+      testList.peek();
       break;
 
     case PRINT:
       testList.print();
+      // test2.print();
+      // test3.print();
       break;
 
     case FIND:
-      std::cout << "Enter a value to search for within our list: ";
+      std::cout << "Enter an existing value to search for within our list: ";
       std::cin >> val;
       std::cin.clear();
       testList.find(val);
+      break;
+
+    case REMOVE:
+      std::cout << "Enter an existing value to remove from our list: ";
+      std::cin >> val;
+      std::cin.clear();
+      testList.remove(val);
+      break;
+
+    case REPLACE:
+      std::cout << "Enter a new value to add to our list: ";
+      std::cin >> val;
+      std::cin.clear();
+      std::cout << "Enter an existing value to replace within our list: ";
+      std::cin >> key;
+      std::cin.clear();
+      if (testList.replace(val, key)) {
+        std::cout << "List after replacing [" 
+          << key << "] by [" << val << "]: \n";
+        testList.print();
+      }
       break;
 
     default:

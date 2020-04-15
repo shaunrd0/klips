@@ -26,9 +26,11 @@ class SingleList{
     ~SingleList();
     bool insert(int val);
     bool insert(int val, int key);
+    bool remove(int val);
+    bool replace(int val, int key);
     void makeEmpty();
     bool isEmpty() const;
-    int peek() const;
+    void peek() const;
     void print() const;
     bool find(int val) const;
 
@@ -40,6 +42,10 @@ class SingleList{
       Node(int val): data(val), next(NULL) {};
     };
     Node *head;
+    bool insert(int val, Node *&head);
+    bool insert(int val, int key, Node *&head);
+    bool remove(int val, Node *&head);
+    bool replace(int val, int key, Node *&head);
     Node* find(int val, Node *start) const;
     Node* findPrevious(int val, Node *start) const;
     void print(Node *start) const;

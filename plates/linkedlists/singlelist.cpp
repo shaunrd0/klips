@@ -56,14 +56,11 @@ SingleList::~SingleList()
  */
 bool SingleList::insert(int val)
 {
-  Node *newNode = new Node(val);
-  if (isEmpty())
-    head = newNode; 
-  else {
-    newNode->next = head;
-    head = newNode;
-  }
-  return true;
+  bool inserted = insert(val, head);
+  if (inserted) 
+    std::cout << "[" << val << "] was inserted into the list\n";
+  else std::cout << "[" << val << "] could not be inserted into the list\n";
+  return inserted;
 }
 
 /** insert at
@@ -75,16 +72,44 @@ bool SingleList::insert(int val)
  */
 bool SingleList::insert(int val, int key)
 {
-  Node *newNode = new Node(val);
-  if (isEmpty() || head->data == key) return insert(val);
+  bool inserted = insert(val, key, head);
+  if (inserted) 
+    std::cout << "[" << val << "] was inserted into the list\n";
+  else std::cout << "[" << val << "] could not be inserted into the list\n";
+  return inserted;
+}
 
-  Node *result = findPrevious(key, head);
-  if (result == NULL) return false;
-  else {
-    newNode->next = result->next;
-    result->next = newNode;
-    return true;
-  }
+/** remove
+ * @brief Removes a value in the list by calling a private member and handling output
+ * 
+ * @param val Value to be removed from the list
+ * @return true If the value was removed from the list
+ * @return false If the value was not removed from the list
+ */
+bool SingleList::remove(int val)
+{
+  bool removed = remove(val, head);
+  if (removed) 
+    std::cout << "[" << val << "] was removed from the list\n";
+  else std::cout << "[" << val << "] could not be removed from the list\n";
+  return removed;
+}
+
+/** replace
+ * @brief Replaces a value in the list by calling a private member and handling output
+ * 
+ * @param val Value to insert into the list
+ * @param key Value to be replaced within the list
+ * @return true If the key has been replaced in the list by val
+ * @return false If the key has not been replaced in the list by val
+ */
+bool SingleList::replace(int val, int key)
+{
+  bool replaced = replace(val, key, head);
+  if (replaced) 
+    std::cout << "[" << key << "] was replaced by [" << val << "] in the list\n";
+  else std::cout << "[" << key << "] could not be replaced by [" << val << "] in the list\n";
+  return replaced;
 }
 
 /** makeEmpty
@@ -93,7 +118,7 @@ bool SingleList::insert(int val, int key)
 void SingleList::makeEmpty()
 {
   Node *temp;
-  while(head != NULL) {
+  while(!isEmpty()) {
     temp = head;
     head = head->next;
     delete temp;
@@ -116,10 +141,11 @@ bool SingleList::isEmpty() const
  * 
  * @return int The value held at the Node pointed to by SingleList::head
  */
-int SingleList::peek() const
+void SingleList::peek() const
 {
-  if (head == NULL) return -1;
-  else return head->data;
+  if (!isEmpty()) 
+    std::cout << "[" << head->data << "] is at the top of our list\n";
+  else std::cout << "Nothing to peek, our list is empty...\n";
 }
 
 /** print
@@ -128,7 +154,8 @@ int SingleList::peek() const
  */
 void SingleList::print() const
 {
-  print(head);
+  if(!isEmpty()) print(head);
+  else std::cout << "Nothing to print, our list is empty...\n";
 }
 
 /** find
@@ -154,6 +181,92 @@ bool SingleList::find(int val) const
  * Private Member Functions
  *****************************************************************************/ 
 
+/** insert
+ * @brief Private member to handle inserting value into the list
+ * 
+ * @param val Value to be inserted
+ * @param head The head of the list to insert the value into
+ * @return true If the value was inserted
+ * @return false If the value could not be inserted
+ */
+bool SingleList::insert(int val, Node *&head)
+{
+  Node *newNode = new Node(val);
+  // If the list is not empty, update next pointer to head node
+  if (!isEmpty()) newNode->next = head;
+  // Always set head to our newNode
+  head = newNode; 
+  return true;
+}
+
+/** insert at
+ * @brief Private member to handle inserting a value at a key within our list
+ * 
+ * @param val Value to be inserted
+ * @param key Key value to search for within the list
+ * @param head Head node of the list to insert to
+ * @return true If the value was inserted
+ * @return false If the value was not inserted
+ */
+bool SingleList::insert(int val, int key, Node *&head)
+{
+  Node *newNode = new Node(val);
+  if (isEmpty()) return false;
+  // Let insert() handle inserting at the head
+  else if (head->data == key) return insert(val);
+
+  Node *keyNode = findPrevious(key, head);
+  // If there was no keyNode found, the key does is not in our list
+  // Don't insert anything, return false and let caller decide whats next
+  if (keyNode == NULL) return false;
+  // Set the newNode to come BEFORE our keyNode
+  newNode->next = keyNode->next;
+  keyNode->next = newNode;
+  return true;
+}
+
+/** remove
+ * @brief Private member to remove values from the list
+ * 
+ * @param val Value to be removed
+ * @param head Head of the list to remove the value from
+ * @return true If the value has been removed from the list
+ * @return false If the value has not been removed from the list
+ */
+bool SingleList::remove(int val, Node *&head)
+{
+
+  if (head == NULL) return false;
+  else if (head->data == val) {
+    head = head->next;
+    return true;
+  }
+
+  Node *prevNode = findPrevious(val, head);
+  if (prevNode == NULL) return false;
+  Node *gtfo = prevNode->next;
+  prevNode->next = prevNode->next->next;
+  delete gtfo;
+  return true;
+}
+
+/** replace
+ * @brief Private member to replace values within the list
+ * 
+ * @param val Value to insert into the list
+ * @param key Value to be replaced within the list
+ * @param head Head of the list to replace the value
+ * @return true If the key has been replaced by val within the list
+ * @return false If the key has not been replaced by val within the list
+ */
+bool SingleList::replace(int val, int key, Node *&head)
+{
+  Node *replacee = find(key, head);
+  if (replacee == NULL) return false;
+  replacee->data = val;
+  return true;
+}
+
 /** find
  * @brief Find and return a Node which contains the given value
  * 
@@ -162,16 +275,17 @@ bool SingleList::find(int val) const
  */
 SingleList::Node* SingleList::find(int val, Node *start) const
 {
+  // If given a NULL list, return NULL
+  // If given a head which contains the requested value, return the foundNode
   if (start == NULL || start->data == val) return start;
 
-  Node *temp = start;
-  while (temp->next != NULL) {
-    temp = temp->next;
-    if (temp->data == val) break;
+  Node *foundNode = start;
+  while (foundNode->next != NULL) {
+    foundNode = foundNode->next;
+    if (foundNode->data == val) return foundNode;
   }
-
-  if (temp->data == val) return temp;
-  else return NULL;
+  // If we have not yet returned a foundNode, the key is not in our list
+  return NULL;
 }
 
 /** findPrevious
@@ -209,4 +323,3 @@ void SingleList::print(Node *start) const
   }
   std::cout << std::endl;
 }
-
