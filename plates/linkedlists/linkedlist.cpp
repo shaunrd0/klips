@@ -11,7 +11,7 @@
  */
 SingleList::SingleList(const SingleList& rhs)
 {
-
+  head = rhs.head;
 }
 
 /**
@@ -22,6 +22,8 @@ SingleList::SingleList(const SingleList& rhs)
  */
 SingleList& SingleList::operator=(const SingleList& rhs)
 {
+  makeEmpty();
+  head = rhs.head;
   return *this;
 }
 
@@ -30,6 +32,7 @@ SingleList& SingleList::operator=(const SingleList& rhs)
  */
 SingleList::~SingleList()
 {
+  makeEmpty();
 }
 
 /******************************************************************************
