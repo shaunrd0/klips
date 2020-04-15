@@ -1,4 +1,14 @@
-#include "linkedlist.h"
+/*#############################################################################
+## Author: Shaun Reed                                                        ##
+## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
+## About: An example of a singly linked list                                 ##
+##                                                                           ##
+## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
+##############################################################################
+## singlelist.cpp
+*/
+
+#include "singlelist.h"
 
 /******************************************************************************
  * Constructors, Destructors, Operators
