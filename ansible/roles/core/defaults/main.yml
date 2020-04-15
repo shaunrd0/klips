@@ -1,9 +1,8 @@
 ---
-packages: [git, vim, ssh]
+packages: [git, vim, ssh, libpam-yubico]
+authusers: [user1, user2]
 ssh_port: 22
 auth_methods: "publickey,keyboard-interactive"
-hostname: "localhost"
-domain_name: "www.localhost.com"
-git_email: "user@domain.com"
-git_name: "First Last"
+git_email: "email@domain.com"
+git_name: "Shaun Reed"
 
