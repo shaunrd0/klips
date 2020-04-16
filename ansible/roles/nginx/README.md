@@ -1,45 +1,38 @@
-nginx
+Role Name
 =========
 
-A simple role for installing and configuring nginx on a new Ubuntu host using Ansible. Supports templates for index.html and custom nginx.conf
+A brief description of the role goes here.
 
 Requirements
 ------------
 
-Expects that the host is using apt package manager, and running a Debian / Ubuntu system. 
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
 
-Found in `.../roles/nginx/defaults/main.yml`
-```
----
-domain_name: "localhost"
-nginx_root_dir: "/var/www/html/"
-index_files: "index.html index.htm"
-```
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-#### NGINX Configuration Variables - 
+Dependencies
+------------
 
-domain_name - Domain name to be used in nginx.conf, default value is the same as nginx base package default setting (localhost)
-
-nginx_root_dir - The directory to point the default nginx server to
-
-index_files - The files / types to be checked for content in our root directory
+A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
 Example Playbook
 ----------------
 
-After configuring the approprate variables in `.../defaults/main.yml`, create the following play.yml and run `ansible-playbook play.yml` after setting the correct hosts in your `/etc/ansible/hosts` file.
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-```
----
-- hosts: nginx-server
-  become: yes
-  roles:
-  - nginx
-```
+    - hosts: servers
+      roles:
+         - { role: username.rolename, x: 42 }
 
-Feel free to rename play.yml, hosts group name, etc. Just be sure it reflects to your settings in the related files.
+License
+-------
 
+BSD
 
+Author Information
+------------------
+
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

@@ -1,4 +1,4 @@
 ---
 - name: Configure Git
-  template: src=files/.gitconfig dest=~/.gitconfig
+  copy: src=files/.gitconfig dest=~/.gitconfig
 

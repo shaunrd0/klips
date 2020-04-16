@@ -1,76 +1,38 @@
-core
+Role Name
 =========
 
-A simple role for configuring a set of packages / settings on a new Ubuntu host using Ansible.
-
-### Packages Added / Configured
-
-Git
- - Configure / set user name and email
-
-SSH
- - MOTD (Template, replacable, displayed on login.)
- - PAM (Template, replacable, authusers file to bypass)
- - authusers (Add users to file to bypass PAM settings)
-
-Vim
- - Install Vim
- - Run https://github.com/shaunrd0/klips/scripts/setup-vim.sh
+A brief description of the role goes here.
 
 Requirements
 ------------
 
-Expects that the host is using apt package manager, and running a Debian / Ubuntu system. 
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
 
-Found in `.../roles/core/defaults/main.yml`
-```
----
-packages: [git, vim, ssh]
-ssh_port: 22
-auth_methods: "publickey,keyboard-interactive"
-git_email: "user@domain.com"
-git_name: "First Last"
-hostname: "localhost"
-domain_name: "www.localhost.com"
-```
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-#### Basic package installation variable - 
+Dependencies
+------------
 
-packages - A list of packages to install when running core configuration. Add package to this list and it will be installed on your new host. Further configuration will need to be done manually, unless the role is modified otherwise.
-
-#### SSH Configuration Variables - 
-
-ssh_port - The port to configure SSH to listen on
-
-auth_methods - Authentication methods to allow SSH base configuration to use. Otherwise, specify a match within the sshd_config
-
-#### MOTD Configuration Variables - 
-
-hostname - The hostname of the box you are using, used in the MOTD for a host-specific greeting, so you know which host you are logged into when glancing between terminals.
-
-domain_name - The domain name, if available, associated with this host.
-
-#### Git Configuration Variables - 
-
-git_email - Email address to configure with Git
-
-git_name - Full name to configure with Git (First Last || Shaun Reed)
+A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
 Example Playbook
 ----------------
 
-After configuring the appropriate variables in `.../defaults/main.yml`, create the following play.yml and run `ansible-playbook play.yml` after setting the correct hosts in your `/etc/ansible/hosts` file.
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-```
----
-- hosts: core
-  become: yes
-  roles:
-  - core
-```
+    - hosts: servers
+      roles:
+         - { role: username.rolename, x: 42 }
 
-Feel free to rename play.yml, hosts group name, etc. Just be sure it reflects to your settings in the related files.
+License
+-------
 
+BSD
+
+Author Information
+------------------
+
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

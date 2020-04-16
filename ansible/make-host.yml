@@ -2,7 +2,9 @@
 - hosts: dev
   become: yes
   roles:
-    - core
-    - docker
+    - shared
     - nginx
+    - fail2ban
+    - postfix
+    - docker
 
