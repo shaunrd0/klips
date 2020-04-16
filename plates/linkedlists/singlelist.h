@@ -22,7 +22,7 @@ class SingleList{
   public:
     SingleList() : head(NULL) {};
     SingleList(const SingleList& rhs);
-    SingleList& operator=(const SingleList& rhs);
+    SingleList operator=(SingleList rhs);
     ~SingleList();
     bool insert(int val);
     bool insert(int val, int key);

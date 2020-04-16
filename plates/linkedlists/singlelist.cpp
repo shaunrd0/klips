@@ -19,9 +19,8 @@
  * 
  * @param rhs SingleList object
  */
-SingleList::SingleList(const SingleList& rhs)
+SingleList::SingleList(const SingleList& rhs) : head (rhs.head)
 {
-  head = rhs.head;
 }
 
 /**
@@ -30,10 +29,11 @@ SingleList::SingleList(const SingleList& rhs)
  * @param rhs SingleList object 
  * @return SingleList& The copied rhs SingleList to the lhs of the assignment
  */
-SingleList& SingleList::operator=(const SingleList& rhs)
+SingleList SingleList::operator=(SingleList rhs)
 {
-  makeEmpty();
-  head = rhs.head;
+  if (this == &rhs) return *this;
+  std::swap(head, rhs.head);
+  // head = rhs.head;
   return *this;
 }
 
@@ -117,9 +117,8 @@ bool SingleList::replace(int val, int key)
  */
 void SingleList::makeEmpty()
 {
-  Node *temp;
+  Node *temp(head);
   while(!isEmpty()) {
-    temp = head;
     head = head->next;
     delete temp;
   }
