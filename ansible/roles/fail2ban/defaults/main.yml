@@ -1,0 +1,18 @@
+---
+# defaults file for /etc/ansible/roles/fail2ban
+#
+packages: [fail2ban]
+ssh_port: 22
+relay_host: "[sub.domain.com]:777"
+email: "email@domain.com"
+nginx_botsearch: "true"
+nginx_http_auth: "true"
+nginx_nobinary: "true"
+nginx_nohome: "true"
+nginx_noproxy: "true"
+nginx_noscan: "true"
+nginx_noenv: "true"
+nginx_noscript: "true"
+sshd: "true"
+sshd_badproto: "true"
+

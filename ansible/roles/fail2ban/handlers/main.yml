@@ -1,0 +1,7 @@
+---
+# handlers file for /etc/ansible/roles/fail2ban
+#
+
+- name: restart fail2ban
+  service: name=fail2ban state=restarted
+
