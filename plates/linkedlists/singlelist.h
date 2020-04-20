@@ -6,11 +6,11 @@
 ## Structure:   Remove:         Insert:      Insert at:   Replace:           ##
 ## o-o-o-o-o-o  o-o--x-->o-o-o  o                o            o              ##
 ##                              |               /|           / \             ##
-##                              o-o~o-o-o-o  o-o~o-o-o-o  o-o~x~o-o-o        ##
+##                              o-o-o-o-o-o  o-o~o-o-o-o  o-o~x~o-o-o        ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
-## singlelist.cpp
+## singlelist.h
 */
 
 #ifndef LINKEDLIST_H
@@ -22,7 +22,7 @@ class SingleList{
   public:
     SingleList() : head(NULL) {};
     SingleList(const SingleList& rhs);
-    SingleList operator=(SingleList rhs);
+    SingleList operator=(SingleList& rhs);
     ~SingleList();
     bool insert(int val);
     bool insert(int val, int key);
@@ -38,7 +38,7 @@ class SingleList{
     struct Node {
       int data;
       Node *next;
-      Node(): data(00), next(NULL) {};
+      Node(): data(), next(NULL) {};
       Node(int val): data(val), next(NULL) {};
     };
     Node *head;

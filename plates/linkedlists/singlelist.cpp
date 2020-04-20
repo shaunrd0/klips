@@ -19,21 +19,34 @@
  * 
  * @param rhs SingleList object
  */
-SingleList::SingleList(const SingleList& rhs) : head (rhs.head)
+SingleList::SingleList(const SingleList& rhs)
 {
+  Node *cp = rhs.head;
+  Node *tempHead;
+  if (cp == NULL) head = NULL;
+  else {
+    head = new Node(cp->data);
+    tempHead = head;
+    while (cp->next != NULL) {
+      cp = cp->next;
+      head->next = new Node(cp->data);
+      head = head->next;
+    }
+    head = tempHead;
+  }
 }
 
 /**
- * @brief Copy the rhs SingleList::SingleList into the lhs of an assignemnt
+ * @brief Shallow copy of the rhs into the lhs of the assignemnt
  * 
  * @param rhs SingleList object 
- * @return SingleList& The copied rhs SingleList to the lhs of the assignment
+ * @return SingleList& A shallow copy of the rhs SingleList in the assignment
  */
-SingleList SingleList::operator=(SingleList rhs)
+SingleList SingleList::operator=(SingleList& rhs)
 {
   if (this == &rhs) return *this;
-  std::swap(head, rhs.head);
-  // head = rhs.head;
+  else head = rhs.head;
+
   return *this;
 }
 
@@ -117,10 +130,15 @@ bool SingleList::replace(int val, int key)
  */
 void SingleList::makeEmpty()
 {
-  Node *temp(head);
-  while(!isEmpty()) {
-    head = head->next;
+  Node *nextNode = head->next;
+  Node *temp;
+  delete head;
+  head = NULL;
+  while(nextNode != NULL) {
+    temp = nextNode;
+    nextNode = nextNode->next;
     delete temp;
+    temp = NULL;
   }
 }
 
