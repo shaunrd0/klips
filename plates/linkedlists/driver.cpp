@@ -23,17 +23,15 @@ int main()
   bool exit = false;
   int choice = -1;
   int val, key;
-  SingleList test2;
+
   while (!exit)
   {
-    test2 = testList;
     std::cout << "##### Singly Linked List Menu #####\n\t0. Exit"
       << "\n\t1. Insert\n\t2. Insert at\n\t3. Empty list\n\t4. Peek top of list"
       << "\n\t5. Print list\n\t6. Find\n\t7. Remove\n\t8. Replace\n";
     std::cin >> choice;
     std::cin.clear();
-    switch (choice)
-    {
+    switch (choice) {
     case EXIT:
       exit = true;
       break;
@@ -69,8 +67,6 @@ int main()
 
     case PRINT:
       testList.print();
-      test2.print();
-      // test3.print();
       break;
 
     case FIND:
