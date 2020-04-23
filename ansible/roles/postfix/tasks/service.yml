@@ -1,0 +1,3 @@
+---
+- name: Start and enable postfix service
+  service: name=postfix state=restarted enabled=yes

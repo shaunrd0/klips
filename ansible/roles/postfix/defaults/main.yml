@@ -1,0 +1,8 @@
+---
+# defaults file for /etc/ansible/roles/postfix
+#
+packages: [mailutils, postfix]
+relay_host: "[sub.domain.com]:777"
+email: "email@domain.com"
+sasl_passwd: "xxxxxxxxxxxxx"
+
