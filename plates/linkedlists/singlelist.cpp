@@ -130,8 +130,10 @@ bool SingleList::replace(int val, int key)
  */
 void SingleList::makeEmpty()
 {
-  Node *nextNode = head->next;
-  Node *temp;
+  Node *nextNode, *temp;
+
+  if (head == NULL) return;
+  nextNode = head->next;
   delete head;
   head = NULL;
   while(nextNode != NULL) {
