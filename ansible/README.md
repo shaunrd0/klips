@@ -9,10 +9,14 @@ Playbooks
  - hosts - Sample / partially default ansible hosts file
  - make-host.yml - Playbook example for using multiple roles together to create a new host
  - nginx.yml - Playbook example for using nginx role 
+ - fail2ban.yml - Playbook example for using fail2ban role 
+ - postifx.yml - Playbook example for using postfix role 
 
 Roles 
  - Basic ansible role created with ansible-galaxy command
  - core - Role to configure a new host with basic authentication / package settings
  - docker - Role to install docker, docker-compose, configure docker user group (Debian / Ubuntu)
  - nginx - Role to install and configure a new nginx webserver on a host 
+ - fail2ban - Role to install and configure fail2ban on a new host
+ - postfix - Role to install and configure postfix on a new host
 
