@@ -36,11 +36,13 @@ SingleList::SingleList(const SingleList& rhs)
   }
 }
 
-/**
- * @brief Shallow copy of the rhs into the lhs of the assignemnt
+/** operator=
+ * @brief Assign two SingleList objects equal using copy constr and class destr
+ *        Pass the rhs by value to create local copy, swap its contents
+ *        Destructor called on previous SingleList data at the end of this scope 
  * 
- * @param rhs SingleList object 
- * @return SingleList& A shallow copy of the rhs SingleList in the assignment
+ * @param rhs SingleList object passed by value
+ * @return SingleList A deep copy of the rhs SingleList object
  */
 SingleList SingleList::operator=(SingleList rhs)
 {

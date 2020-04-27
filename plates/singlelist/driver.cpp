@@ -19,7 +19,7 @@ int main()
 {
   std::cout << "Driver: \n";
 
-  SingleList testList, test;
+  SingleList testList;
   bool exit = false;
   int choice = -1;
   int val, key;
@@ -41,7 +41,6 @@ int main()
       std::cin >> val;
       std::cin.clear();
       testList.insert(val);
-      test = testList;
       break;
 
     case INSERTAT:
@@ -68,7 +67,6 @@ int main()
 
     case PRINT:
       testList.print();
-      test.print();
       break;
 
     case FIND:
