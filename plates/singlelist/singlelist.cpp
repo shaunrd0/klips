@@ -42,11 +42,10 @@ SingleList::SingleList(const SingleList& rhs)
  * @param rhs SingleList object 
  * @return SingleList& A shallow copy of the rhs SingleList in the assignment
  */
-SingleList SingleList::operator=(SingleList& rhs)
+SingleList SingleList::operator=(SingleList rhs)
 {
   if (this == &rhs) return *this;
-  else head = rhs.head;
-
+  std::swap(head, rhs.head);
   return *this;
 }
 
