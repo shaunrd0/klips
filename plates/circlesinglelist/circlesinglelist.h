@@ -1,29 +1,24 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: An example of a singly linked list                                 ##
-##                                                                           ##
-## Structure:   Remove:         Insert:      Insert at:   Replace:           ##
-## o-o-o-o-o-o  o-o--x-->o-o-o  o                o            o              ##
-##                              |               /|           / \             ##
-##                              o-o-o-o-o-o  o-o~o-o-o-o  o-o~x~o-o-o        ##
+## About: An example of a circular singly linked list                        ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
-## singlelist.h
+## circlesinglelist.h
 */
 
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#ifndef CIRCLESINGLELIST_H
+#define CIRCLESINGLELIST_H
 
 #include <iostream>
 
-class SingleList{
+class CircleSingleList{
   public:
-    SingleList() : head(NULL) {};
-    SingleList(const SingleList& rhs);
-    SingleList operator=(SingleList rhs);
-    ~SingleList();
+    CircleSingleList() : tail(NULL) {};
+    CircleSingleList(const CircleSingleList& rhs);
+    CircleSingleList operator=(CircleSingleList rhs);
+    ~CircleSingleList();
     bool insert(int val);
     bool insert(int val, int key);
     bool remove(int val);
@@ -39,15 +34,15 @@ class SingleList{
       int data;
       Node *next;
       Node(): data(), next(NULL) {};
-      Node(int val): data(val), next(NULL) {};
+      Node(int val): data(val), next(this) {};
     };
-    Node *head;
-    bool insert(int val, Node *&head);
-    bool insert(int val, int key, Node *&head);
-    bool remove(int val, Node *&head);
-    bool replace(int val, int key, Node *&head);
+    Node *tail;
+    bool insert(int val, Node *&tail);
+    bool insert(int val, int key, Node *&tail);
+    bool remove(int val, Node *&tail);
+    bool replace(int val, int key, Node *&tail);
     Node* find(int val, Node *start) const;
-    Node* findPrevious(int val, Node *start) const;
+    Node* findPrevious(int val) const;
     void print(Node *start) const;
 };
 
