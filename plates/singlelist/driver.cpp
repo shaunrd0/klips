@@ -51,7 +51,7 @@ int main()
       std::cin >> key;
       std::cin.clear();
       if (testList.insert(val, key)) {
-        std::cout << "List after inserting [" 
+        std::cout << "List after inserting ["
           << val << "] at [" << key << "]: \n";
         testList.print();
       }
@@ -91,7 +91,7 @@ int main()
       std::cin >> key;
       std::cin.clear();
       if (testList.replace(val, key)) {
-        std::cout << "List after replacing [" 
+        std::cout << "List after replacing ["
           << key << "] by [" << val << "]: \n";
         testList.print();
       }

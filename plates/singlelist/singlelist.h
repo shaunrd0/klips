@@ -13,8 +13,8 @@
 ## singlelist.h
 */
 
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#ifndef SINGLELIST_H
+#define SINGLELIST_H
 
 #include <iostream>
 
@@ -30,7 +30,7 @@ class SingleList{
     bool replace(int val, int key);
     void makeEmpty();
     bool isEmpty() const;
-    void peek() const;
+    int peek() const;
     void print() const;
     bool find(int val) const;
 

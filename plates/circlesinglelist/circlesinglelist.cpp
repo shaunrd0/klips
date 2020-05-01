@@ -185,12 +185,13 @@ bool CircleSingleList::isEmpty() const
  *
  * @return int The value held at the Node at the head of our linked list
  */
-void CircleSingleList::peek() const
+int CircleSingleList::peek() const
 {
   // If there is only one data member, a circular list node will point to itself
   if (!isEmpty())
     std::cout << "[" << tail->next->data << "] is at the top of our list\n";
   else std::cout << "Nothing to peek, our list is empty...\n";
+  return tail->next->data;
 }
 
 /** print

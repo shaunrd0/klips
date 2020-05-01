@@ -13,7 +13,7 @@
 
 #include <iostream>
 
-class CircleSingleList{
+class CircleSingleList {
   public:
     CircleSingleList() : tail(NULL) {};
     CircleSingleList(const CircleSingleList& rhs);
@@ -25,7 +25,7 @@ class CircleSingleList{
     bool replace(int val, int key);
     void makeEmpty();
     bool isEmpty() const;
-    void peek() const;
+    int peek() const;
     void print() const;
     bool find(int val) const;
 

@@ -1,8 +1,0 @@
-// #ifndef LDS_H
-// #define LDS_H
-
-#define DS_VERSION_MINOR @DataStruct_VERSION_MINOR@
-#define DS_VERSION_MAJOR @DataStruct_VERSION_MAJOR@
-#define DS_VERSION @DataStruct_VERSION@
-
-// #endif
