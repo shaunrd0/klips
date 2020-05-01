@@ -1,14 +1,14 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: A driver program to test a singly linked list                      ##
+## About: A driver program to test a doubly linked list                      ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
 ## driver.cpp
 */
 
-#include "singlelist.h"
+#include "doublelist.h"
 #include <iostream>
 
 enum OPS {
@@ -19,7 +19,7 @@ int main()
 {
   std::cout << "Driver: \n";
 
-  SingleList testList;
+  DoubleList testList;
   bool exit = false;
   int choice = -1;
   int val, key;
@@ -51,7 +51,7 @@ int main()
       std::cin >> key;
       std::cin.clear();
       if (testList.insert(val, key)) {
-        std::cout << "List after inserting [" 
+        std::cout << "List after inserting ["
           << val << "] at [" << key << "]: \n";
         testList.print();
       }
@@ -91,7 +91,7 @@ int main()
       std::cin >> key;
       std::cin.clear();
       if (testList.replace(val, key)) {
-        std::cout << "List after replacing [" 
+        std::cout << "List after replacing ["
           << key << "] by [" << val << "]: \n";
         testList.print();
       }
