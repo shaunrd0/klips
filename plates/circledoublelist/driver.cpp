@@ -1,7 +1,7 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: A driver program to test a doubly linked list                      ##
+## About: A driver program to test a circular doubly linked list             ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
@@ -17,16 +17,14 @@ enum OPS {
 
 int main()
 {
-  std::cout << "Driver: \n";
-
-  DoubleList testList;
+  CircleDoubleList testList;
   bool exit = false;
   int choice = -1;
   int val, key;
 
   while (!exit)
   {
-    std::cout << "##### Singly Linked List Menu #####\n\t0. Exit"
+    std::cout << "##### Circular Doubly Linked List Menu #####\n\t0. Exit"
       << "\n\t1. Insert\n\t2. Insert at\n\t3. Empty list\n\t4. Peek top of list"
       << "\n\t5. Print list\n\t6. Find\n\t7. Remove\n\t8. Replace\n";
     std::cin >> choice;

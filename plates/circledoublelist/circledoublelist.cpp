@@ -1,11 +1,11 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: An example of a doubly linked list                                 ##
+## About: An example of a circular doubly linked list                        ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
-## doublelist.cpp
+## circledoublelist.cpp
 */
 
 #include "circledoublelist.h"
@@ -16,46 +16,46 @@
  *****************************************************************************/
 
 /** copy constructor
- * @brief Construct a new DoubleList::DoubleList object from an existing one
+ * @brief Construct a new CircleDoubleList::CircleDoubleList object from an existing one
  *
- * @param rhs DoubleList object
+ * @param rhs CircleDoubleList object
  */
-DdoubleList::DoubleList(const DoubleList& rhs)
+CircleDoubleList::CircleDoubleList(const CircleDoubleList& rhs)
 {
-  Node *cp2 = rhs.head;
-  Node *cp = rhs.head;
+  Node *cp = rhs.tail;
   Node *tempHead;
-  if (cp == NULL) head = NULL;
+  if (cp == NULL) tail = NULL;
   else {
-    head = new Node(cp->data);
-    tempHead = head;
+    tail = new Node(cp->data);
+    tempHead = tail;
     while (cp->next != NULL) {
       cp = cp->next;
-      head->next = new Node(cp->data);
-      head = head->next;
+      tail->next = new Node(cp->data);
+      tail = tail->next;
     }
-    head = tempHead;
+    tail = tempHead;
   }
 }
+
 /** operator=
- * @brief Assign two DoubleList objects equal using copy constr and class destr
+ * @brief Assign two CircleDoubleList objects equal using copy constr and class destr
  *        Pass the rhs by value to create local copy, swap its contents
- *        Destructor called on previous DoubleList data at the end of this scope
+ *        Destructor called on previous CircleDoubleList data at the end of this scope
  *
- * @param rhs DoubleList object passed by value
- * @return DoubleList A deep copy of the rhs DoubleList object
+ * @param rhs CircleDoubleList object passed by value
+ * @return CircleDoubleList A deep copy of the rhs CircleDoubleList object
  */
-DoubleList DoubleList::operator=(DoubleList rhs)
+CircleDoubleList CircleDoubleList::operator=(CircleDoubleList rhs)
 {
   if (this != &rhs) return *this;
-  std::swap(head, rhs.head);
+  std::swap(tail, rhs.tail);
   return *this;
 }
 
 /** destructor
- * @brief Destroy the DoubleList::DoubleList object
+ * @brief Destroy the CircleDoubleList::CircleDoubleList object
  */
-DoubleList::~DoubleList()
+CircleDoubleList::~CircleDoubleList()
 {
   makeEmpty();
 }
@@ -68,11 +68,11 @@ DoubleList::~DoubleList()
 /** insert
  * @brief Inserts a value to the head of our linked list
  *
- * @param x The value to be inserted
+ * @param val The value to be inserted
  */
-bool DoubleList::insert(int val)
+bool CircleDoubleList::insert(int val)
 {
-  bool inserted = insert(val, head);
+  bool inserted = insert(val, tail);
   if (inserted)
     std::cout << "[" << val << "] was inserted into the list\n";
   else std::cout << "[" << val << "] could not be inserted into the list\n";
@@ -86,9 +86,15 @@ bool DoubleList::insert(int val)
  * @param key The value to search for to determine insert location
  * @param val The value to be inserted into the list
  */
-bool DoubleList::insert(int val, int key)
+bool CircleDoubleList::insert(int val, int key)
 {
-  bool inserted = insert(val, key, head);
+  // Check that we are not trying to insert at a position within an empty list
+  if (tail == NULL) {
+    std::cout << "Cannot insert at a key value using an empty list\n";
+    return false;
+  }
+
+  bool inserted = insert(val, key, tail->next);
   if (inserted)
     std::cout << "[" << val << "] was inserted into the list\n";
   else std::cout << "[" << val << "] could not be inserted into the list\n";
@@ -96,15 +102,22 @@ bool DoubleList::insert(int val, int key)
 }
 
 /** remove
- * @brief Removes a value in the list by calling a private member and handling output
+ * @brief Removes a value in the list by calling overloaded private member and handling output
  *
  * @param val Value to be removed from the list
  * @return true If the value was removed from the list
  * @return false If the value was not removed from the list
  */
-bool DoubleList::remove(int val)
+bool CircleDoubleList::remove(int val)
 {
-  bool removed = remove(val, head);
+  // Check that we are not trying to remove from an empty list
+  if (isEmpty()) {
+    std::cout << "Cannot remove from an empty list\n";
+    return false;
+  }
+
+  // Attempt to remove the item
+  bool removed = remove(val, tail->next);
   if (removed)
     std::cout << "[" << val << "] was removed from the list\n";
   else std::cout << "[" << val << "] could not be removed from the list\n";
@@ -112,16 +125,23 @@ bool DoubleList::remove(int val)
 }
 
 /** replace
- * @brief Replaces a value in the list by calling a private member and handling output
+ * @brief Replaces a value in the list by calling overloaded private member and handling output
  *
  * @param val Value to insert into the list
  * @param key Value to be replaced within the list
  * @return true If the key has been replaced in the list by val
  * @return false If the key has not been replaced in the list by val
  */
-bool DoubleList::replace(int val, int key)
+bool CircleDoubleList::replace(int val, int key)
 {
-  bool replaced = replace(val, key, head);
+  // Check that we are not trying to replace within an empty list
+  if (isEmpty()) {
+    std::cout << "Cannot replace anything within an empty list\n";
+    return false;
+  }
+
+  // Attempt to replace the item
+  bool replaced = replace(val, key, tail->next);
   if (replaced)
     std::cout << "[" << key << "] was replaced by [" << val << "] in the list\n";
   else std::cout << "[" << key << "] could not be replaced by [" << val << "] in the list\n";
@@ -129,68 +149,74 @@ bool DoubleList::replace(int val, int key)
 }
 
 /** makeEmpty
- * @brief Empty this DoubleList object, deleting all associated Nodes
+ * @brief Empty this CircleDoubleList object, deleting all associated Nodes
  */
-void DoubleList::makeEmpty()
+void CircleDoubleList::makeEmpty()
 {
-  Node *nextNode, *temp;
-
-  if (head == NULL) return;
-  nextNode = head->next;
-  delete head;
-  head = NULL;
-  while(nextNode != NULL) {
-    temp = nextNode;
+  Node *nextNode;
+  if (isEmpty()) return;
+  
+  // Start deletion from the head of the list
+  nextNode = tail->next;
+  while(!isEmpty()) {
     nextNode = nextNode->next;
-    delete temp;
-    temp = NULL;
+    remove(nextNode->prev->data);
   }
+  nextNode = NULL;
+  return;
 }
 
 /** isEmpty
- * @brief Determine if the DoubleList is empty
+ * @brief Determine if the CircleDoubleList is empty
  *
- * @return true If the DoubleList::head is NULL
- * @return false If the DoubleList::head contains data
+ * @return true If the CircleDoubleList::tail is NULL
+ * @return false If the CircleDoubleList::tail contains data
  */
-bool DoubleList::isEmpty() const
+bool CircleDoubleList::isEmpty() const
 {
-  return head == NULL;
+  return tail == NULL;
 }
 
 /** peek
- * @brief returns the value at the DoubleList::head
+ * @brief returns the value at the CircleDoubleList::head
  *
- * @return int The value held at the Node pointed to by DoubleList::head
+ * @return int The value held at the Node pointed to by CircleDoubleList::head
  */
-int DoubleList::peek() const
+int CircleDoubleList::peek() const
 {
   if (!isEmpty())
-    std::cout << "[" << head->data << "] is at the top of our list\n";
+    std::cout << "[" << tail->next->data << "] is at the top of our list\n";
   else std::cout << "Nothing to peek, our list is empty...\n";
-  return head->data;
+  return tail->data;
 }
 
 /** print
- * @brief Output the data held by the DoubleList object
+ * @brief Output the data held by the CircleDoubleList object
  *        Calls to the private print()
  */
-void DoubleList::print() const
+void CircleDoubleList::print() const
 {
-  if(!isEmpty()) print(head);
+  // Print from the head of our list
+  if(!isEmpty()) print(tail->next);
   else std::cout << "Nothing to print, our list is empty...\n";
 }
 
 /** find
- * @brief Calls to the private member find() and handles return cases
+ * @brief Calls to overloaded private member find() and handles output
  *
- * @param val The value to search for within our DoubleList
- * @return true If the value was found in this DoubleList
- * @return false If the value was not found in this DoubleList
+ * @param val The value to search for within our CircleDoubleList
+ * @return true If the value was found in this CircleDoubleList
+ * @return false If the value was not found in this CircleDoubleList
  */
-bool DoubleList::find(int val) const
+bool CircleDoubleList::find(int val) const
 {
-  Node *result = find(val, head);
+  // Check that we are not trying to search an empty list
+  if (isEmpty()) {
+    std::cout << "Cannot search an empty list\n";
+    return false;
+  }
+
+  Node *result = find(val, tail);
   if( result == NULL) {
     std::cout << "[" << val << "] Was not found in our list\n";
     return false;
@@ -209,21 +235,22 @@ bool DoubleList::find(int val) const
  * @brief Private member to handle inserting value into the list
  *
  * @param val Value to be inserted
- * @param head The head of the list to insert the value into
+ * @param tail The tail node of the list to insert the value into
  * @return true If the value was inserted
  * @return false If the value could not be inserted
  */
-bool DoubleList::insert(int val, Node *&head)
+bool CircleDoubleList::insert(int val, Node *&tail)
 {
   Node *newNode = new Node(val);
-  // If the list is not empty, update next pointer to head node
   if (!isEmpty()) {
-    newNode->next = head;
-    // Create a prev ptr for the head node
-    head->prev = newNode;
+    // Relink the current head to the node after newNode
+    newNode->next = tail->next;
+    tail->next->prev = newNode;
+    // Relink our head and tail nodes, makine newNode the head node
+    tail->next = newNode;
+    newNode->prev = tail;
   }
-  // Always set head to our newNode
-  head = newNode;
+  else tail = newNode;
   return true;
 }
 
@@ -236,18 +263,19 @@ bool DoubleList::insert(int val, Node *&head)
  * @return true If the value was inserted
  * @return false If the value was not inserted
  */
-bool DoubleList::insert(int val, int key, Node *&head)
+bool CircleDoubleList::insert(int val, int key, Node *&head)
 {
   Node *newNode = new Node(val);
-  if (isEmpty()) return false;
   // Let insert() handle inserting at the head
-  else if (head->data == key) return insert(val);
+  if (head->data == key) return insert(val);
 
+  // Get the node which contains our value
   Node *keyNode = find(key, head);
-  // If there was no keyNode found, the key does is not in our list
-  // Don't insert anything, return false and let caller decide whats next
+  // If there was no keyNode found, the key is not in our list, do nothing
   if (keyNode == NULL) return false;
-  // Insert the newNode infront of the previous to the keyNode
+  // Insert the newNode in front of the previous to the keyNode
+  // [head]->[key]->[tail]
+  // [head]->[new]->[key]->[tail]
   newNode->prev = keyNode->prev;
   keyNode->prev->next = newNode;
 
@@ -265,21 +293,53 @@ bool DoubleList::insert(int val, int key, Node *&head)
  * @return true If the value has been removed from the list
  * @return false If the value has not been removed from the list
  */
-bool DoubleList::remove(int val, Node *&head)
+bool CircleDoubleList::remove(int val, Node *&head)
 {
-  if (head == NULL) return false;
-  else if (head->data == val) {
+  // If there is only one node in the list
+  // Synonymous with: if (tail = tail->next)
+  if (head == head->next) {
+    delete tail;
+    tail = NULL;
+    // Nothing to relink, list is empty
+    return true;
+  }
+  
+  // If the head node contains the value to remove
+  if (head->data == val) {
+    Node *temp = head;
+    // Move head to the next node in the list
     head = head->next;
+    // Relink head and tail nodes
+    head->prev = tail;
+    tail->next = head;
+    // Delete dangling pointer created by relinking
+    delete temp;
+    return true;
+  }
+  
+  // If the tail node contains the value to remove
+  if (tail->data == val) {
+    Node *temp = tail;
+    // Move tail to the previous node in the list
+    tail = tail->prev;
+    // Relink head and tail nodes
+    head->prev = tail;
+    tail->next = head;
+    // Delete dangling pointer created by relinking
+    delete temp;
     return true;
   }
 
+  // Search for the value further within our list
   Node *keyNode = find(val, head);
+  // If NULL, the value does not exist within our list
   if (keyNode == NULL) return false;
-  Node *gtfo = keyNode;
-  if (keyNode->next != NULL) keyNode->next->prev = keyNode->prev;
-  if (keyNode->prev != NULL) keyNode->prev->next = keyNode->next;
-  delete gtfo;
-  gtfo = NULL;
+  // Relink surrounding nodes to make keyNode a dangling ptr
+  keyNode->next->prev = keyNode->prev;
+  keyNode->prev->next = keyNode->next;
+  // Delete the dangling node created by relinking above
+  delete keyNode;
+  keyNode = NULL;
   return true;
 }
 
@@ -288,11 +348,11 @@ bool DoubleList::remove(int val, Node *&head)
  *
  * @param val Value to insert into the list
  * @param key Value to be replaced within the list
- * @param head Head of the list to replace the value
+ * @param head Head node of the list to modify
  * @return true If the key has been replaced by val within the list
  * @return false If the key has not been replaced by val within the list
  */
-bool DoubleList::replace(int val, int key, Node *&head)
+bool CircleDoubleList::replace(int val, int key, Node *&head)
 {
   Node *replacee = find(key, head);
   if (replacee == NULL) return false;
@@ -303,17 +363,21 @@ bool DoubleList::replace(int val, int key, Node *&head)
 /** find
  * @brief Find and return a Node which contains the given value
  *
- * @param val The value to search for within our DoubleList
- * @return DoubleList::Node* A pointer to the Node containing the search value
+ * @param val The value to search for within our CircleDoubleList
+ * @param start The node to begin the search from, returns on the first found result
+ * @return CircleDoubleList::Node* A pointer to the Node containing the search value
  */
-DoubleList::Node* DoubleList::find(int val, Node *start) const
+CircleDoubleList::Node* CircleDoubleList::find(int val, Node *start) const
 {
   // If given a NULL list, return NULL
   // If given a head which contains the requested value, return the foundNode
   if (start == NULL || start->data == val) return start;
 
+  // Copy our start position, check its value 
   Node *foundNode = start;
-  while (foundNode->next != NULL) {
+  if (foundNode->data == val) return foundNode;
+  // Keep checking the next node until we reach the start value again
+  while (foundNode->next != start) {
     foundNode = foundNode->next;
     if (foundNode->data == val) return foundNode;
   }
@@ -322,15 +386,16 @@ DoubleList::Node* DoubleList::find(int val, Node *start) const
 }
 
 /** print
- * @brief Output the contents of a DoubleList from the given Node to NULL
+ * @brief Output the contents of a CircleDoubleList from the given Node to NULL
  *
  * @param start The Node to begin traversing output from
  */
-void DoubleList::print(Node *start) const
+void CircleDoubleList::print(Node *start) const
 {
   Node *temp = start;
-  std::cout << "List Contents: ";
-  while (temp != NULL) {
+  std::cout << "List Contents: " << temp->data << " | ";
+  temp = temp->next;
+  while (temp != start) {
     std::cout << temp->data << " | ";
     temp = temp->next;
   }

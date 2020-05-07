@@ -1,24 +1,24 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: An example of a doubly linked list                                 ##
+## About: An example of a circular doubly linked list                        ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
-## doublelist.h
+## circledoublelist.h
 */
 
-#ifndef DOUBLELIST_H
-#define DOUBLELIST_H
+#ifndef CIRCLEDOUBLELIST_H
+#define CIRCLEDOUBLELIST_H
 
 #include <iostream>
 
-class DoubleList {
+class CircleDoubleList {
   public:
-    DoubleList() : head(NULL) {};
-    DoubleList(const DoubleList& rhs);
-    DoubleList operator=(DoubleList rhs);
-    ~DoubleList();
+    CircleDoubleList() : tail(NULL) {};
+    CircleDoubleList(const CircleDoubleList& rhs);
+    CircleDoubleList operator=(CircleDoubleList rhs);
+    ~CircleDoubleList();
     bool insert(int val);
     bool insert(int val, int key);
     bool remove(int val);
@@ -34,13 +34,13 @@ class DoubleList {
       int data;
       Node *next, *prev;
       Node(): data(), next(NULL), prev(NULL) {};
-      Node(int val): data(val), next(NULL), prev(NULL) {};
+      Node(int val): data(val), next(this), prev(this) {};
     };
-    Node *head;
-    bool insert(int val, Node *&head);
-    bool insert(int val, int key, Node *&head);
-    bool remove(int val, Node *&head);
-    bool replace(int val, int key, Node *&head);
+    Node *tail;
+    bool insert(int val, Node *&tail);
+    bool insert(int val, int key, Node *&tail);
+    bool remove(int val, Node *&tail);
+    bool replace(int val, int key, Node *&tail);
     Node* find(int val, Node *start) const;
     void print(Node *start) const;
 };
