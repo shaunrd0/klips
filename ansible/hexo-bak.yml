@@ -4,8 +4,8 @@
   tasks:
     - name: Backup Hexo files
       archive:
-        path: /home/hexouser/site
-        dest: /home/hexouser/site.tgz
+        path: /home/hexo/site
+        dest: /home/hexo/site.tgz
     - name: Fetching backup files
       fetch:
         src: /home/hexo/site.tgz
