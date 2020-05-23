@@ -1,0 +1,18 @@
+---
+- hosts: bookstack
+  become: yes
+  tasks:
+    - name: Create backup directory if it doesn't exist
+      file:
+        path: /home/bookstackuser/backups
+        state: directory
+    - name: Backup Bookstack container files
+      archive:
+        path: /home/bookstackuser/docker-bookstack
+        dest: /home/bookstackuser/backups/bookstack.tgz
+    - name: Fetching backup files from remote host
+      synchronize:
+        src: /home/bookstackuser/backups/
+        dest: /home/ansibleuser/backups/
+        mode: pull
+
