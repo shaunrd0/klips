@@ -1,0 +1,34 @@
+---
+- name: Install Hexo static site generator
+  hosts: hexo
+  become: yes
+  tasks:
+    - name: Update apt sources and install npm
+      apt:
+        name: npm
+        state: present
+        update_cache: yes
+    - name: Install hexo-cli
+      npm:
+        name: hexo-cli
+        global: yes
+    - name: Adding hexo user / administrator
+      user:
+        name: hexouser
+        shell: /bin/bash
+        groups: sudo
+        uid: 1003
+    - name: Initialize site files
+      command:
+        chdir: /home/hexouser/
+        cmd: hexo init blogsite
+    - name: Install site packages
+      npm:
+        path: /home/hexouser/blogsite/
+    - name: Start server
+      command:
+        chdir: /home/hexouser/blogsite/
+        cmd: nohup hexo server &
+      async: 45
+      poll: 0
+

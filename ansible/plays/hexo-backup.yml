@@ -1,0 +1,13 @@
+---
+- hosts: hexo
+  become: yes
+  tasks:
+    - name: Backup Hexo files
+      archive:
+        path: /home/hexouser/blogsite
+        dest: /home/hexouser/blogsite.tgz
+    - name: Fetching backup files
+      fetch:
+        src: /home/hexouser/blogsite.tgz
+        dest: /home/ansibleuser/backups/
+        flat: yes
