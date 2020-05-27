@@ -19,7 +19,7 @@ printf "\nEnter 1 if $1 should have sudo privileges. Any other value will contin
 read choice
 if [ $choice -eq 1 ] ; then
 printf "\nConfiguring sudo for $1...\n"
-sudo usermod -G sudo $1
+sudo usermod -aG sudo $1
 fi
 
 printf "\nEnter 1 to set a password for $1, any other value will exit with no password set\n"
