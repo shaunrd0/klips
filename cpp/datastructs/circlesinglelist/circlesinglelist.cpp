@@ -191,7 +191,8 @@ int CircleSingleList::peek() const
   if (!isEmpty())
     std::cout << "[" << tail->next->data << "] is at the top of our list\n";
   else std::cout << "Nothing to peek, our list is empty...\n";
-  return tail->next->data;
+  // If the list has data we return it, otherwise we return the smallest possible int (error)
+  return (!isEmpty()) ? tail->next->data : INT32_MIN;
 }
 
 /** print
