@@ -1,5 +1,5 @@
 ---
-- hosts: core
+- hosts: dev
   become: yes
   roles:
   - core

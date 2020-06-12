@@ -1,12 +1,12 @@
 #!/bin/bash
 ## Author: Shaun Reed | Contact: shaunrd0@gmail.com | URL: www.shaunreed.com ##
 ## A custom bash script for creating new linux users.                        ##
-## Syntax: ./adduser.sh <username> <userID>                                  ##
+## Syntax: ./newuser.sh <username> <userID>                                  ##
 ###############################################################################
 
 if [ "$#" -ne 2 ]; then
   printf "Illegal number of parameters."
-  printf "\nUsage: sudo ./adduser.sh <username> <groupid>"
+  printf "\nUsage: sudo ./newuser.sh <username> <groupid>"
   printf "\n\nAvailable groupd IDs:"
   printf "\n60001......61183 	Unused | 65520...............65533  Unused"
   printf "\n65536.....524287 	Unused | 1879048191.....2147483647  Unused\n"

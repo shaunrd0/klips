@@ -1,6 +1,8 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2019 Shaun Reed, all rights reserved               ##
+## Requires SDL: `sudo apt-get install libsdl2-dev`                          ##
+## To build an executable: `g++ inherited.cpp -lSDL2 -o test`                ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################

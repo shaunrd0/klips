@@ -41,3 +41,16 @@ nginx
 
 A simple role for installing and configuring nginx on a new Ubuntu host using Ansible. Supports templates for index.html and custom nginx.conf
 
+
+postfix
+------------
+
+A simple role for installing and configuring the postfix MTA on a new Ubuntu host using Ansible. Supports templates for main.cf and custom sasl_passwd
+
+
+fail2ban
+------------
+
+A simple role for installing and configuring fail2ban on a new Ubuntu host using Ansible. Supports templates for jail.local settings and provides a custom filter.d directory copy custom filters to the remote host.
+
+

@@ -1,5 +1,5 @@
 ---
-- hosts: bookstack
+- hosts: docker-host
   become: yes
   tasks:
     - name: Create backup directory if it doesn't exist

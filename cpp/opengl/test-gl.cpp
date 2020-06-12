@@ -1,5 +1,7 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
+## Requires freeglut3-dev to be installed with your package manager          ##
+## To build an executable: `g++ test-gl.cpp -w -lGL -lGLU -lglut -o test`    ##
 ##                                                                           ##
 ## Testing building OpenGL projects with source code from lazyfoo -          ##
 ## https://lazyfoo.net/tutorials/OpenGL/                                     ##

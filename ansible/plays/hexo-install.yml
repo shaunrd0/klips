@@ -1,6 +1,6 @@
 ---
 - name: Install Hexo static site generator
-  hosts: hexo
+  hosts: dev
   become: yes
   tasks:
     - name: Update apt sources and install npm

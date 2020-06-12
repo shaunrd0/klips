@@ -1,5 +1,5 @@
 ---
-- hosts: hexo
+- hosts: dev
   become: yes
   tasks:
     - name: Backup Hexo files

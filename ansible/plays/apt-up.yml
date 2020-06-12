@@ -1,5 +1,5 @@
 ---
-- hosts: core
+- hosts: nginx-server
   become: yes
   tasks:
     - name: Ensure package lists are up-to-date
