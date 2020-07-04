@@ -24,9 +24,10 @@
  */
 Vector::Vector(const Vector& rhs)
 {
-  if (rhs.getSize() >= 0) {
-    curIndex = rhs.getSize();
-    maxSize = rhs.getMax();
+  if (rhs.getIndex() >= 0) {
+    curIndex = rhs.getIndex();
+    // Avoid copying over unused indices from parent Vector
+    maxSize = rhs.getSize();
     data = new int[curIndex];
     for (int i = 0; i <= rhs.getSize(); i++) {
       data[i] = rhs.getValue(i);
@@ -44,7 +45,7 @@ Vector::Vector(const Vector& rhs)
  *        Pass the rhs by value to create local copy, swap its contents
  *        Destructor called on previous Vector data at the end of this scope
  *
- * @param rhs Vector object passed by valuIt would be easier to emulate the android app on a PCe
+ * @param rhs Vector object passed by value, creating a local variable
  * @return Vector A deep copy of the rhs Vector object
  */
 Vector Vector::operator=(Vector rhs)
@@ -52,6 +53,10 @@ Vector Vector::operator=(Vector rhs)
   if (this == &rhs) return *this;
   // Swap the pointers, moving the previous head data to the local variable rhs 
   std::swap(data, rhs.data);
+  curIndex = rhs.getIndex();
+  // Use the current size of the vector we are equal to
+  // Avoids copying over unused indices
+  maxSize = rhs.getSize();
   return *this;
 }
 
@@ -60,7 +65,7 @@ Vector Vector::operator=(Vector rhs)
  */
 Vector::~Vector()
 {
-  if (getSize() + 1 >= 1) makeEmpty();
+  if (!isEmpty()) makeEmpty();
 }
 
 
@@ -71,7 +76,7 @@ Vector::~Vector()
 /** push
  * @brief Push a value to the end of our Vector
  *
- * @param x The value to be inserted
+ * @param val The value to be inserted
  */
 bool Vector::push(int val)
 {
@@ -83,7 +88,8 @@ bool Vector::push(int val)
 }
 
 /** pop
- * @brief returns the value at the Vector::data[index -1] if it exists
+ * @brief returns the value at the Vector::data[curIndex] if it exists
+ *        Once returned, the curIndex is decremented via data[curIndex--]
  *        If the vector is empty, returns INT32_MIN
  *
  * @return int The value held at the Node pointed to by Vector::data[index -1]
@@ -92,7 +98,6 @@ int Vector::pop()
 {
   int val = INT32_MIN;
   if (!isEmpty()) {
-    // (!isEmpty()) ? data[index - 1] : INT32_MIN;
     val = pop(data);
     std::cout << "[" << val << "] has been popped from our Vector\n";
   }
@@ -106,7 +111,7 @@ int Vector::pop()
 void Vector::makeEmpty()
 {
   if (isEmpty()) {
-    std::cout << "Our vector is empty...\n";
+    std::cout << "Cannot makeEmpty, our Vector is already empty...\n";
     return;
   }
   else makeEmpty(data);
@@ -122,14 +127,15 @@ int Vector::peek() const
 {
   int val = INT32_MIN;
   if (!isEmpty()) {
-    // (!isEmpty()) ? data[index - 1] : INT32_MIN;
     val = peek(data);
     std::cout << "[" << peek(data) << "] is at the end of our vector\n";
   }
   else std::cout << "Nothing to peek, our vector is empty...\n";
   return val;
 }
- 
+
+// TODO: Verify that isEmpty works by actually checking data == NULL
+
 /** isEmpty
  * @brief Determine if the Vector is empty
  *
@@ -163,8 +169,9 @@ void Vector::print() const
 }
 
 /** getMax
- * @brief Returns the maximum size of the vector
- * 
+ * @brief Returns the literal maximum size of the vector
+ *        Not offset to match any index - Vector with max size 3 has indices 0-2
+ *
  * @return int at this->maxSize
  */
 int Vector::getMax() const
@@ -174,6 +181,7 @@ int Vector::getMax() const
 
 /** getSize
  * @brief Returns the current size of the vector
+ *        AKA the current number of indices being used, NOT the max indices
  * 
  * @return int at this->curIndex + 1
  */
@@ -184,7 +192,8 @@ int Vector::getSize() const
 
 /** getIndex
  * @brief Returns the current index of the vector
- * 
+ *        AKA the last index the vector wrote to
+ *
  * @return int at this->curIndex
  */
 int Vector::getIndex() const
@@ -197,8 +206,8 @@ int Vector::getIndex() const
 /** getValue
  * @brief Get the value stored at a given index within the vector
  * 
- * @param index 
- * @return int 
+ * @param index The index containing the value to be returned
+ * @return int The value held at the index given
  */
 int Vector::getValue(int index) const
 {
@@ -213,7 +222,8 @@ int Vector::getValue(int index) const
  * @brief Private member to handle inserting value into the vector
  *
  * @param val Value to be inserted
- * @param head The head of the vector to push the value into
+ * @param data The data of the vector to push the value into
+ *
  * @return true If the value was inserted
  * @return false If the value could not be inserted
  */
@@ -227,7 +237,6 @@ bool Vector::push(int val, int *&data)
     for (int i = 0; i <= curIndex; i++) {
       temp[i] = data[i];
     }
-    // data = temp;
     std::swap(data, temp);
   }
   curIndex += 1;
@@ -236,10 +245,11 @@ bool Vector::push(int val, int *&data)
 }
 
 /** pop
- * @brief 
+ * @brief Returns the value held at the last index within the Vector
+ *        Decrements the curIndex after storing the value to be returned
  * 
- * @param data 
- * @return int 
+ * @param data The Vector data to modify
+ * @return int The value stored at the index removed from the end of the Vector
  */
 int Vector::pop(int *&data)
 {
@@ -249,8 +259,7 @@ int Vector::pop(int *&data)
 }
 
 /** makeEmpty
- * @brief Private member to empty this Vector object, deleting all associated Nodes
- *        Does not print any output. Avoids destructors printing to cout
+ * @brief Private member to empty Vector object, deleting all associated data
  * 
  * @param head The head of the stack to be deleted
  * 
@@ -264,10 +273,10 @@ void Vector::makeEmpty(int *&data)
 }
 
 /** peek
- * @brief 
+ * @brief Private member to display the value at the end of our Vector
  * 
- * @param data 
- * @return int 
+ * @param data The Vector data peek
+ * @return int The value stored at the end of the Vector
  */
 int Vector::peek(int *data) const
 {
@@ -280,7 +289,6 @@ int Vector::peek(int *data) const
  */
 void Vector::print(int *data) const
 {
-  // int *temp = data;
   std::cout << "Vector Contents: ";
   for (int i = 0; i <= curIndex; i++) {
     std::cout << data[i] << " | ";

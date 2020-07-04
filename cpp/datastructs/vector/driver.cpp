@@ -58,6 +58,8 @@ int main()
       testList.makeEmpty();
       break;
 
+    // If this test is successful, we build a default empty Vector object
+    // Will 'have nothing to print' because a default Vector contains no values
     case CONSTRUCT:
     {
       Vector constrTest;
@@ -67,6 +69,8 @@ int main()
       break;
     }
 
+    // If this is successful, we build a new Vector based on the existing Vector
+    // The new Vector output here should be identical to this session's Vector
     case COPY:
     {
       Vector copyTest(testList);
@@ -76,6 +80,7 @@ int main()
       break;
     }
 
+    // Test assignment operator, setting new Vector object equal to the existing
     case ASSIGN:
     {
       Vector assignTest;
@@ -86,12 +91,14 @@ int main()
       break;
     }
 
-    // Arguably redundant, since this is only another way to call to makeEmpty()
     case DESTRUCT:
     {
       Vector destrTest(testList);
+      std::cout << "Current destrTest Vector contents...\n";
+      destrTest.print();
       std::cout << "Deleting local destrTest Vector...\n";
-      // destrTest.~Vector(); is called at the end of this case {} scope
+      destrTest.~Vector(); // Implicitly called at the end of this scope {}
+      destrTest.print();
       break;
     }
 
