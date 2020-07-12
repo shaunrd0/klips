@@ -15,14 +15,6 @@
 * Constructors, Destructors, Operators
 *********************************************************************************/
 
-/** Default Destructor
- * @brief Destroy the Binary Search Tree:: Binary Search Tree object
- */
-BinarySearchTree::~BinarySearchTree()
-{
-  makeEmpty(root);
-}
-
 /** Copy Assignment Operator
  * @brief Empty the calling object's root BinaryNode, and copy the rhs data
  *
@@ -39,6 +31,14 @@ const BinarySearchTree& BinarySearchTree::operator=(const BinarySearchTree& rhs)
   // Copy rhs to this->root
   root = clone(rhs.root);
   return *this;
+}
+
+/** Default Destructor
+ * @brief Destroy the Binary Search Tree:: Binary Search Tree object
+ */
+BinarySearchTree::~BinarySearchTree()
+{
+  makeEmpty(root);
 }
 
 
@@ -82,12 +82,12 @@ bool BinarySearchTree::contains(const int &x) const
 }
 
 /** isEmpty
- * @brief Determine wheter or not the calling BST object is empty
+ * @brief Determine whether or not the calling BST object is empty
  *
  * @return true If this->root node points to an empty tree (NULL)
  * @return false If this->root node points to a constructed BinaryNode
  */
-bool BinarySearchTree::isEmpty() // const?
+bool BinarySearchTree::isEmpty() const
 {
   return root == NULL;
 }
@@ -130,6 +130,7 @@ void BinarySearchTree::makeEmpty()
 void BinarySearchTree::printInOrder() const
 {
   printInOrder(root);
+  std::cout << std::endl;
 }
 
 /** printPostOrder
@@ -139,6 +140,7 @@ void BinarySearchTree::printInOrder() const
 void BinarySearchTree::printPostOrder() const
 {
   printPostOrder(root);
+  std::cout << std::endl;
 }
 
 /** printPreOrder
@@ -148,6 +150,7 @@ void BinarySearchTree::printPostOrder() const
 void BinarySearchTree::printPreOrder() const
 {
   printPreOrder(root);
+  std::cout << std::endl;
 }
 
 
@@ -174,7 +177,7 @@ BinarySearchTree::BinaryNode * BinarySearchTree::clone(BinaryNode *t) const
  * @brief Insert a value into the BST of the given BinaryNode
  *
  * @param x The value to be inserted
- * @param t The BinaryNode to beign insertion
+ * @param t The BinaryNode to begin insertion
  */
 void BinarySearchTree::insert(const int &x, BinarySearchTree::BinaryNode *&t) const
 {
@@ -244,7 +247,7 @@ BinarySearchTree::BinaryNode * BinarySearchTree::findMin(BinarySearchTree::Binar
 /** findMax
  * @brief Find the maximum value within the BST of the given BinaryNode
  *
- * @param t Te root BinaryNode to begin checking values
+ * @param t The root BinaryNode to begin checking values
  * @return BinarySearchTree::BinaryNode* The BinaryNode which contains the largest value (returns NULL if BST is empty)
  */
 BinarySearchTree::BinaryNode * BinarySearchTree::findMax(BinarySearchTree::BinaryNode *t) const
@@ -265,7 +268,7 @@ BinarySearchTree::BinaryNode * BinarySearchTree::findMax(BinarySearchTree::Binar
  * @brief Determines if the value exists within the given BinaryNode and its children
  *
  * @param x The value to search for within the BST
- * @param t The root BinaryNode to beign the search
+ * @param t The root BinaryNode to begin the search
  * @return true If the value is found within the root node or any of its children
  * @return false If the value is not found within the root node or any of its children
  */

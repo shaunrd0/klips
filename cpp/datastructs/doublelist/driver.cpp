@@ -26,7 +26,7 @@ int main()
 
   while (!exit)
   {
-    std::cout << "##### Singly Linked List Menu #####\n\t0. Exit"
+    std::cout << "##### Doubly Linked List Menu #####\n\t0. Exit"
       << "\n\t1. Insert\n\t2. Insert at\n\t3. Empty list\n\t4. Peek top of list"
       << "\n\t5. Print list\n\t6. Find\n\t7. Remove\n\t8. Replace\n";
     std::cin >> choice;

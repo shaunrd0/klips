@@ -74,7 +74,7 @@ StackList::~StackList()
 /** push
  * @brief Push a value to the head of our linked list
  *
- * @param x The value to be inserted
+ * @param val The value to be inserted
  */
 bool StackList::push(int val)
 {
@@ -146,7 +146,6 @@ bool StackList::isEmpty() const
   return head == NULL;
 }
 
-
 /** print
  * @brief Output the data held by the StackList object
  *        Calls to the private print()
@@ -180,6 +179,12 @@ bool StackList::push(int val, Node *&head)
   return true;
 }
 
+/** pop
+ * @brief Private member to handle removing the head node from the stack
+ *
+ * @param head The head node of the stack
+ * @return The last known value held at the head node before removal
+ */
 int StackList::pop(Node *&head)
 {
   // We already know the stack is not empty from public pop()

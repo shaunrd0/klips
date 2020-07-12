@@ -14,7 +14,6 @@
 /******************************************************************************
  * Constructors, Destructors, Operators
  *****************************************************************************/
-// TODO: Fix const, destr, op=
 
 /** copy constructor
  * @brief Construct a new Vector::Vector object from an existing one
@@ -92,7 +91,7 @@ bool Vector::push(int val)
  *        Once returned, the curIndex is decremented via data[curIndex--]
  *        If the vector is empty, returns INT32_MIN
  *
- * @return int The value held at the Node pointed to by Vector::data[index -1]
+ * @return int The value held at the Node pointed to by Vector::data[index]
  */
 int Vector::pop()
 {
@@ -101,7 +100,7 @@ int Vector::pop()
     val = pop(data);
     std::cout << "[" << val << "] has been popped from our Vector\n";
   }
-  else std::cout << "Nothing to pop, our stack is empty...\n";
+  else std::cout << "Nothing to pop, our Vector is empty...\n";
   return val;
 }
 
@@ -134,8 +133,6 @@ int Vector::peek() const
   return val;
 }
 
-// TODO: Verify that isEmpty works by actually checking data == NULL
-
 /** isEmpty
  * @brief Determine if the Vector is empty
  *
@@ -144,7 +141,7 @@ int Vector::peek() const
  */
 bool Vector::isEmpty() const
 {
-  return curIndex <= -1;
+  return data == NULL;
 }
 
 /** isFull
@@ -214,6 +211,7 @@ int Vector::getValue(int index) const
   return data[index];
 }
 
+
 /******************************************************************************
  * Private Member Functions
  *****************************************************************************/
@@ -261,8 +259,7 @@ int Vector::pop(int *&data)
 /** makeEmpty
  * @brief Private member to empty Vector object, deleting all associated data
  * 
- * @param head The head of the stack to be deleted
- * 
+ * @param data The data of the Vector to be deleted
  */
 void Vector::makeEmpty(int *&data)
 {
@@ -275,7 +272,7 @@ void Vector::makeEmpty(int *&data)
 /** peek
  * @brief Private member to display the value at the end of our Vector
  * 
- * @param data The Vector data peek
+ * @param data The Vector data to peek
  * @return int The value stored at the end of the Vector
  */
 int Vector::peek(int *data) const
@@ -286,6 +283,8 @@ int Vector::peek(int *data) const
 
 /** print
  * @brief Output the contents of a Vector from the beginning to the end
+ *
+ * @param data The data within the Vector to output
  */
 void Vector::print(int *data) const
 {

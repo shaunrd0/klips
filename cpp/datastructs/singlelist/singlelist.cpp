@@ -68,7 +68,7 @@ SingleList::~SingleList()
 /** insert
  * @brief Inserts a value to the head of our linked list
  *
- * @param x The value to be inserted
+ * @param val The value to be inserted
  */
 bool SingleList::insert(int val)
 {
@@ -81,7 +81,7 @@ bool SingleList::insert(int val)
 
 /** insert at
  * @brief Inserts a value in the place of a given key
- *        Key Node found is moved to the newNode->next positon
+ *        Key Node found is moved to the newNode->next position
  *
  * @param key The value to search for to determine insert location
  * @param val The value to be inserted into the list
@@ -296,6 +296,7 @@ bool SingleList::replace(int val, int key, Node *&head)
  * @brief Find and return a Node which contains the given value
  *
  * @param val The value to search for within our SingleList
+ * @param start The Node to start the search from
  * @return SingleList::Node* A pointer to the Node containing the search value
  */
 SingleList::Node* SingleList::find(int val, Node *start) const
@@ -317,6 +318,7 @@ SingleList::Node* SingleList::find(int val, Node *start) const
  * @brief Find and return the Node before a given value
  *
  * @param val The value to search for within our SingleList
+ * @param start The Node to start the search from
  * @return SingleList::Node* A pointer to the Node previous to the  given value
  */
 SingleList::Node* SingleList::findPrevious(int val, Node *start) const

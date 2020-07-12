@@ -81,7 +81,7 @@ bool DoubleList::insert(int val)
 
 /** insert at
  * @brief Inserts a value in the place of a given key
- *        Key Node found is moved to the newNode->next positon
+ *        Key Node found is moved to the newNode->next position
  *
  * @param key The value to search for to determine insert location
  * @param val The value to be inserted into the list

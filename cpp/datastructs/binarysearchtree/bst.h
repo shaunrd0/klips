@@ -24,7 +24,7 @@ class BinarySearchTree {
     const int & findMin() const;
     const int & findMax() const;
     bool contains(const int &x) const;
-    bool isEmpty();
+    bool isEmpty() const;
     void insert(const int &x);
     void remove(const int &x);
     void makeEmpty();

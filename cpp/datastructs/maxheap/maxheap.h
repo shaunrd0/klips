@@ -25,17 +25,17 @@ class MaxHeap {
     MaxHeap operator=(MaxHeap rhs);
     void insert(int val);
     void del();
-    void print();
+    void print() const;
     void makeEmpty();
-    int findMax();
-    int findMin();
-    bool isEmpty();
-    bool isFull();
+    int findMax() const;
+    int findMin() const;
+    bool isEmpty() const;
+    bool isFull() const;
 
 private:
     void insert(int*& heap, int _size, int val);
     void del(int* heap);
-    void print(int* heap, int _index);
+    void print(int* heap, int _index) const;
     void grow(int*& heap, int _size);
     void siftUp(int* heap, int _index);
     void siftDown(int* heap, int currentMax);

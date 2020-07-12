@@ -75,7 +75,7 @@ QueueList::~QueueList()
 /** enqueue
  * @brief Queue a value to the tail of our linked list
  *
- * @param x The value to be inserted into the queue
+ * @param val The value to be inserted into the queue
  */
 bool QueueList::enqueue(int val)
 {
@@ -157,6 +157,7 @@ void QueueList::makeEmpty()
 
   }
 }
+
 
 /******************************************************************************
  * Private Member Functions

@@ -10,6 +10,7 @@
 
 #include "maxheap.h"
 
+
 /********************************************************************************
 * Constructors, Destructors, Operators
 *********************************************************************************/
@@ -93,7 +94,7 @@ void MaxHeap::del()
 /** print
  *  Outputs all values held within the heap
  */
-void MaxHeap::print()
+void MaxHeap::print() const
 {
   print(heap, index);
 }
@@ -115,7 +116,7 @@ void MaxHeap::makeEmpty()
  *
  * @return The smallest value stored in our heap
  */
-int MaxHeap::findMin()
+int MaxHeap::findMin() const
 {
   int min = INT32_MAX;
   for (int i = ROOT; i < index; i++)
@@ -128,7 +129,7 @@ int MaxHeap::findMin()
  *
  * @return The largest value stored in our heap
  */
-int MaxHeap::findMax()
+int MaxHeap::findMax() const
 {
   return heap[ROOT];
 }
@@ -138,7 +139,7 @@ int MaxHeap::findMax()
  *
  * @return true if the heap is empty, false if it has contents
  */
-bool MaxHeap::isEmpty()
+bool MaxHeap::isEmpty() const
 {
   return heap == NULL;
 }
@@ -148,7 +149,7 @@ bool MaxHeap::isEmpty()
  *
  * @return true if the heap is full, false if it is not
  */
-bool MaxHeap::isFull()
+bool MaxHeap::isFull() const
 {
   // Offset for the 0 index
   return index >= size-1;
@@ -195,7 +196,7 @@ void MaxHeap::del(int* heap)
  * @param heap Address of the heap array
  * @param _index Last free position in the array
  */
-void MaxHeap::print(int* heap, int _index)
+void MaxHeap::print(int* heap, int _index) const
 {
   if (isEmpty()) return;
   for (int i = 0; i < _index; i++)

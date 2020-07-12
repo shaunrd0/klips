@@ -247,7 +247,7 @@ bool CircleDoubleList::insert(int val, Node *&tail)
     // Relink the current head to the node after newNode
     newNode->next = tail->next;
     tail->next->prev = newNode;
-    // Relink our head and tail nodes, makine newNode the head node
+    // Relink our head and tail nodes, making newNode the head node
     tail->next = newNode;
     newNode->prev = tail;
   }

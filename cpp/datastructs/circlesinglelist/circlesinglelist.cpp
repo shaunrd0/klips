@@ -40,7 +40,7 @@ CircleSingleList::CircleSingleList(const CircleSingleList& rhs)
 /** operator=
  * @brief Deep copy of the rhs CircleSingleList object
  *        Pass rhs by value to create local copy, swap its data with our tail
- *        Swapped local copy now with previous tail data deleted at end of scope using destr
+ *        Swapped local copy deleted at end of scope using destructor
  *
  * @param rhs CircleSingleList object
  * @return CircleSingleList& A deep copy of the rhs CircleSingleList
@@ -53,7 +53,7 @@ CircleSingleList CircleSingleList::operator=(CircleSingleList rhs)
 }
 
 /** destructor
- * @brief Destroy the CircleSingleList::CircleSingleList object
+ * @brief Destroy the CircleSingleList object
  */
 CircleSingleList::~CircleSingleList()
 {
@@ -80,7 +80,7 @@ bool CircleSingleList::insert(int val)
 
 /** insert at
  * @brief Inserts a value in the place of a given key
- *        Key Node found is moved to the newNode->next positon
+ *        Key Node found is moved to the newNode->next position
  *
  * @param key The value to search for to determine insert location
  * @param val The value to be inserted into the list
