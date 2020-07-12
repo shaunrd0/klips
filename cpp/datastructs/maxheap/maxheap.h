@@ -22,7 +22,7 @@ class MaxHeap {
     MaxHeap(const MaxHeap& rhs);
     MaxHeap(int _size);
     ~MaxHeap();
-    const MaxHeap& operator=(const MaxHeap& rhs);
+    MaxHeap operator=(MaxHeap rhs);
     void insert(int val);
     void del();
     void print();

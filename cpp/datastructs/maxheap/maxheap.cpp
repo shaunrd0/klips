@@ -24,8 +24,12 @@ MaxHeap::MaxHeap() : size(0), index(0), heap(NULL) {}
  *
  * @param rhs
  */
-MaxHeap::MaxHeap(const MaxHeap& rhs) : size(rhs.size), index(rhs.index), heap(rhs.heap)
+MaxHeap::MaxHeap(const MaxHeap& rhs) : size(rhs.size), index(rhs.index)
 {
+  heap = new int[size];
+  for (int i = 0; i < index; i++) {
+    heap[i] = rhs.heap[i];
+  }
 }
 
 /** constructor
@@ -49,14 +53,18 @@ MaxHeap::~MaxHeap()
 }
 
 /** operator=
- *  Sets one heap equal to another, making the two refer to the same data
+ *  Sets one existing MaxHeap equal to another existing MaxHeap
  *
- * @param rhs An existing MaxHeap to set equal to
- * @return The MaxHeap object which we want to create a reference to
+ * @param rhs An existing MaxHeap
+ * @return The copied MaxHeap object
  */
-const MaxHeap& MaxHeap::operator=(const MaxHeap& rhs)
+MaxHeap MaxHeap::operator=(MaxHeap rhs)
 {
   if (this == &rhs) return *this;
+  std::swap(heap, rhs.heap);
+  size = rhs.size;
+  index = rhs.index;
+  return *this;
 }
 
 

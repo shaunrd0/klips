@@ -23,8 +23,7 @@ int main()
   int choice = -1;
   int val;
 
-  while (!exit)
-  {
+  while (!exit) {
     std::cout << "##### Max Heap Menu #####\n\t0. Exit"
        "\n\t1. Insert\n\t2. Delete\n\t3. Print"
       << "\n\t4. Empty\n\t5. Min\n\t6. Max\n";
@@ -55,11 +54,11 @@ int main()
       break;
 
     case MIN:
-      std::cout << "Min value within our tree: " << testList.findMin() << endl;
+      std::cout << "Min value within our heap: " << testList.findMin() << std::endl;
       break;
 
     case MAX:
-      std::cout << "Max value within our tree: " << testList.findMax() << endl;
+      std::cout << "Max value within our heap: " << testList.findMax() << std::endl;
       break;
 
     default:
@@ -67,5 +66,5 @@ int main()
       break;
     }
   }
-}
 
+}
