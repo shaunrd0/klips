@@ -1,7 +1,7 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: An example of a vector implementation                              ##
+## About: An example of a vector implementation using templates              ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
@@ -28,21 +28,21 @@ class Vector {
     bool isEmpty() const;
     bool isFull() const;
     void print() const;
-    T getMax() const;
-    T getSize() const;
-    T getIndex() const;
-    T getValue(T index) const;
+    int getMax() const;
+    int getSize() const;
+    int getIndex() const;
+    T getValue(int index) const;
 
   private:
-    T maxSize;
-    T curIndex;
+    int maxSize;
+    int curIndex;
     T *data;
     bool push(T val, T *&data);
     T pop(T *&data);
     void makeEmpty(T *&data);
     T peek(T *data) const;
     void print(T *data) const;
-    
 };
+
 
 #endif

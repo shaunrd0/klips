@@ -1,7 +1,7 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: A driver program to test a vector implementation                   ##
+## About: A driver program to test a vector implementation using templates   ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
@@ -11,6 +11,9 @@
 #include "vector.h"
 #include <iostream>
 
+// Input the type we want to use within our vector here
+#define TYPE std::string
+
 enum OPS {
   EXIT, PUSH, POP, TOP, PRINT, EMPTY, CONSTRUCT, COPY,  ASSIGN, DESTRUCT
 };
@@ -18,10 +21,10 @@ enum OPS {
 int main()
 {
   std::cout << "Driver: \n";
-  Vector<std::string> testlist;
+  Vector<TYPE> testList;
   bool exit = false;
   int choice = -1;
-  <typename T> T val;
+  TYPE val;
 
   while (!exit)
   {
@@ -39,7 +42,7 @@ int main()
       std::cout << "enter a value to push to our vector: ";
       std::cin >> val;
       std::cin.clear();
-      testlist.push(val);
+      testList.push(val);
       break;
 
     case POP:
@@ -62,7 +65,7 @@ int main()
     // Will 'have nothing to print' because a default Vector contains no values
     case CONSTRUCT:
     {
-      Vector<std::string> constrTest;
+      Vector<TYPE> constrTest;
       std::cout << "##### Constructor Test #####\n";
       constrTest.print();
       std::cout << "Deleting local constrTest Vector...\n";
@@ -73,7 +76,7 @@ int main()
     // The new Vector output here should be identical to this session's Vector
     case COPY:
     {
-      Vector<std::string> copyTest(testList);
+      Vector<TYPE> copyTest(testList);
       std::cout << "##### Copy Constructor Test #####\n";
       copyTest.print();
       std::cout << "Deleting local copyTest Vector...\n";
@@ -83,7 +86,7 @@ int main()
     // Test assignment operator, setting new Vector object equal to the existing
     case ASSIGN:
     {
-      Vector<std::string> assignTest;
+      Vector<TYPE> assignTest;
       assignTest = testList;
       std::cout << "##### Assignment Test #####\n";
       assignTest.print();
@@ -93,7 +96,7 @@ int main()
 
     case DESTRUCT:
     {
-      Vector<std::string> destrTest(testList);
+      Vector<TYPE> destrTest(testList);
       std::cout << "Current destrTest Vector contents...\n";
       destrTest.print();
       std::cout << "Deleting local destrTest Vector...\n";

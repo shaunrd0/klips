@@ -1,7 +1,7 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: An example of a vector implementation                              ##
+## About: An example of a vector implementation using templates              ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
@@ -19,7 +19,7 @@
  * @brief Construct a new Vector::Vector object from an existing one
  *        Creates a new deep copy of a given Vector
  *
- * @param rhs Vector object
+ * @param rhs Vector<T> object
  */
 template<typename T>
 Vector<T>::Vector(const Vector<T>& rhs)
@@ -28,8 +28,8 @@ Vector<T>::Vector(const Vector<T>& rhs)
     curIndex = rhs.getIndex();
     // Avoid copying over unused indices from parent Vector
     maxSize = rhs.getSize();
-    data = new T[curIndex];
-    for (int i = 0; i <= rhs.getSize(); i++) {
+    data = new T[curIndex+1];
+    for (int i = 0; i <= rhs.getIndex(); i++) {
       data[i] = rhs.getValue(i);
     }
   } 
@@ -46,7 +46,7 @@ Vector<T>::Vector(const Vector<T>& rhs)
  *        Destructor called on previous Vector data at the end of this scope
  *
  * @param rhs Vector object passed by value, creating a local variable
- * @return Vector A deep copy of the rhs Vector object
+ * @return Vector<T> A deep copy of the rhs Vector object
  */
 template<typename T>
 Vector<T> Vector<T>::operator=(Vector<T> rhs)
@@ -95,7 +95,7 @@ bool Vector<T>::push(T val)
  *        Once returned, the curIndex is decremented via data[curIndex--]
  *        If the vector is empty, returns INT32_MIN
  *
- * @return int The value held at the Node pointed to by Vector::data[index]
+ * @return T The value held at the Node pointed to by Vector::data[index]
  */
 template<typename T>
 T Vector<T>::pop()
@@ -126,12 +126,12 @@ void Vector<T>::makeEmpty()
  * @brief returns the value at the end of the vector
  *  If the vector is empty, returns INT32_MIN
  *
- * @return int The value held at the current data[index] of the vector
+ * @return T The value held at the current data[index] of the vector
  */
 template<typename T>
 T Vector<T>::peek() const
 {
-  T val = NULL;
+  T val;
   if (!isEmpty()) {
     val = peek(data);
     std::cout << "[" << peek(data) << "] is at the end of our vector\n";
@@ -182,7 +182,7 @@ void Vector<T>::print() const
  * @return int at this->maxSize
  */
 template<typename T>
-T Vector<T>::getMax() const
+int Vector<T>::getMax() const
 {
   return maxSize;
 }
@@ -194,7 +194,7 @@ T Vector<T>::getMax() const
  * @return int at this->curIndex + 1
  */
 template<typename T>
-T Vector<T>::getSize() const
+int Vector<T>::getSize() const
 {
   return curIndex + 1;
 }
@@ -206,7 +206,7 @@ T Vector<T>::getSize() const
  * @return int at this->curIndex
  */
 template<typename T>
-T Vector<T>::getIndex() const
+int Vector<T>::getIndex() const
 {
   return curIndex;
 }
@@ -217,10 +217,10 @@ T Vector<T>::getIndex() const
  * @brief Get the value stored at a given index within the vector
  * 
  * @param index The index containing the value to be returned
- * @return int The value held at the index given
+ * @return T The value held at the index given
  */
 template<typename T>
-T Vector<T>::getValue(T index) const
+T Vector<T>::getValue(int index) const
 {
   return data[index];
 }
@@ -262,7 +262,7 @@ bool Vector<T>::push(T val, T *&data)
  *        Decrements the curIndex after storing the value to be returned
  * 
  * @param data The Vector data to modify
- * @return int The value stored at the index removed from the end of the Vector
+ * @return T The value stored at the index removed from the end of the Vector
  */
 template<typename T>
 T Vector<T>::pop(T *&data)
@@ -291,7 +291,7 @@ void Vector<T>::makeEmpty(T *&data)
  * @brief Private member to display the value at the end of our Vector
  * 
  * @param data The Vector data to peek
- * @return int The value stored at the end of the Vector
+ * @return T The value stored at the end of the Vector
  */
 template<typename T>
 T Vector<T>::peek(T *data) const
@@ -315,5 +315,7 @@ void Vector<T>::print(T *data) const
   std::cout << std::endl;
 }
 
+// Instantiate relevant type templates for this class
 template class Vector<int>;
+template class Vector<float>;
 template class Vector<std::string>;
