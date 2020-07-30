@@ -12,17 +12,16 @@
 #include <iostream>
 
 enum OPS {
-  EXIT, ENQUEUE, DEQUEUE, NEXT, PRINT, EMPTY
 };
 
 int main()
 {
   std::cout << "Driver: \n";
 
-  QueueList testList;
+  QueueList<TYPE> testList;
   bool exit = false;
   int choice = -1;
-  int val;
+  TYPE val;
 
   while (!exit)
   {

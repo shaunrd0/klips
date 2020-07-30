@@ -10,7 +10,6 @@
 
 #include "queuelist.h"
 
-
 /******************************************************************************
  * Constructors, Destructors, Operators
  *****************************************************************************/
@@ -21,21 +20,22 @@
  *
  * @param rhs QueueList object
  */
-QueueList::QueueList(const QueueList& rhs)
+template<typename T>
+QueueList<T>::QueueList(const QueueList<T>& rhs)
 {
-  Node *cp = rhs.head;
-  Node *tempHead;
+  Node<T> *cp = rhs.head;
+  Node<T> *tempHead;
   // If we are copying from an empty queue, create a new QueueList with a NULL head
   if (cp == NULL) head = NULL;
   else {
     // If the queue has data, initialize a new queue with the head data
-    head = new Node(cp->data);
+    head = new Node<T>(cp->data);
     // Keep a temporary head node so we can return to it later
     tempHead = head;
     while (cp->next != NULL) {
       // Until we hit an end, create new nodes with the next node data
       cp = cp->next;
-      head->next = new Node(cp->data);
+      head->next = new Node<T>(cp->data);
       head = head->next;
     }
     tail = head;
@@ -51,7 +51,8 @@ QueueList::QueueList(const QueueList& rhs)
  * @param rhs QueueList object passed by value
  * @return QueueList A deep copy of the rhs QueueList object
  */
-QueueList QueueList::operator=(QueueList rhs)
+template<typename T>
+QueueList<T> QueueList<T>::operator=(QueueList<T> rhs)
 {
   if (this == &rhs) return *this;
   // Swap the pointers, moving the previous head data to the local variable rhs 
@@ -62,7 +63,8 @@ QueueList QueueList::operator=(QueueList rhs)
 /** destructor
  * @brief Destroy the QueueList::QueueList object
  */
-QueueList::~QueueList()
+template<typename T>
+QueueList<T>::~QueueList()
 {
   makeEmpty(head);
 }
@@ -76,8 +78,11 @@ QueueList::~QueueList()
  * @brief Queue a value to the tail of our linked list
  *
  * @param val The value to be inserted into the queue
+ * @return true If the value was inserted in the queue
+ * @return false If the value could not be queued
  */
-bool QueueList::enqueue(int val)
+template<typename T>
+bool QueueList<T>::enqueue(T val)
 {
   bool inserted = enqueue(val, tail);
   if (inserted)
@@ -89,29 +94,31 @@ bool QueueList::enqueue(int val)
 /** dequeue
  * @brief returns the value at the QueueList::head and moves head to the next in queue
  *
- * @return int The value held at the Node pointed to by QueueList::head
+ * @return T The value held at the Node pointed to by QueueList::head
  */
-int QueueList::dequeue()
+template<typename T>
+T QueueList<T>::dequeue()
 {
   if (!isEmpty())
     std::cout << "[" << dequeue(head) << "] has been removed from our queue\n";
   else std::cout << "Nothing to dequeue, our queue is empty...\n";
   // If the queue has data we return it, otherwise we return the smallest possible int (error)
-  return (!isEmpty()) ? head->data : INT32_MIN;
+  return (!isEmpty()) ? head->data : T();
 }
 
 /** next
  * @brief returns the value at the QueueList::head
  *
- * @return int The value held at the Node pointed to by QueueList::head
+ * @return T The value held at the Node pointed to by QueueList::head
  */
-int QueueList::next() const
+template<typename T>
+T QueueList<T>::next() const
 {
   if (!isEmpty())
     std::cout << "[" << head->data << "] is next in queue\n";
   else std::cout << "Our queue is empty...\n";
   // If the queue has data we return it, otherwise we return the smallest possible int (error)
-  return (!isEmpty()) ? head->data : INT32_MIN;
+  return (!isEmpty()) ? head->data : T();
 }
 
 /** isEmpty
@@ -120,7 +127,8 @@ int QueueList::next() const
  * @return true If the QueueList::head is NULL
  * @return false If the QueueList::head contains data
  */
-bool QueueList::isEmpty() const
+template<typename T>
+bool QueueList<T>::isEmpty() const
 {
   return head == NULL;
 }
@@ -129,7 +137,8 @@ bool QueueList::isEmpty() const
  * @brief Output the data held by the QueueList object
  *        Calls to the private print()
  */
-void QueueList::print() const
+template<typename T>
+void QueueList<T>::print() const
 {
   if(!isEmpty()) print(head);
   else std::cout << "Nothing to print, our queue is empty...\n";
@@ -138,9 +147,10 @@ void QueueList::print() const
 /** makeEmpty
  * @brief Empty this QueueList object, deleting all associated Nodes
  */
-void QueueList::makeEmpty()
+template<typename T>
+void QueueList<T>::makeEmpty()
 {
-  Node *nextNode, *temp;
+  Node<T> *nextNode, *temp;
 
   if (head == NULL) std::cout << "Our queue is empty...\n";
   else {
@@ -171,9 +181,10 @@ void QueueList::makeEmpty()
  * @return true If the value was inserted
  * @return false If the value could not be inserted
  */
-bool QueueList::enqueue(int val, Node *&tail)
+template<typename T>
+bool QueueList<T>::enqueue(T val, Node<T> *&tail)
 {
-  Node *newNode = new Node(val);
+  Node<T> *newNode = new Node<T>(val);
   // If the queue is not empty, update next pointer to tail node
   if (!isEmpty()) {
     tail->next = newNode;
@@ -188,14 +199,15 @@ bool QueueList::enqueue(int val, Node *&tail)
  * @brief Removes a node from the front of the queue
  * 
  * @param head The head of the queue to remove a node from
- * @return int The value held at the node removed
+ * @return T The value held at the node removed
  */
-int QueueList::dequeue(Node *&head)
+template<typename T>
+T QueueList<T>::dequeue(Node<T> *&head)
 {
   // We already know the queue is not empty from public dequeue()
-  Node *temp = head;
+  Node<T> *temp = head;
   // Store the data at the front of the queue before we delete the node
-  int data = head->data;
+  T data = head->data;
 
   // If there is only one item in the queue 
   if (temp == tail) {
@@ -217,9 +229,10 @@ int QueueList::dequeue(Node *&head)
  *
  * @param start The Node to begin traversing output from
  */
-void QueueList::print(Node *start) const
+template<typename T>
+void QueueList<T>::print(Node<T> *start) const
 {
-  Node *temp = start;
+  Node<T> *temp = start;
   std::cout << "Queue Contents: ";
   while (temp != NULL) {
     std::cout << temp->data << " | ";
@@ -235,9 +248,10 @@ void QueueList::print(Node *start) const
  * @param head The head of the queue to be deleted
  * 
  */
-void QueueList::makeEmpty(Node *&head)
+template<typename T>
+void QueueList<T>::makeEmpty(Node<T> *&head)
 {
-  Node *nextNode, *temp;
+  Node<T> *nextNode, *temp;
 
   if (head == NULL) return;
   else {
@@ -254,3 +268,5 @@ void QueueList::makeEmpty(Node *&head)
 
   }
 }
+
+template class QueueList<TYPE>;

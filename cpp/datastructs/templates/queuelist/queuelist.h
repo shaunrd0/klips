@@ -13,31 +13,36 @@
 
 #include <iostream>
 
+
+#define TYPE std::string
+
+template <typename T>
 class QueueList {
   public:
     QueueList() : head(NULL), tail(NULL){};
-    QueueList(const QueueList& rhs);
-    QueueList operator=(QueueList rhs);
+    QueueList(const QueueList<T>& rhs);
+    QueueList operator=(QueueList<T> rhs);
     ~QueueList();
-    bool enqueue(int val);
-    int dequeue();
-    int next() const;
+    bool enqueue(T val);
+    T dequeue();
+    T next() const;
     bool isEmpty() const;
     void print() const;
     void makeEmpty();
 
   private:
+    template<typename TY>
     struct Node {
-      int data;
+      TY data;
       Node *next;
       Node(): data(), next(NULL) {};
-      Node(int val): data(val), next(NULL) {};
+      Node(TY val): data(val), next(NULL) {};
     };
-    Node *head, *tail;
-    bool enqueue(int val, Node *&head);
-    int dequeue(Node *&tail);
-    void print(Node *start) const;
-    void makeEmpty(Node *&head);
+    Node<T> *head, *tail;
+    bool enqueue(T val, Node<T> *&head);
+    T dequeue(Node<T> *&tail);
+    void print(Node<T> *start) const;
+    void makeEmpty(Node<T> *&head);
     
 };
 
