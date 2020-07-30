@@ -11,8 +11,6 @@
 #include "doublelist.h"
 #include <iostream>
 
-#define TYPE std::string
-
 enum OPS {
   EXIT, INSERT, INSERTAT, EMPTY, PEEK, PRINT, FIND, REMOVE, REPLACE
 };

@@ -23,19 +23,19 @@
 template<typename T>
 QueueList<T>::QueueList(const QueueList<T>& rhs)
 {
-  Node<T> *cp = rhs.head;
-  Node<T> *tempHead;
+  Node *cp = rhs.head;
+  Node *tempHead;
   // If we are copying from an empty queue, create a new QueueList with a NULL head
   if (cp == NULL) head = NULL;
   else {
     // If the queue has data, initialize a new queue with the head data
-    head = new Node<T>(cp->data);
+    head = new Node(cp->data);
     // Keep a temporary head node so we can return to it later
     tempHead = head;
     while (cp->next != NULL) {
       // Until we hit an end, create new nodes with the next node data
       cp = cp->next;
-      head->next = new Node<T>(cp->data);
+      head->next = new Node(cp->data);
       head = head->next;
     }
     tail = head;
@@ -150,7 +150,7 @@ void QueueList<T>::print() const
 template<typename T>
 void QueueList<T>::makeEmpty()
 {
-  Node<T> *nextNode, *temp;
+  Node *nextNode, *temp;
 
   if (head == NULL) std::cout << "Our queue is empty...\n";
   else {
@@ -182,9 +182,9 @@ void QueueList<T>::makeEmpty()
  * @return false If the value could not be inserted
  */
 template<typename T>
-bool QueueList<T>::enqueue(T val, Node<T> *&tail)
+bool QueueList<T>::enqueue(T val, Node *&tail)
 {
-  Node<T> *newNode = new Node<T>(val);
+  Node *newNode = new Node(val);
   // If the queue is not empty, update next pointer to tail node
   if (!isEmpty()) {
     tail->next = newNode;
@@ -202,10 +202,10 @@ bool QueueList<T>::enqueue(T val, Node<T> *&tail)
  * @return T The value held at the node removed
  */
 template<typename T>
-T QueueList<T>::dequeue(Node<T> *&head)
+T QueueList<T>::dequeue(Node *&head)
 {
   // We already know the queue is not empty from public dequeue()
-  Node<T> *temp = head;
+  Node *temp = head;
   // Store the data at the front of the queue before we delete the node
   T data = head->data;
 
@@ -230,9 +230,9 @@ T QueueList<T>::dequeue(Node<T> *&head)
  * @param start The Node to begin traversing output from
  */
 template<typename T>
-void QueueList<T>::print(Node<T> *start) const
+void QueueList<T>::print(Node *start) const
 {
-  Node<T> *temp = start;
+  Node *temp = start;
   std::cout << "Queue Contents: ";
   while (temp != NULL) {
     std::cout << temp->data << " | ";
@@ -249,9 +249,9 @@ void QueueList<T>::print(Node<T> *start) const
  * 
  */
 template<typename T>
-void QueueList<T>::makeEmpty(Node<T> *&head)
+void QueueList<T>::makeEmpty(Node *&head)
 {
-  Node<T> *nextNode, *temp;
+  Node *nextNode, *temp;
 
   if (head == NULL) return;
   else {

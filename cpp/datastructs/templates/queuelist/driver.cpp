@@ -12,6 +12,7 @@
 #include <iostream>
 
 enum OPS {
+  EXIT, ENQUEUE, DEQUEUE, NEXT, PRINT, EMPTY
 };
 
 int main()

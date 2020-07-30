@@ -14,6 +14,9 @@
 #include <iostream>
 #include <string>
 
+
+#define TYPE std::string
+
 template <typename T>
 class Vector {
   public:

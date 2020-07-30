@@ -12,7 +12,6 @@
 #include <iostream>
 
 // Input the type we want to use within our vector here
-#define TYPE std::string
 
 enum OPS {
   EXIT, PUSH, POP, TOP, PRINT, EMPTY, CONSTRUCT, COPY,  ASSIGN, DESTRUCT

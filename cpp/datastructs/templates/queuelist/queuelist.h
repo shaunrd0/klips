@@ -31,18 +31,17 @@ class QueueList {
     void makeEmpty();
 
   private:
-    template<typename TY>
     struct Node {
-      TY data;
+      TYPE data;
       Node *next;
       Node(): data(), next(NULL) {};
-      Node(TY val): data(val), next(NULL) {};
+      Node(TYPE val): data(val), next(NULL) {};
     };
-    Node<T> *head, *tail;
-    bool enqueue(T val, Node<T> *&head);
-    T dequeue(Node<T> *&tail);
-    void print(Node<T> *start) const;
-    void makeEmpty(Node<T> *&head);
+    Node *head, *tail;
+    bool enqueue(T val, Node *&head);
+    T dequeue(Node *&tail);
+    void print(Node *start) const;
+    void makeEmpty(Node *&head);
     
 };
 

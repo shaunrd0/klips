@@ -13,6 +13,9 @@
 
 #include <iostream>
 
+
+#define TYPE std::string
+
 template <typename T>
 class DoubleList {
   public:
@@ -31,20 +34,19 @@ class DoubleList {
     bool find(T val) const;
 
   private:
-    template <typename TY>
     struct Node {
-      TY data;
+      TYPE data;
       Node *next, *prev;
       Node(): data(), next(NULL), prev(NULL) {};
-      Node(T val): data(val), next(NULL), prev(NULL) {};
+      Node(TYPE val): data(val), next(NULL), prev(NULL) {};
     };
-    Node<T> *head;
-    bool insert(T val, Node<T> *&head);
-    bool insert(T val, T key, Node<T> *&head);
-    bool remove(T val, Node<T> *&head);
-    bool replace(T val, T key, Node<T> *&head);
-    Node<T>* find(T val, Node<T> *start) const;
-    void print(Node<T> *start) const;
+    Node *head;
+    bool insert(T val, Node *&head);
+    bool insert(T val, T key, Node *&head);
+    bool remove(T val, Node *&head);
+    bool replace(T val, T key, Node *&head);
+    Node* find(T val, Node *start) const;
+    void print(Node *start) const;
 };
 
 #endif

@@ -23,15 +23,15 @@
 template <typename T>
 DoubleList<T>::DoubleList(const DoubleList& rhs)
 {
-  Node<T> *cp = rhs.head;
-  Node<T> *tempHead;
+  Node *cp = rhs.head;
+  Node *tempHead;
   if (cp == NULL) head = NULL;
   else {
-    head = new Node<T>(cp->data);
+    head = new Node(cp->data);
     tempHead = head;
     while (cp->next != NULL) {
       cp = cp->next;
-      head->next = new Node<T>(cp->data);
+      head->next = new Node(cp->data);
       head = head->next;
     }
     head = tempHead;
@@ -141,7 +141,7 @@ bool DoubleList<T>::replace(T val, T key)
 template <typename T>
 void DoubleList<T>::makeEmpty()
 {
-  Node<T> *nextNode, *temp;
+  Node *nextNode, *temp;
 
   if (head == NULL) return;
   nextNode = head->next;
@@ -203,7 +203,7 @@ void DoubleList<T>::print() const
 template <typename T>
 bool DoubleList<T>::find(T val) const
 {
-  Node<T> *result = find(val, head);
+  Node *result = find(val, head);
   if( result == NULL) {
     std::cout << "[" << val << "] Was not found in our list\n";
     return false;
@@ -227,9 +227,9 @@ bool DoubleList<T>::find(T val) const
  * @return false If the value could not be inserted
  */
 template <typename T>
-bool DoubleList<T>::insert(T val, Node<T> *&head)
+bool DoubleList<T>::insert(T val, Node *&head)
 {
-  Node<T> *newNode = new Node<T>(val);
+  Node *newNode = new Node(val);
   // If the list is not empty, update next pointer to head node
   if (!isEmpty()) {
     newNode->next = head;
@@ -251,14 +251,14 @@ bool DoubleList<T>::insert(T val, Node<T> *&head)
  * @return false If the value was not inserted
  */
 template <typename T>
-bool DoubleList<T>::insert(T val, T key, Node<T> *&head)
+bool DoubleList<T>::insert(T val, T key, Node *&head)
 {
-  Node<T> *newNode = new Node<T>(val);
+  Node *newNode = new Node(val);
   if (isEmpty()) return false;
   // Let insert() handle inserting at the head
   else if (head->data == key) return insert(val, head);
 
-  Node<T> *keyNode = find(key, head);
+  Node *keyNode = find(key, head);
   // If there was no keyNode found, the key does is not in our list
   // Don't insert anything, return false and let caller decide whats next
   if (keyNode == NULL) return false;
@@ -281,7 +281,7 @@ bool DoubleList<T>::insert(T val, T key, Node<T> *&head)
  * @return false If the value has not been removed from the list
  */
 template <typename T>
-bool DoubleList<T>::remove(T val, Node<T> *&head)
+bool DoubleList<T>::remove(T val, Node *&head)
 {
   if (head == NULL) return false;
   else if (head->data == val) {
@@ -289,9 +289,9 @@ bool DoubleList<T>::remove(T val, Node<T> *&head)
     return true;
   }
 
-  Node<T> *keyNode = find(val, head);
+  Node *keyNode = find(val, head);
   if (keyNode == NULL) return false;
-  Node<T> *gtfo = keyNode;
+  Node *gtfo = keyNode;
   if (keyNode->next != NULL) keyNode->next->prev = keyNode->prev;
   if (keyNode->prev != NULL) keyNode->prev->next = keyNode->next;
   delete gtfo;
@@ -309,9 +309,9 @@ bool DoubleList<T>::remove(T val, Node<T> *&head)
  * @return false If the key has not been replaced by val within the list
  */
 template <typename T>
-bool DoubleList<T>::replace(T val, T key, Node<T> *&head)
+bool DoubleList<T>::replace(T val, T key, Node *&head)
 {
-  Node<T> *replacee = find(key, head);
+  Node *replacee = find(key, head);
   if (replacee == NULL) return false;
   replacee->data = val;
   return true;
@@ -325,13 +325,13 @@ bool DoubleList<T>::replace(T val, T key, Node<T> *&head)
  * @return DoubleList::Node* A pointer to the Node containing the search value
  */
 template <typename T>
-DoubleList<T>::Node<T>* DoubleList<T>::find(T val, Node<T> *start) const
+typename DoubleList<T>::Node* DoubleList<T>::find(T val, Node *start) const
 {
   // If given a NULL list, return NULL
   // If given a head which contains the requested value, return the foundNode
   if (start == NULL || start->data == val) return start;
 
-  Node<T> *foundNode = start;
+  Node *foundNode = start;
   while (foundNode->next != NULL) {
     foundNode = foundNode->next;
     if (foundNode->data == val) return foundNode;
@@ -346,9 +346,9 @@ DoubleList<T>::Node<T>* DoubleList<T>::find(T val, Node<T> *start) const
  * @param start The Node to begin traversing output from
  */
 template <typename T>
-void DoubleList<T>::print(Node<T> *start) const
+void DoubleList<T>::print(Node *start) const
 {
-  Node<T> *temp = start;
+  Node *temp = start;
   std::cout << "List Contents: ";
   while (temp != NULL) {
     std::cout << temp->data << " | ";
@@ -357,6 +357,4 @@ void DoubleList<T>::print(Node<T> *start) const
   std::cout << std::endl;
 }
 
-template class DoubleList<int>;
-template class DoubleList<float>;
-template class DoubleList<std::string>;
+template class DoubleList<TYPE>;

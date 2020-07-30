@@ -316,6 +316,4 @@ void Vector<T>::print(T *data) const
 }
 
 // Instantiate relevant type templates for this class
-template class Vector<int>;
-template class Vector<float>;
-template class Vector<std::string>;
+template class Vector<TYPE>;
