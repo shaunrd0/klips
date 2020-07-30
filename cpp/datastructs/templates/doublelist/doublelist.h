@@ -13,36 +13,38 @@
 
 #include <iostream>
 
+template <typename T>
 class DoubleList {
   public:
     DoubleList() : head(NULL) {};
     DoubleList(const DoubleList& rhs);
     DoubleList operator=(DoubleList rhs);
     ~DoubleList();
-    bool insert(int val);
-    bool insert(int val, int key);
-    bool remove(int val);
-    bool replace(int val, int key);
+    bool insert(T val);
+    bool insert(T val, T key);
+    bool remove(T val);
+    bool replace(T val, T key);
     void makeEmpty();
     bool isEmpty() const;
-    int peek() const;
+    T peek() const;
     void print() const;
-    bool find(int val) const;
+    bool find(T val) const;
 
   private:
+    template <typename TY>
     struct Node {
-      int data;
+      TY data;
       Node *next, *prev;
       Node(): data(), next(NULL), prev(NULL) {};
-      Node(int val): data(val), next(NULL), prev(NULL) {};
+      Node(T val): data(val), next(NULL), prev(NULL) {};
     };
-    Node *head;
-    bool insert(int val, Node *&head);
-    bool insert(int val, int key, Node *&head);
-    bool remove(int val, Node *&head);
-    bool replace(int val, int key, Node *&head);
-    Node* find(int val, Node *start) const;
-    void print(Node *start) const;
+    Node<T> *head;
+    bool insert(T val, Node<T> *&head);
+    bool insert(T val, T key, Node<T> *&head);
+    bool remove(T val, Node<T> *&head);
+    bool replace(T val, T key, Node<T> *&head);
+    Node<T>* find(T val, Node<T> *start) const;
+    void print(Node<T> *start) const;
 };
 
 #endif

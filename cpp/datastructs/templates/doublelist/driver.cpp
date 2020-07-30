@@ -11,6 +11,8 @@
 #include "doublelist.h"
 #include <iostream>
 
+#define TYPE std::string
+
 enum OPS {
   EXIT, INSERT, INSERTAT, EMPTY, PEEK, PRINT, FIND, REMOVE, REPLACE
 };
@@ -19,10 +21,11 @@ int main()
 {
   std::cout << "Driver: \n";
 
-  DoubleList testList;
+  DoubleList<TYPE> testList;
   bool exit = false;
   int choice = -1;
-  int val, key;
+  TYPE val;
+  TYPE key;
 
   while (!exit)
   {
