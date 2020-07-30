@@ -13,29 +13,33 @@
 
 #include <iostream>
 
+
+#define TYPE std::string
+
+template <typename T>
 class StackList {
   public:
     StackList() : head(NULL) {};
-    StackList(const StackList& rhs);
-    StackList operator=(StackList rhs);
+    StackList(const StackList<T>& rhs);
+    StackList operator=(StackList<T> rhs);
     ~StackList();
-    bool push(int val);
-    int pop();
-    int top() const;
+    bool push(T val);
+    T pop();
+    T top() const;
     bool isEmpty() const;
     void print() const;
     void makeEmpty();
 
   private:
     struct Node {
-      int data;
+      TYPE data;
       Node *next;
       Node(): data(), next(NULL) {};
-      Node(int val): data(val), next(NULL) {};
+      Node(TYPE val): data(val), next(NULL) {};
     };
     Node *head;
-    bool push(int val, Node *&head);
-    int pop(Node *&head);
+    bool push(T val, Node *&head);
+    T pop(Node *&head);
     void print(Node *start) const;
     void makeEmpty(Node *&head);
     

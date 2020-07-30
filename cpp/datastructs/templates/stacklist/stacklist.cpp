@@ -21,7 +21,8 @@
  *
  * @param rhs StackList object
  */
-StackList::StackList(const StackList& rhs)
+template <typename T>
+StackList<T>::StackList(const StackList<T>& rhs)
 {
   Node *cp = rhs.head;
   Node *tempHead;
@@ -50,7 +51,8 @@ StackList::StackList(const StackList& rhs)
  * @param rhs StackList object passed by value
  * @return StackList A deep copy of the rhs StackList object
  */
-StackList StackList::operator=(StackList rhs)
+template <typename T>
+StackList<T> StackList<T>::operator=(StackList<T> rhs)
 {
   if (this == &rhs) return *this;
   // Swap the pointers, moving the previous head data to the local variable rhs 
@@ -61,7 +63,8 @@ StackList StackList::operator=(StackList rhs)
 /** destructor
  * @brief Destroy the StackList::StackList object
  */
-StackList::~StackList()
+template <typename T>
+StackList<T>::~StackList()
 {
   makeEmpty(head);
 }
@@ -76,7 +79,8 @@ StackList::~StackList()
  *
  * @param val The value to be inserted
  */
-bool StackList::push(int val)
+template <typename T>
+bool StackList<T>::push(T val)
 {
   bool inserted = push(val, head);
   if (inserted)
@@ -88,35 +92,38 @@ bool StackList::push(int val)
 /** pop
  * @brief returns the value at the StackList::head
  *
- * @return int The value held at the Node pointed to by StackList::head
+ * @return T The value held at the Node pointed to by StackList::head
  */
-int StackList::pop()
+template <typename T>
+T StackList<T>::pop()
 {
   if (!isEmpty())
     std::cout << "[" << pop(head) << "] has been popped from our stack\n";
   else std::cout << "Nothing to pop, our stack is empty...\n";
   // If the stack has data we return it, otherwise we return the smallest possible int (error)
-  return (!isEmpty()) ? head->data : INT32_MIN;
+  return (!isEmpty()) ? head->data : T();
 }
 
 /** top
  * @brief returns the value at the StackList::head
  *
- * @return int The value held at the Node pointed to by StackList::head
+ * @return T The value held at the Node pointed to by StackList::head
  */
-int StackList::top() const
+template <typename T>
+T StackList<T>::top() const
 {
   if (!isEmpty())
     std::cout << "[" << head->data << "] is at the top of our stack\n";
   else std::cout << "Our stack is empty...\n";
   // If the stack has data we return it, otherwise we return the smallest possible int (error)
-  return (!isEmpty()) ? head->data : INT32_MIN;
+  return (!isEmpty()) ? head->data : T();
 }
 
 /** makeEmpty
  * @brief Empty this StackList object, deleting all associated Nodes
  */
-void StackList::makeEmpty()
+template <typename T>
+void StackList<T>::makeEmpty()
 {
   Node *nextNode, *temp;
 
@@ -141,7 +148,8 @@ void StackList::makeEmpty()
  * @return true If the StackList::head is NULL
  * @return false If the StackList::head contains data
  */
-bool StackList::isEmpty() const
+template <typename T>
+bool StackList<T>::isEmpty() const
 {
   return head == NULL;
 }
@@ -150,7 +158,8 @@ bool StackList::isEmpty() const
  * @brief Output the data held by the StackList object
  *        Calls to the private print()
  */
-void StackList::print() const
+template <typename T>
+void StackList<T>::print() const
 {
   if(!isEmpty()) print(head);
   else std::cout << "Nothing to print, our stack is empty...\n";
@@ -169,7 +178,8 @@ void StackList::print() const
  * @return true If the value was inserted
  * @return false If the value could not be inserted
  */
-bool StackList::push(int val, Node *&head)
+template <typename T>
+bool StackList<T>::push(T val, Node *&head)
 {
   Node *newNode = new Node(val);
   // If the stack is not empty, update next pointer to head node
@@ -183,13 +193,14 @@ bool StackList::push(int val, Node *&head)
  * @brief Private member to handle removing the head node from the stack
  *
  * @param head The head node of the stack
- * @return The last known value held at the head node before removal
+ * @return T The last known value held at the head node before removal
  */
-int StackList::pop(Node *&head)
+template <typename T>
+T StackList<T>::pop(Node *&head)
 {
   // We already know the stack is not empty from public pop()
   Node *temp = head;
-  int data = temp->data;
+  T data = temp->data;
   head = head->next;
   delete temp;
   return data;
@@ -200,7 +211,8 @@ int StackList::pop(Node *&head)
  *
  * @param start The Node to begin traversing output from
  */
-void StackList::print(Node *start) const
+template <typename T>
+void StackList<T>::print(Node *start) const
 {
   Node *temp = start;
   std::cout << "Stack Contents: ";
@@ -216,9 +228,9 @@ void StackList::print(Node *start) const
  *        Does not print any output. Avoids destructors printing to cout
  * 
  * @param head The head of the stack to be deleted
- * 
  */
-void StackList::makeEmpty(Node *&head)
+template <typename T>
+void StackList<T>::makeEmpty(Node *&head)
 {
   Node *nextNode, *temp;
 
@@ -236,3 +248,5 @@ void StackList::makeEmpty(Node *&head)
 
   }
 }
+
+template class StackList<TYPE>;

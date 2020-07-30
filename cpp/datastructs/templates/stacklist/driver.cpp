@@ -19,10 +19,10 @@ int main()
 {
   std::cout << "Driver: \n";
 
-  StackList testList;
+  StackList<TYPE> testList;
   bool exit = false;
   int choice = -1;
-  int val;
+  TYPE val;
 
   while (!exit)
   {
