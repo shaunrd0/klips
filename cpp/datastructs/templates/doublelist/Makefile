@@ -5,15 +5,8 @@ CXXFLAGS=-g -Wall
 # Driver
 ###############################################################################
 
-driver:	driver.cpp	doublelist.o
-	${CXX} ${CXXFLAGS} driver.cpp doublelist.o -o driver
-
-###############################################################################
-# DoubleList
-###############################################################################
-
-doublelist.o:	doublelist.cpp doublelist.h
-	${CXX} ${CXXFLAGS} -c doublelist.cpp -o doublelist.o
+driver:	driver.cpp
+	${CXX} ${CXXFLAGS} driver.cpp -o driver
 
 ###############################################################################
 # Clean

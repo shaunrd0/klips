@@ -5,15 +5,8 @@ CXXFLAGS=-g -Wall
 # Driver
 ###############################################################################
 
-driver:	driver.cpp	queuelist.o
-	${CXX} ${CXXFLAGS} driver.cpp queuelist.o -o driver
-
-###############################################################################
-# QueueList
-###############################################################################
-
-queuelist.o:	queuelist.cpp queuelist.h
-	${CXX} ${CXXFLAGS} -c queuelist.cpp -o queuelist.o
+driver:	driver.cpp
+	${CXX} ${CXXFLAGS} driver.cpp -o driver
 
 ###############################################################################
 # Clean

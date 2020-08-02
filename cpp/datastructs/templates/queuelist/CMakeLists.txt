@@ -13,6 +13,6 @@ cmake_minimum_required(VERSION 3.2)
 # Define the project name
 project(Queue)
 # Define source files
-set(SRC driver.cpp queuelist.cpp)
+set(SRC driver.cpp)
 # Build an executable
 add_executable(QueueDriver ${SRC})

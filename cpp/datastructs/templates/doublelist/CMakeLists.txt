@@ -13,6 +13,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
 # Define the project name
 project(DoubleList)
 # Define source files
-set(SRC driver.cpp doublelist.cpp)
+set(SRC driver.cpp)
 # Build an executable
 add_executable(DoubleListDriver ${SRC})

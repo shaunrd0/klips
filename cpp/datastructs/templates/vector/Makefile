@@ -5,15 +5,8 @@ CXXFLAGS=-g -Wall
 # Driver
 ###############################################################################
 
-driver:	driver.cpp	vector.o
-	${CXX} ${CXXFLAGS} driver.cpp vector.o -o driver
-
-###############################################################################
-# Vector
-###############################################################################
-
-vector.o:	vector.cpp vector.h
-	${CXX} ${CXXFLAGS} -c vector.cpp -o vector.o
+driver:	driver.cpp
+	${CXX} ${CXXFLAGS} driver.cpp -o driver
 
 ###############################################################################
 # Clean

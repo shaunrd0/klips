@@ -13,6 +13,6 @@ cmake_minimum_required(VERSION 3.2)
 # Define the project name
 project(Stack)
 # Define source files
-set(SRC driver.cpp stacklist.cpp)
+set(SRC driver.cpp)
 # Build an executable
 add_executable(StackDriver ${SRC})

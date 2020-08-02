@@ -5,15 +5,8 @@ CXXFLAGS=-g -Wall
 # Driver
 ###############################################################################
 
-driver:	driver.cpp	stacklist.o
-	${CXX} ${CXXFLAGS} driver.cpp stacklist.o -o driver
-
-###############################################################################
-# StackList
-###############################################################################
-
-stacklist.o:	stacklist.cpp stacklist.h
-	${CXX} ${CXXFLAGS} -c stacklist.cpp -o stacklist.o
+driver:	driver.cpp
+	${CXX} ${CXXFLAGS} driver.cpp -o driver
 
 ###############################################################################
 # Clean
