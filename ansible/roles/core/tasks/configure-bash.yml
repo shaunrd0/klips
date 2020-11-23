@@ -1,0 +1,13 @@
+---
+- name: Copy .bashrc to new kansible user
+  template: src=files/.bashrc dest=/home/kansible/.bashrc
+  
+- name: Set skeleton files for new users
+  template: src=files/.bashrc dest=/etc/skel/.bashrc
+           
+- name: Copy .bash_aliases to new kansible user
+  template: src=files/.bash_aliases dest=/home/kansible/.bash_aliases
+  
+- name: Set skeleton files for new users
+  template: src=files/.bash_aliases dest=/etc/skel/.bash_aliases
+           

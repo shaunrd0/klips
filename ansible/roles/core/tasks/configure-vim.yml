@@ -5,6 +5,6 @@
     clone: yes
     dest: /etc/klips/ 
 
-- name: Vim setup script
+- name: Run Vim setup script
   script: /etc/ansible/roles/core/files/setup-vim.sh
 

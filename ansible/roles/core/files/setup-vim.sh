@@ -16,17 +16,17 @@ mkdir -pv /etc/config-vim
 mv -fuv temp/README.md /etc/config-vim/ && mv -fuv temp/configs/.vimrc* /etc/config-vim/
 rm -Rf temp/
 printf "\n${GREEN}Klips config files updated"\
-  "\nSee $PWD/etc/config-vim/README.md for more information.${NORMAL}\n\n"
+  "\nSee /etc/config-vim/README.md for more information.${NORMAL}\n\n"
 
 # Create backup dir for .vimrc
 mkdir -pv /etc/config-vim/backup/
-printf "\n${GREEN}Backup directory created - $PWD/etc/config-vim/backup/${NORMAL}\n"
+printf "\n${GREEN}Backup directory created - /etc/config-vim/backup/${NORMAL}\n"
 
 # Copy cloned clonfig into user directory
 cp /etc/config-vim/.vimrc ~/
 
 # Copy our cloned config into global directories
-cp /etc/config-vim/.vimrc /usr/share/vim/vimfiles/vimrc
+cp /etc/config-vim/.vimrc /etc/skel/.vimrc
 cp /etc/config-vim/.vimrc /etc/vim/vimrc
 printf "${GREEN}New /usr/share/vim/vimfiles configuration installed.${NORMAL}\n"
 

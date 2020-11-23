@@ -2,6 +2,11 @@
 - name: Copy server MOTD
   template: src=files/motd dest=/etc/motd
 
+- name: Install Yubico Authentication Module
+  apt:
+    name: libpam-yubico
+    state: latest
+
 - name: Configure PAM
   template: src=files/sshd dest=/etc/pam.d/sshd
 

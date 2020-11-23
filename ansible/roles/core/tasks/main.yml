@@ -13,5 +13,8 @@
 - import_tasks: configure-git.yml
 
 # Vim
-- import_tasks: configure-vim.yml
+#- import_tasks: configure-vim.yml
+
+# Bash
+- import_tasks: configure-bash.yml
 
