@@ -1,4 +1,12 @@
 # klips
 
-This repository is a collection of code snippets and configurations. This can be cloned or just viewed and copied as needed to lay out templates or automate tasks for larger projects.
+This repository is a collection of useful code snippets and configurations.
 
+```
+github.com/shaunrd0/klips/
+├── ansible     # Ansible roles, playbooks, and examples
+├── cpp         # C++ programs, datastructures, and other examples
+├── figlet      # Figlet fonts I like :)
+├── README.md   
+└── scripts     # Bash scripts
+```
