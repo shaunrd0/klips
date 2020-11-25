@@ -1,4 +1,4 @@
 ---
 - name: Install packages
-  apt: name="{{ item }}" state=latest
+  package: name="{{ item }}" state=present
   with_items: "{{ packages }}"

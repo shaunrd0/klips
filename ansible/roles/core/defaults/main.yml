@@ -1,8 +1,16 @@
 ---
-packages: [git, vim, ssh, libpam-yubico]
+packages: [python-apt, git, vim, ssh, libpam-yubico, ranger]
 authusers: [user1, user2]
 ssh_port: 22
 auth_methods: "publickey,keyboard-interactive"
-git_email: "email@domain.com"
+git_email: "someemail@gmail.com"
 git_name: "Shaun Reed"
-
+vim_plugins: [{ repo: 'dense-analysis/ale', dest: 'ale'}, 
+{ repo: 'chrisbra/Colorizer', dest: 'colorizer'},
+{ repo: 'ervandew/supertab', dest: 'supertab'},
+{ repo: 'chrisbra/unicode.vim', dest: 'unicode'},
+{ repo: 'vim-airline/vim-airline', dest: 'vim-airline'},
+{ repo: 'vim-airline/vim-airline-themes', dest: 'vim-airline-themes'},
+{ repo: 'mhinz/vim-signify', dest: 'signify'}
+]
+upgrades_email: someemail@gmail.com

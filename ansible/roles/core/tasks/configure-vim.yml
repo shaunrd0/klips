@@ -1,10 +1,60 @@
 ---
-- name: Clone github.com/shaunrd0/klips
-  git:
-    repo: https://github.com/shaunrd0/klips.git
-    clone: yes
-    dest: /etc/klips/ 
+- name: Create vim directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /home/ansibleuser/.vim/
+    - /home/ansibleuser/.vim/colors/
+    - /home/ansibleuser/.vim/plugin/
+    - /home/ansibleuser/.vim/doc/
+    - /home/ansibleuser/.vim/bundle/
+    - /home/ansibleuser/.vim/autoload/
+    - /etc/skel/.vim/
+    - /etc/skel/.vim/colors/
+    - /etc/skel/.vim/plugin/
+    - /etc/skel/.vim/doc/
+    - /etc/skel/.vim/bundle/
+    - /etc/skel/.vim/autoload/
 
-- name: Run Vim setup script
-  script: /etc/ansible/roles/core/files/setup-vim.sh
+- name: Install Pathogen, sourcerer theme
+  copy:
+    src: files/{{ item.src }}
+    dest: /home/ansibleuser/.vim/{{ item.dest }}
+  with_items:
+    - { src: 'pathogen.vim', dest: 'autoload/pathogen.vim'}
+    - { src: 'sourcerer.vim', dest: 'colors/sourcerer.vim'}
+
+- name: Install sourcerer theme
+  copy:
+    src: files/pathogen.vim
+    dest: /home/ansibleuser/.vim/autoload/
+
+- name : Install vim plugins
+  git:
+    repo: https://github.com/{{ item.repo }}
+    dest: /home/ansibleuser/.vim/bundle/{{ item.dest }}
+  with_items: "{{ vim_plugins }}"
+
+- name: Install Pathogen, sourcerer theme within skeleton files
+  copy:
+    src: files/{{ item.src }}
+    dest: /etc/skel/.vim/{{ item.dest }}
+  with_items:
+    - { src: 'pathogen.vim', dest: 'autoload/pathogen.vim'}
+    - { src: 'sourcerer.vim', dest: 'colors/sourcerer.vim'}
+
+- name: Install vim plugins within skeleton files
+  git:
+    repo: https://github.com/{{ item.repo }}
+    dest: /etc/skel/.vim/bundle/{{ item.dest }}
+  with_items: "{{ vim_plugins }}"
+
+- name: Configure vim
+  template:
+    src: files/.vimrc
+    dest: "{{ item }}"
+  with_items:
+    - /home/ansibleuser/.vimrc
+    - /etc/skel/.vimrc
 

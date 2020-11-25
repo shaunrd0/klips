@@ -1,0 +1,6 @@
+---
+- hosts: plumbi
+  become: yes
+  roles:
+    - fail2ban
+

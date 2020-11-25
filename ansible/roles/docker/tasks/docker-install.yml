@@ -25,3 +25,13 @@
     state: present
   notify: restart docker
 
+- name: Install python-pip package
+  package:
+    name: python-pip
+    state: latest
+
+- name: Install Docker python packages
+  pip:
+    name: docker
+    name: docker-compose
+

@@ -1,0 +1,14 @@
+---
+- name: Configure ranger
+  copy:
+    src: files/ranger
+    dest: "{{ item }}"
+  with_items:
+    - /home/ansibleuser/.config
+    - /etc/skel/.config
+
+- name: Set ranger permissions
+  file:
+    dest: /home/ansibleuser/.config/ranger/
+    group: ansibleuser
+    owner: ansibleuser

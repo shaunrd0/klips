@@ -10,4 +10,9 @@
   
 - name: Set skeleton files for new users
   template: src=files/.bash_aliases dest=/etc/skel/.bash_aliases
-           
+
+- name: Configure unattended upgrades
+  template:
+   src: files/50unattended-upgrades
+   dest: /etc/apt/apt.conf.d/50unattended-upgrades
+

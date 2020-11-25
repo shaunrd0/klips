@@ -394,7 +394,16 @@ port     = http,https
 filter   = nginx-noenv
 logpath  = /var/log/nginx/access.log
 maxretry = 1
-bantime = 4
+bantime = 4h
+
+[nginx-wplogin]
+enabled  = {{ nginx_wplogin }}
+port     = http,https
+filter   = nginx-wplogin
+logpath  = /var/log/nginx/access.log
+maxretry = 1
+bantime = 4h
+
 
 
 [nginx-nobinary]
@@ -407,7 +416,7 @@ bantime = -1
 
 [sshd-badproto]
 enabled = {{ sshd_badproto }}
-port = {{ ssh+port }}
+port = {{ ssh_port }}
 filter = sshd-badproto
 logpath = /var/log/auth.log
 maxretry = 1

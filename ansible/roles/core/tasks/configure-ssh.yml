@@ -11,17 +11,22 @@
   template: src=files/sshd dest=/etc/pam.d/sshd
 
 - name: Add authusers file
-  copy:
-    dest: "/etc/authusers"
-    content: |
-      user1
-      user2
+  lineinfile:
+    dest: /etc/authusers
+    line: '{{ item }}'
+  with_items:
+    - 'user1'
+    - 'user2'
 
 - name: Add authorized_yubikeys file
   copy:
-    dest: "/etc/ssh/authorized_yubikeys"
-    content: |
-      user:cccckey1cccc:cccckey2cccc
+    src: files/authorized_yubikeys
+    dest: /etc/ssh/
+
+- name: Copy adduser.sh script
+  copy:
+    src: files/adduser.sh
+    dest: /home/ansibleuser/
 
 - name: Add custom /etc/hosts
   lineinfile:
@@ -29,15 +34,15 @@
     line: '{{ item }}'
   with_items:
     - '127.0.0.1 localhost'
-    - '127.0.0.2 www.otherhost.com otherhost'
+    - '123.123.123.12 some.domain.com somewhere'
+    - '12.12.12.12 other.domains.com somewhereelse'
 
 - name: Add SSH Keys
   lineinfile:
-    dest: /home/ansible/.ssh/authorized_keys
+    dest: /home/ansibleuser/.ssh/authorized_keys
     line: '{{ item }}'
   with_items:
-    - 'ssh-idrsa AAZ1NTE5AAAAIA+ndydG+ddddpdddaabvbumkiuyk7778678676547564563434XwmnYb user@host'
-
+    - 'ssh-rsa 1232346A+7654475n4x5y6GL657+V6mJ5Yp23s6I6o4+6N ansibleuser@host'
 
 - name: Copy ssh configuration file
   template: src=files/sshd_config dest=/etc/ssh/sshd_config

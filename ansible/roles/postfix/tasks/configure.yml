@@ -1,5 +1,5 @@
 ---
-- name: Copy postfix configuration template
+- name: Copy configuration template
   template: src=files/postfix/main.cf dest=/etc/postfix/main.cf
 
 - name: Copy postfix sasl_passwd
