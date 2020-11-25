@@ -21,5 +21,5 @@ cmake .. && cmake --build .
 
 
 If cmake is not being used in a project, it can be built with `g++` manually using
-the commands outlined in `*/.vscode/tasts.json`, or by using VSCode to open the example
+the commands outlined in `*/.vscode/tasks.json`, or by using VSCode to open the example
 and running the build task.

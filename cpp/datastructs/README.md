@@ -16,5 +16,5 @@ klips/cpp/datastructs
 ├── singlelist          # Singly linked list
 ├── stacklist           # Stack implementation using linked list
 ├── templates           # Templated data structures
-└── vector
+└── vector              # Custom Vector implementation
 ```
