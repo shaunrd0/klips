@@ -21,13 +21,13 @@ option (DB_BUILD "Should we run the build in debug mode?" OFF)
 option (EXE_BUILD "Should we build the executable?" ON)
 
 add_library(             # Add Library
-  lib-sdl-test           # Library Name
-  "src/lib-sdl-test.cpp"  # Sources..
-  "src/lib-sdl-test.h"
+  lib-inherit            # Library Name
+  "src/lib-inherit.cpp"  # Sources..
+  "src/lib-inherit.h"
 )
 
 target_include_directories(        # When calling library, include a directory
-  lib-sdl-test                     # Library name
+  lib-inherit                      # Library name
   PUBLIC                           #
     "${CMAKE_CURRENT_SOURCE_DIR}"  # Source directory of exe including our library
 )
@@ -39,13 +39,13 @@ if (EXE_BUILD)
   include_directories(${SDL2_INCLUDE_DIRS})
 
   add_executable(         # Creating executable
-    sdl-test              # Exe name
-    "apps/sdl-test.cpp"  # Exe Source(s)
+    inherited             # Exe name
+    "apps/inherited.cpp"  # Exe Source(s)
   )
   target_link_libraries(  # Linking the exe to library
-    sdl-test              # Executable to link
-    PRIVATE               #
-      lib-sdl-test        # Library to link
+    inherited        # Executable to link
+    PRIVATE          #
+      lib-inherit    # Library to link
       ${SDL2_LIBRARIES}
   )
 elseif(DB_BUILD)
@@ -61,7 +61,7 @@ elseif(DB_CONF)
   # Configure header file with CMake variables defined in src/lib-inherit.h.in
   # @ONLY is specified, only variables of the form @VAR@ will be replaced and ${VAR} will be ignored.
   # configure_file(src/lib-inherit.h src/lib-inherit.h @ONLY)
-  configure_file(apps/sdl-test.cpp apps/sdl-test.cpp @ONLY)
+  configure_file(apps/inherited.cpp apps/inherited.cpp @ONLY)
  
   # Create compile_commands.json for linter
   set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

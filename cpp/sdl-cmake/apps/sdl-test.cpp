@@ -9,7 +9,7 @@
 ## apps/inherited.cpp
 */
 
-#include <src/lib-inherit.h>
+#include <src/lib-sdl-test.h>
 #include <iostream>
 //#include <string>
 

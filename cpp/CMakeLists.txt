@@ -1,16 +1,22 @@
 ###############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2021 Shaun Reed, all rights reserved               ##
-## About: An example of a queue implementation                               ##
+## About: A root project for practicing C++                                  ##
+##        This project can be built to debug and run all nested projects     ##
+##        Or, any subdirectory with a project() statement can be selected    ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
 #
 cmake_minimum_required(VERSION 3.15)
 
-# Define the project name
-project(Queue)
-# Define source files
-set(SRC driver.cpp queuelist.cpp)
-# Build an executable
-add_executable(QueueDriver ${SRC})
+project(
+    #[[NAME]]   Klips
+    VERSION     1.0
+    DESCRIPTION "A root project for several small cpp practice projects"
+    LANGUAGES   CXX
+)
+
+add_subdirectory(cmake)
+add_subdirectory(datastructs)
+add_subdirectory(sdl-cmake)
