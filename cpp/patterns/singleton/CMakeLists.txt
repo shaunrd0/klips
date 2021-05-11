@@ -16,5 +16,6 @@ project(
 )
 
 add_library(singleton "singleton.cpp")
+add_library(singleton-pointer "singleton-pointer.cpp")
 add_executable(singleton-test "main.cpp")
-target_link_libraries(singleton-test singleton)
+target_link_libraries(singleton-test singleton singleton-pointer)

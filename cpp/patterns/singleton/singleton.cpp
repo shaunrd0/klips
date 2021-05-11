@@ -1,5 +1,5 @@
 
-#include "singleton.h"
+#include "singleton.hpp"
 
 Singleton::~Singleton()
 {
