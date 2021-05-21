@@ -9,7 +9,7 @@ From this directory, run `npm install` to install required packages.
 From there, we can create any contracts and deploy to development or public networks...
 ### Development Deploy
 
-```asm
+```
 npx truffle develop
 truffle(develop)> migrate
 
