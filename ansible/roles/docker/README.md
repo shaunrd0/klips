@@ -1,31 +1,50 @@
-Role Name
+Docker
 =========
 
-A brief description of the role goes here.
+An ansible role to configure docker on a remote host. This can be used to 
+configure one or several servers with basic docker and docker-compose settings.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role will only function correctly on Ubuntu servers, or some debian 
+derivative that also uses the `apt` package manager.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+`docker_users: [user1, user2]`
+ * Existing users that the role will add to the docker groups to ensure 
+   command access
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+First, make sure all settings within `defaults/main.yml` are correct for your
+server. All settings and their purposes are outline in the section above.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Create a new ansible play. You can name it whatever you want, but this
+example play will simply be named `docker.yml`.
+
+```yml
+---
+- hosts: testserver
+  become: yes
+  roles:
+  - docker
+```
+
+Make sure the IP for `testserver` is correct in the `/etc/ansible/hosts` file -
+```
+[testserver]
+123.123.123.123:22
+```
+
+Run the play!
+
+```bash
+ansible-playbook docker.yml
+```
 
 License
 -------
@@ -35,4 +54,6 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0
+
+TODO: Update to follow the more recent official docker installation instructions
