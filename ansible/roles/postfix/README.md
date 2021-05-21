@@ -1,17 +1,36 @@
-Role Name
+Postfix
 =========
 
-A brief description of the role goes here.
+An ansible role to install and configure Postfix on a remote host.
+This can be used to configure a server to send mail on your behalf.
+
+Should you have any questions on basic Postfix configurations, see 
+[Knoats - Configuring Postfix](https://knoats.com/books/linux-admin/page/configure-postfix#bkmrk-create-google-app-to)
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+`packages: [mailutils, postfix]`
+ * A list of packages to install on the server
+
+
+`relay_host: "[sub.domain.com]:777"`
+ * The relay to route mail through. Presumably, this could be GMail's -
+  `[smtp.gmail.com]:587`
+   
+`email: "email@domain.com"`
+ * The email address that Postfix will route mail through. Instead of 
+   `root@SERVER_IP`, mail send with Postfix will use `email@domain.com` 
+   as the sender
+   
+`sasl_passwd: "xxxxxxxxxxxxx"`
+ * The sasl password generated for the email account we selected. 
+    If you are unsure how to do this, see [Knoats - Configuring Postfix](https://knoats.com/books/linux-admin/page/configure-postfix#bkmrk-create-google-app-to)
 
 Dependencies
 ------------
@@ -21,11 +40,31 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+First, make sure all settings within `defaults/main.yml` are correct for your
+server. All settings and their purposes are outline in the section above.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Create a new ansible play. You can name it whatever you want, but this
+example play will simply be named `postfix.yml`.
+
+```yml
+---
+- hosts: testserver
+  become: yes
+  roles:
+  - postfix
+```
+
+Make sure the IP for `testserver` is correct in the `/etc/ansible/hosts` file -
+```
+[testserver]
+123.123.123.123:22
+```
+
+Run the play!
+
+```bash
+ansible-playbook postfix.yml
+```
 
 License
 -------
@@ -35,4 +74,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0
