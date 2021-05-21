@@ -1,31 +1,73 @@
-Role Name
+Fail2ban
 =========
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+An ansible role for installing fail2ban with basic configuration options
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+`packages: [fail2ban]`
+* A list of packages to install on the server
+
+`ssh_port: 22`
+ * The port SSH where is running on the remote server
+
+`relay_host: "[sub.domain.com]:777"`
+`sender_email: "senderemail@domain.com"`
+ * The relay to route mail through, and a corresponding email to send as
+
+`email: "email@domain.com"`
+ * The email address to send alerts to when an IP is banned or jailed
+
+`nginx_botsearch: "true"`
+`nginx_http_auth: "true"`
+`nginx_nobinary: "true"`
+`nginx_nohome: "true"`
+`nginx_noproxy: "true"`
+`nginx_wplogin: "true"`
+`nginx_noscan: "true"`
+`nginx_noenv: "true"`
+`nginx_noscript: "true"`
+`sshd: "true"`
+`sshd_badproto: "true"`
+* Each of these variables are an existing fail2ban filter with a corresponding
+bool to enable or disable them.
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Requires that postfix is configured to send email alerts
+on behalf of the `sender_email` address.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+First, make sure all settings within `defaults/main.yml` are correct for your
+server. All settings and their purposes are outline in the section above.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Create a new ansible play. You can name it whatever you want, but this
+example play will simply be named `fail2ban.yml`.
+
+```yml
+---
+- hosts: testserver
+  become: yes
+  roles:
+  - fail2ban
+```
+
+Make sure the IP for `testserver` is correct in the `/etc/ansible/hosts` file -
+```
+[testserver]
+123.123.123.123:22
+```
+
+Run the play!
+
+```bash
+ansible-playbook fail2ban.yml
+```
 
 License
 -------
@@ -35,4 +77,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0

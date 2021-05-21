@@ -25,12 +25,13 @@ Git
 SSH
  - MOTD (Template, replacable, displayed on login.)
  - PAM (Template, replacable, authusers file to bypass)
+ - Yubikey authentication PAM module
  - authusers (Add users to file to bypass PAM settings)
 
 Vim
- - Install Vim
- - Run https://github.com/shaunrd0/klips/blob/master/scripts/setup-vim.sh
+ - Install Vim and customizable list of plugins
 
+Ranger
 
 docker
 ------------

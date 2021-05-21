@@ -4,7 +4,8 @@
 packages: [fail2ban]
 ssh_port: 22
 relay_host: "[sub.domain.com]:777"
-email: "email@domain.com"
+sender_email: "senderemail@domain.com"
+dest_email: "email@domain.com"
 nginx_botsearch: "true"
 nginx_http_auth: "true"
 nginx_nobinary: "true"

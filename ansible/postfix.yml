@@ -1,6 +1,0 @@
----
-- hosts: othergroup
-  become: yes
-  roles:
-    - postfix
-

@@ -2,7 +2,7 @@
 - hosts: dev
   become: yes
   roles:
-    - shared
+    - core
     - nginx
     - fail2ban
     - postfix

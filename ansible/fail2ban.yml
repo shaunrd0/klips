@@ -1,6 +1,0 @@
----
-- hosts: nginx-server
-  become: yes
-  roles:
-    - fail2ban
-
