@@ -17,7 +17,7 @@
     - /etc/skel/.vim/bundle/
     - /etc/skel/.vim/autoload/
 
-- name: Install Pathogen, sourcerer theme
+- name: Install Pathogen, sourcerer theme for ansible user
   copy:
     src: files/{{ item.src }}
     dest: /home/ansibleuser/.vim/{{ item.dest }}
@@ -25,12 +25,7 @@
     - { src: 'pathogen.vim', dest: 'autoload/pathogen.vim'}
     - { src: 'sourcerer.vim', dest: 'colors/sourcerer.vim'}
 
-- name: Install sourcerer theme
-  copy:
-    src: files/pathogen.vim
-    dest: /home/ansibleuser/.vim/autoload/
-
-- name : Install vim plugins
+- name : Install vim plugins for ansible user
   git:
     repo: https://github.com/{{ item.repo }}
     dest: /home/ansibleuser/.vim/bundle/{{ item.dest }}
@@ -50,7 +45,7 @@
     dest: /etc/skel/.vim/bundle/{{ item.dest }}
   with_items: "{{ vim_plugins }}"
 
-- name: Configure vim
+- name: Configure .vimrc for ansible user and skeleton files
   template:
     src: files/.vimrc
     dest: "{{ item }}"

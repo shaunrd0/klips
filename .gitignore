@@ -9,3 +9,4 @@
 **/CMakeFiles/**
 **/Makefile
 **/*.cbp
+**/node-modules/
