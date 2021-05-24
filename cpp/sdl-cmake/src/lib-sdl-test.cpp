@@ -4,45 +4,22 @@
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
-## src/lib-inherit.cpp
+##
 */
 
-#include <src/lib-sdl-test.h>
+#include <lib-sdl-test.h>
 
-// Shape class definitions
 
-Shape::Shape(double w, double h) {
-  height = h;
-  width = w;
+/******************************************************************************/
+// Shape base class definitions
+std::string Shape::PrintInfo() {
+  return name + " HxW: " + std::to_string(height) + "x" + std::to_string(width);
 };
 
-Shape::Shape() {
-  height = 2;
-  width = 2;
-};
 
-Shape::~Shape() { /* Shape destructor */};
+/******************************************************************************/
+// SDL helper function definitions
 
-const std::string Shape::PrintInfo() {
-  info = name + " HxW: " + std::to_string(height) + "x" + std::to_string(width);
-  return info;
-};
-
-// Rectangle Class definitions
-
-Rectangle::Rectangle(double w, double h) {
-  height = h;
-  width = w;
-};
-
-Rectangle::Rectangle() {
-  height = 2;
-  width = 4;
-};
-
-Rectangle::~Rectangle() { /* Rectangle destructor */ };
-
-/// SDL Helper Definitions
 int InitScreen(SDL_Window* &window, SDL_Renderer* &renderer) {
   int state = 0;
 
@@ -66,6 +43,5 @@ void DrawDelay(SDL_Renderer* renderer, int delay) {
 	SDL_RenderPresent(renderer);
   // Wait 3000ms, then continue
 	SDL_Delay(delay);
-
   return;
 }

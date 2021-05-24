@@ -10,32 +10,41 @@
 #include <iostream>
 #include <string>
 #include <SDL2/SDL.h>
+#include <utility>
 #include <vector>
 
+
 class Shape {
+public:
+  // Provide ctor to set name of derived shape
+  Shape(double w, double h, std::string name_) :
+      width(w), height(h), name(std::move(name_)) {}
+  Shape(double w, double h) : width(w), height(h) {}
+  Shape() : width(2), height(2) {}
+  virtual ~Shape() = default;
+
+  // All derived inherit ability to show name
+  virtual std::string PrintInfo();
+
   private:
     double width, height;
-    std::string info;
     const std::string name = "Shape";
-
-  public:
-    Shape(double w, double h);
-    Shape();
-    ~Shape();
-    virtual const std::string PrintInfo();
 };
+
+
+/******************************************************************************/
+// Rectangle derived Shape
 
 class Rectangle: public Shape {
-  private:
-    double width, height;
-    std::string info;
-
   public:
-    Rectangle(double w, double h);
-    Rectangle();
-    ~Rectangle();
-
+    Rectangle(double w, double h) : Shape(w, h, "Rectangle") {}
+    Rectangle() : Shape(4, 2, "Rectangle") {}
+    ~Rectangle() override = default;
 };
+
+
+/******************************************************************************/
+// SDL helper functions
 
 int InitScreen(SDL_Window* &window, SDL_Renderer* &renderer);
 

@@ -9,29 +9,35 @@
 ## apps/inherited.cpp
 */
 
-#include <src/lib-sdl-test.h>
+#include <lib-sdl-test.h>
 #include <iostream>
-//#include <string>
 
 int main (int argc, char const * argv[]) {
   // Cast cli arguments to void since they are unused in this exe
   (void)argc;
   (void)argv;
-  
+
   // Ensure SDL is initialized before continuing
- 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-    exit(2);  
-  
+  if (SDL_Init(SDL_INIT_EVERYTHING) < 0) exit(2);
+
   SDL_Window *window;
   SDL_Renderer *renderer;
 
-  if (InitScreen(window, renderer) < 0)
+  if (InitScreen(window, renderer) < 0) {
     std::cout << "Error - Unable to initialize SDL screen\n";
-  
-  DrawDelay(renderer, 3000);
+  }
 
-  std::cout << "Test\n";
+  // Draw a window for 3000ms
+  DrawDelay(renderer, 3000);
+  // Destroy the window after 3 seconds
+  SDL_DestroyWindow(window);
+  // Destroy the renderer, since we won't be using it anymore
+  SDL_DestroyRenderer(renderer);
+
+  std::cout << "Testing creation of Shape, Rectangle...\n";
+  // Create a custom shape, and a default shape
   Shape shape(4,4), dShape;
+  // Create a custom rectangle, and a default rectangle
   Rectangle rect(4,8), dRect;
   std::cout << dShape.PrintInfo() << std::endl;
   std::cout << shape.PrintInfo() << std::endl;

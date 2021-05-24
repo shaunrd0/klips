@@ -1,70 +1,59 @@
 ###############################################################################
 ## Author: Shaun Reed                                                        ##
-## Legal: All Content (c) 2019 Shaun Reed, all rights reserved               ##
+## Legal: All Content (c) 2021 Shaun Reed, all rights reserved               ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
-# Root CMakeLists.txt of cpp practice 4-inheritance
+#
 
 # Define CMake version
 cmake_minimum_required(VERSION 3.15)
 
-project(       # Define project
-  inheritance  # Project name
-  DESCRIPTION  "Example project for class inheritance"
-  LANGUAGES    CXX
-  )
-
-# Pass this to program to control debug output
-option (DB_CONF "Should we debug and configure files with cmake values?" ON)
-option (DB_BUILD "Should we run the build in debug mode?" OFF)
-option (EXE_BUILD "Should we build the executable?" ON)
-
-add_library(             # Add Library
-  lib-sdl-test           # Library Name
-  "src/lib-sdl-test.cpp"  # Sources..
-  "src/lib-sdl-test.h"
+project(
+    #[[NAME]]    SDL-Cmake
+    DESCRIPTION  "Example project for building SDL projects with CMake"
+    LANGUAGES    CXX
 )
 
-target_include_directories(        # When calling library, include a directory
-  lib-sdl-test                     # Library name
-  PUBLIC                           #
-    "${CMAKE_CURRENT_SOURCE_DIR}"  # Source directory of exe including our library
+# Add Library
+add_library(
+    lib-sdl-test            # Library Name
+    "src/lib-sdl-test.cpp"  # Sources..
+    "src/lib-sdl-test.h"
 )
 
-if (EXE_BUILD)
-  set(BUILD_STATUS "Building default executable")
-  include(FindPkgConfig)
-  pkg_search_module(SDL2 REQUIRED sdl2)
-  include_directories(${SDL2_INCLUDE_DIRS})
+target_include_directories(            # When calling library, include a directory
+    lib-sdl-test                       # Library name
+    PUBLIC                             # Visibility
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"  # Source directory for library
+    )
 
-  add_executable(         # Creating executable
-    sdl-test              # Exe name
-    "apps/sdl-test.cpp"  # Exe Source(s)
+# Search for SDL2 package
+find_package(SDL2 REQUIRED sdl2)
+
+# If SDL2 was found successfully, link to lib-sdl-test
+if (SDL2_FOUND)
+  # Any target that links with this library will also link to SDL2
+  # + Because we choose PUBLIC visibility
+  target_include_directories(lib-sdl-test PUBLIC ${SDL2_INCLUDE_DIRS})
+  target_link_libraries(lib-sdl-test PUBLIC "${SDL2_LIBRARIES}")
+
+  # Creating executable
+  add_executable(
+      sdl-test              # Exe name
+      "apps/sdl-test.cpp"   # Exe Source(s)
   )
-  target_link_libraries(  # Linking the exe to library
-    sdl-test              # Executable to link
-    PRIVATE               #
-      lib-sdl-test        # Library to link
-      ${SDL2_LIBRARIES}
+
+  # Linking the exe to library
+  target_link_libraries(
+      sdl-test              # Executable to link
+      PRIVATE               # Visibility
+      lib-sdl-test          # Library to link
   )
-elseif(DB_BUILD)
-  set(BUILD_STATUS "Building in debug mode")
 
-  # Create compile_commands.json for linter
-  set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-  target_compile_definitions(inherited PRIVATE BUILD_STATUS=${BUILD_STATUS})
-elseif(DB_CONF)
-  set(BUILD_STATUS "Building in debug mode, configuring files")
-
-  # Configure header file with CMake variables defined in src/lib-inherit.h.in
-  # @ONLY is specified, only variables of the form @VAR@ will be replaced and ${VAR} will be ignored.
-  # configure_file(src/lib-inherit.h src/lib-inherit.h @ONLY)
-  configure_file(apps/sdl-test.cpp apps/sdl-test.cpp @ONLY)
- 
-  # Create compile_commands.json for linter
-  set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+else()
+  message(
+      "Error: CMake was unable to find SDL2 package.\n"
+      "Please install the libsdl2-dev package and try again.\n"
+  )
 endif()
-#target_compile_definitions(inherited PRIVATE BUILD_STATUS=${BUILD_STATUS})
-
