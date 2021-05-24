@@ -14,4 +14,5 @@ project (
     DESCRIPTION "A project for practicing various algorithms in C++"
     LANGUAGES   CXX
 )
+
 add_subdirectory(sorting)

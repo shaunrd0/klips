@@ -8,5 +8,12 @@
 #
 cmake_minimum_required(VERSION 3.15)
 
+project (
+    #[[NAME]]   Sorting-Algorithms
+    VERSION     1.0
+    DESCRIPTION "A project for practicing various sorting algorithms in C++"
+    LANGUAGES   CXX
+)
 
+add_subdirectory(merge)
 add_subdirectory(selection)
