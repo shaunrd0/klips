@@ -15,15 +15,15 @@ project(
     LANGUAGES    CXX
 )
 
-# Add test executable
-add_executable(opengl-test "test-gl.cpp")
+add_library(lib-opengl-test "src/lib-opengl-test.cpp")
+target_include_directories(lib-opengl-test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # Find OpenGL package
 find_package(OpenGL REQUIRED)
 if (OPENGL_FOUND)
   # Link opengl-test executable to OpenGL
-  target_include_directories(opengl-test PUBLIC ${OPENGL_INCLUDE_DIR})
-  target_link_libraries(opengl-test PUBLIC ${OPENGL_LIBRARIES})
+  target_include_directories(lib-opengl-test PUBLIC ${OPENGL_INCLUDE_DIR})
+  target_link_libraries(lib-opengl-test PUBLIC ${OPENGL_LIBRARIES})
 
 else()
   message(
@@ -35,13 +35,18 @@ endif()
 # Find GLUT package
 find_package(GLUT REQUIRED)
 if (GLUT_FOUND)
-  # Link opengl-test executable to GLUT
-  target_include_directories(opengl-test PUBLIC ${GLUT_INCLUDE_DIR})
-  target_link_libraries(opengl-test PUBLIC ${GLUT_LIBRARIES})
+  # Link lib-opengl-test executable to GLUT
+  target_include_directories(lib-opengl-test PUBLIC ${GLUT_INCLUDE_DIR})
+  target_link_libraries(lib-opengl-test PUBLIC ${GLUT_LIBRARIES})
 
 else()
   message(
-      "Error: CMake was unable to find the OpenGL package\n"
-      "Please install OpenGL and try again\n"
+      "Error: CMake was unable to find the GLUT package\n"
+      "Please install GLUT (freeglut3-dev) and try again\n"
   )
 endif()
+
+# Add test executable
+add_executable(opengl-test "apps/test-gl.cpp")
+target_link_libraries(opengl-test PRIVATE lib-opengl-test)
+target_include_directories(opengl-test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)

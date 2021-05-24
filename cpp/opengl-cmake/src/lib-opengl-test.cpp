@@ -1,18 +1,11 @@
-/*#############################################################################
-## Author: Shaun Reed                                                        ##
-## Requires freeglut3-dev to be installed with your package manager          ##
-## To build an executable: `g++ test-gl.cpp -w -lGL -lGLU -lglut -o test`    ##
-##                                                                           ##
-## Testing building OpenGL projects with source code from lazyfoo -          ##
-## https://lazyfoo.net/tutorials/OpenGL/                                     ##
-##############################################################################
-## test-gl.cpp
-*/
+
+#include <lib-opengl-test.hpp>
 
 #include <GL/freeglut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <stdio.h>
+
+#include <cstdio>
 
 //Screen constants
 const int SCREEN_WIDTH = 640;
@@ -24,10 +17,20 @@ const int COLOR_MODE_CYAN = 0;
 const int COLOR_MODE_MULTI = 1;
 
 //The current color rendering mode
-int gColorMode = COLOR_MODE_CYAN;
+int gColorMode = 0;
 
 //The projection scale
 GLfloat gProjectionScale = 1.f;
+
+void runMainLoop( int val )
+{
+  //Frame logic
+  update();
+  render();
+
+  //Run frame one more time
+  glutTimerFunc( 1000 / SCREEN_FPS, runMainLoop, val );
+}
 
 bool initGL()
 {
@@ -139,57 +142,3 @@ void handleKeys( unsigned char key, int x, int y )
   }
 }
 
-void runMainLoop( int val );
-/*
-Pre Condition:
- -Initialized freeGLUT
-Post Condition:
- -Calls the main loop functions and sets itself to be called back in 1000 / SCREEN_FPS milliseconds
-Side Effects:
- -Sets glutTimerFunc
-*/
-
-int main( int argc, char* args[] )
-{
-  //Initialize FreeGLUT
-  glutInit( &argc, args );
-
-  //Create OpenGL 2.1 context
-  glutInitContextVersion( 2, 1 );
-
-  //Create Double Buffered Window
-  glutInitDisplayMode( GLUT_DOUBLE );
-  glutInitWindowSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-  glutCreateWindow( "OpenGL" );
-
-  //Do post window/context creation initialization
-  if( !initGL() )
-  {
-    printf( "Unable to initialize graphics library!\n" );
-    return 1;
-  }
-
-  //Set keyboard handler
-  glutKeyboardFunc( handleKeys );
-
-  //Set rendering function
-  glutDisplayFunc( render );
-
-  //Set main loop
-  glutTimerFunc( 1000 / SCREEN_FPS, runMainLoop, 0 );
-
-  //Start GLUT main loop
-  glutMainLoop();
-
-  return 0;
-}
-
-void runMainLoop( int val )
-{
-  //Frame logic
-  update();
-  render();
-
-  //Run frame one more time
-  glutTimerFunc( 1000 / SCREEN_FPS, runMainLoop, val );
-}
