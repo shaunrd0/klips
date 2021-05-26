@@ -18,7 +18,6 @@ int main(const int argc, const char * argv[])
 {
   srand(time(nullptr));
   std::vector<int> array(ARRAY_LENGTH);
-//  array[0] = 0; // Don't use the 0 index
   std::generate(array.begin(), array.end(), [](){ return rand() % 1000;});
 
   auto print = [](std::vector<int> array) {

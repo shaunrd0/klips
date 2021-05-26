@@ -18,9 +18,9 @@ size_t Parent(const size_t &index);
 size_t Left(const size_t &index);
 size_t Right(const size_t &index);
 
-void MaxHeapify(std::vector<int> &array, size_t thisIndex, int &heapSize);
+void MaxHeapify(std::vector<int> &array, size_t thisIndex, const int &heapSize);
 
-void BuildMaxHeap(std::vector<int> &array, int &heapSize);
+void BuildMaxHeap(std::vector<int> &array);
 
 void HeapSort(std::vector<int> &array);
 

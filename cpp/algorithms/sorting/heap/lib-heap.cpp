@@ -17,7 +17,7 @@ size_t Parent(const size_t &index) { return index / 2;}
 size_t Left(const size_t &index) { return 2 * index + 1;}
 size_t Right(const size_t &index) { return (2 * index) + 2;}
 
-void MaxHeapify(std::vector<int> &array, size_t thisIndex, int &heapSize)
+void MaxHeapify(std::vector<int> &array, size_t thisIndex, const int &heapSize)
 {
   // Get an index for the left and right nodes attached to thisIndex
   size_t l = Left(thisIndex);
@@ -42,8 +42,9 @@ void MaxHeapify(std::vector<int> &array, size_t thisIndex, int &heapSize)
   }
 }
 
-void BuildMaxHeap(std::vector<int> &array, int &heapSize)
+void BuildMaxHeap(std::vector<int> &array)
 {
+  int heapSize = array.size();
   // For each value within the heap, starting at last index moving to the first
   for (int i = (array.size() / 2); i >= 0; i--) {
     // Call MaxHeapify, sorting the value held at index i
@@ -58,7 +59,7 @@ void HeapSort(std::vector<int> &array)
   // + Pass this value by reference to track size of heap as modifiable value
   int heapSize = array.size();
   // Create a maximum heap from the array using its size
-  BuildMaxHeap(array, heapSize);
+  BuildMaxHeap(array);
   // For each value within the max heap, starting from its final value
   for (int i = array.size() - 1; i > 0; i--) {
     // Swap the top value within the heap with the value at i
