@@ -13,6 +13,7 @@
 #include <GL/freeglut.h>
 
 #include <cstdio>
+#include <iostream>
 
 //Screen constants
 const int SCREEN_WIDTH = 640;
@@ -25,6 +26,9 @@ const int COLOR_MODE_MULTI = 1;
 
 int main( int argc, char* args[] )
 {
+  std::cout << "Press Q to change color mode, E to adjust zoom\n";
+
+
   //Initialize FreeGLUT
   glutInit( &argc, args );
 

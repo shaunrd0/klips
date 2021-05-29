@@ -11,14 +11,11 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(
-    #[[NAME]]   Klips
+    #[[NAME]]   Graphics
     VERSION     1.0
-    DESCRIPTION "A root project for several small cpp practice projects"
+    DESCRIPTION "A root project for practicing graphics programming in C++"
     LANGUAGES   CXX
 )
 
-add_subdirectory(algorithms)
-add_subdirectory(cmake)
-add_subdirectory(datastructs)
-add_subdirectory(graphics)
-add_subdirectory(patterns)
+add_subdirectory(opengl-cmake)
+add_subdirectory(sdl-cmake)

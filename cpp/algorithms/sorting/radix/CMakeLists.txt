@@ -13,7 +13,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(radix-sort "radix-sort.cpp")
 
-add_library(lib-counting "lib-counting.cpp")
+add_library(lib-radix-counting "lib-counting.cpp")
 add_library(lib-radix "lib-radix.cpp")
 
-target_link_libraries(radix-sort lib-radix lib-counting)
+target_link_libraries(radix-sort lib-radix lib-radix-counting)

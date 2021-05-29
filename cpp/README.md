@@ -5,11 +5,9 @@ shaunrd0/klips/cpp/
 ├── algorithms  # Examples of various algorithms written in C++
 ├── cmake       # Example of using cmake to build and organize larger projects
 ├── datastructs # Collection of useful datastructures written in C++
-├── opengl      # Barebones opengl application written in C++ built with gcc
+├── graphics    # Examples of graphics projects written in C++
 ├── patterns    # Examples of various design patterns written in C++
-├── README.md
-├── sdl-cmake   # Barebones sdl application written in C++ built with cmake
-└── sdl         # Barebones sdl application written in C++ built with gcc
+└── README.md
 ```
 
 This directory contains a `CMakeLists.txt`, which can be selected to open as a 
