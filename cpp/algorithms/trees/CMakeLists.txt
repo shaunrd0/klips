@@ -9,11 +9,10 @@
 cmake_minimum_required(VERSION 3.15)
 
 project (
-    #[[NAME]]   Algorithms
+    #[[NAME]]   Trees
     VERSION     1.0
-    DESCRIPTION "A project for practicing various algorithms in C++"
+    DESCRIPTION "A project for practicing algorithms using trees in C++"
     LANGUAGES   CXX
 )
 
-add_subdirectory(sorting)
-add_subdirectory(trees)
+add_subdirectory(binary)
