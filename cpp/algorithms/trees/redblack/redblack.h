@@ -13,71 +13,88 @@
 
 #include <iostream>
 
-// TODO: Add balance() method to balance overweight branches
-class BinarySearchTree {
+enum Color {Black, Red};
+
+class RedBlackTree {
 
 public:
-  // BinaryNode Structure
-  struct BinaryNode{
+  // RedBlackNode Structure
+  struct RedBlackNode{
     int element;
-    BinaryNode *left, *right, *parent;
+    Color color = Black;
+    RedBlackNode *left{}, *right{}, *parent{};
 
+    RedBlackNode() : element(INT32_MIN), color(Black) {}
     // Ctor for specific element, lhs, rhs
-    BinaryNode(const int &el, BinaryNode *lt, BinaryNode *rt, BinaryNode *p)
-        :element(el), left(lt), right(rt), parent(p) {};
-    // Ctor for a node and any downstream nodes
-    explicit BinaryNode(BinaryNode * toCopy);
+    RedBlackNode(const int &el, Color c,
+                 RedBlackNode *lt, RedBlackNode *rt, RedBlackNode *p)
+        :element(el), color(c), left(lt), right(rt), parent(p) {};
+    // Ctor for copying a node and any downstream nodes
+    explicit RedBlackNode(RedBlackNode * toCopy);
   };
+  static RedBlackNode *nil;
 
-  BinarySearchTree() : root(nullptr) {};
-  BinarySearchTree(const BinarySearchTree &rhs) : root(rhs.clone(rhs.root)) {};
-  BinarySearchTree& operator=(const BinarySearchTree& rhs);
-  ~BinarySearchTree() { makeEmpty(root);};
-  inline BinaryNode * getRoot() const { return root;}
+  RedBlackTree() : root(nil) {};
+  RedBlackTree(const RedBlackTree &rhs);;
+  RedBlackTree& operator=(const RedBlackTree& rhs);
+  ~RedBlackTree() { makeEmpty(root);};
+  // Inlined functions provide less verbose interface for using the RBT
+  inline RedBlackNode * getRoot() const { return root;}
+
+  void rotateLeft(RedBlackNode *pivotNode);
+  void rotateRight(RedBlackNode *pivotNode);
+  void insertFixup(RedBlackNode * start);
+  void deleteFixup(RedBlackNode * start);
 
   // Check if value is within the tree or subtree
   inline bool contains(const int &value) const { return contains(value, root);}
-  bool contains(const int &value, BinaryNode *start) const;
+  bool contains(const int &value, RedBlackNode *start) const;
 
   // Empties a given tree or subtree
   inline void makeEmpty() { makeEmpty(root);}
-  void makeEmpty(BinaryNode *&tree);
-  // Checks if this BST is empty
+  void makeEmpty(RedBlackNode *&tree);
+  // Checks if this RBT is empty
   bool isEmpty() const;
 
   // Insert and remove values from a tree or subtree
-  inline void insert(const int &x) { insert(x, root, nullptr);}
-  void insert(const int &newValue, BinaryNode *&start, BinaryNode *prevNode);
+  inline void insert(const int &x) { insert(x, root, nil);}
+  void insert(const int &newValue, RedBlackNode *&start, RedBlackNode *prevNode);
   inline void remove(const int &x) { remove(search(x, root));}
-  void remove(BinaryNode *removeNode);
+  void remove(RedBlackNode *removeNode);
 
   // Traversal functions
   inline void printInOrder() const { printInOrder(root);}
   inline void printPostOrder() const { printPostOrder(root);}
   inline void printPreOrder() const { printPreOrder(root);}
   // Overloaded to specify traversal of a subtree
-  void printInOrder(BinaryNode *start) const;
-  void printPostOrder(BinaryNode *start) const;
-  void printPreOrder(BinaryNode *start) const;
+  void printInOrder(RedBlackNode *start) const;
+  void printPostOrder(RedBlackNode *start) const;
+  void printPreOrder(RedBlackNode *start) const;
 
   // Find a BinaryNode containing value starting at a given tree / subtree node
-  inline BinaryNode * search(const int &value) const { return search(value, root);}
-  BinaryNode * search(const int &value, BinaryNode *start) const;
-  inline BinaryNode * findMin() const { return findMin(root);}
-  inline BinaryNode * findMax() const { return findMax(root);}
-  // Find nodes with min / max values starting at a given tree / subtree node
-  BinaryNode * findMin(BinaryNode *start) const;
-  BinaryNode * findMax(BinaryNode *start) const;
+  inline RedBlackNode * search(const int &value) const
+      { return search(value, root);}
+  RedBlackNode * search(const int &value, RedBlackNode *start) const;
 
-  BinaryNode * predecessor(BinaryNode *startNode) const;
-  BinaryNode * successor(BinaryNode *startNode) const;
+  inline RedBlackNode * findMin() const { return findMin(root);}
+  inline RedBlackNode * findMax() const { return findMax(root);}
+  // Find nodes with min / max values starting at a given tree / subtree node
+  RedBlackNode * findMin(RedBlackNode *start) const;
+  RedBlackNode * findMax(RedBlackNode *start) const;
+
+  inline RedBlackNode * predecessor(const int &value) const
+      { return predecessor(search(value));}
+  RedBlackNode * predecessor(RedBlackNode *startNode) const;
+  inline RedBlackNode * successor(const int &value) const
+      { return successor(search(value));}
+  RedBlackNode * successor(RedBlackNode *startNode) const;
 
 private:
-  // BST Private Member Functions
-  static BinaryNode * clone(BinaryNode *start);
-  void transplant(BinaryNode *oldNode, BinaryNode *newNode);
+  RedBlackNode * clone(RedBlackNode *start);
+  void transplant(RedBlackNode *oldNode, RedBlackNode *newNode);
 
-  BinaryNode *root;
+  // The root node for the RBT
+  RedBlackNode *root;
 };
 
 #endif // REDBLACK_H

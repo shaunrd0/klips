@@ -15,12 +15,15 @@
 
 int main (const int argc, const char * argv[])
 {
-  BinarySearchTree testTree;
-  std::vector<int> inputValues {2, 6, 9, 1, 5, 8, 10};
+  RedBlackTree testTree;
+//  std::vector<int> inputValues {2, 6, 9, 1, 5, 8, 10};
   // Alternative input values
-//  std::vector<int> inputValues {10, 12, 6, 4, 20, 8, 7, 15, 13};
+  // + Provides a larger RBT, where every path from the root to a leaf node
+  // ++ Also constructs the same RBT as seen in MIT Intro to Algorithms
+  std::vector<int> inputValues {26, 17, 41, 14, 21, 30, 47, 10, 16, 19, 23, 28,
+                                38, 7, 12, 15, 20, 35, 39, 3};
 
-  std::cout << "Building binary search tree with input: ";
+  std::cout << "Building red-black tree with input: ";
   for (const auto &value : inputValues) std::cout << value << ", ";
   std::cout << std::endl;
 
@@ -44,6 +47,7 @@ int main (const int argc, const char * argv[])
   // Test removing a node, printing the result in-order
   std::cout << "\nRemoving root value...\n";
   testTree.remove(testTree.getRoot()->element);
+  testTree.remove(testTree.getRoot()->element);
   // Can use inline function to remove a value directly for testing -
 //  testTree.remove(6);
 
@@ -53,20 +57,20 @@ int main (const int argc, const char * argv[])
 
   // Test copy constructor
   std::cout << "\nCloning testTree to testTree2...\n";
-  BinarySearchTree testTree2 = testTree;
+  RedBlackTree testTree2 = testTree;
   std::cout << "Inorder traversal of the cloned testTree2: \n";
   testTree2.printInOrder();
   std::cout << std::endl;
 
   // Test assignment operator
   std::cout << "\nCloning testTree to testTree3...\n";
-  BinarySearchTree testTree3;
+  RedBlackTree testTree3;
   testTree3 = testTree;
   std::cout << "Inorder traversal of the cloned testTree3 tree: \n";
   testTree3.printInOrder();
   std::cout << std::endl;
 
-  // Test emptying the BST
+  // Test emptying the RBT
   std::cout << "\nEmptying testTree...\n";
   testTree.makeEmpty();
   std::cout << "testTree isEmpty: " << (testTree.isEmpty() ? "true" : "false");
@@ -82,15 +86,15 @@ int main (const int argc, const char * argv[])
   testTree3.printInOrder();
   std::cout << std::endl;
 
-  std::cout << "\nChecking if tree contains value of 6: ";
-  std::cout << (testTree2.contains(6) ? "true" : "false") << std::endl;
+  std::cout << "\nChecking if tree contains value of 7: ";
+  std::cout << (testTree2.contains(7) ? "true" : "false") << std::endl;
   std::cout << "Checking if tree contains value of 600: ";
-  std::cout << (testTree2.contains(600) ? "true" : "false") << std::endl;
+  std::cout << (testTree2.contains(700) ? "true" : "false") << std::endl;
 
-  std::cout << "\nSuccessor of node with value 6: "
-            << testTree2.successor(testTree2.search(6))->element;
-  std::cout << "\nPredecessor of node with value 6: "
-            << testTree2.predecessor(testTree2.search(6))->element;
+  std::cout << "\nSuccessor of node with value 7: "
+            << testTree2.successor(testTree2.search(7))->element;
+  std::cout << "\nPredecessor of node with value 7: "
+            << testTree2.predecessor(testTree2.search(7))->element;
   std::cout << std::endl;
 
 }
