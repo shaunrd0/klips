@@ -1,10 +1,10 @@
-/*#############################################################################
-## Author: Shaun Reed                                                        ##
-## Legal: All Content (c) 2020 Shaun Reed, all rights reserved               ##
-## About: An example of a binary search tree implementation                  ##
-##                                                                           ##
-## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
-##############################################################################
+/*##############################################################################
+## Author: Shaun Reed                                                         ##
+## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
+## About: An example of a binary search tree implementation                   ##
+##                                                                            ##
+## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
+################################################################################
 ## bst.cpp
 */
 
@@ -21,26 +21,16 @@
  * @param rhs The BST to copy, beginning from its root BinaryNode
  * @return const BinarySearchTree& The copied BinarySearchTree object
  */
-const BinarySearchTree& BinarySearchTree::operator=(const BinarySearchTree& rhs)
+BinarySearchTree& BinarySearchTree::operator=(BinarySearchTree rhs)
 {
   // If the objects are already equal, do nothing
   if (this == &rhs) return *this;
 
   // Empty this->root
   makeEmpty();
-  // Copy rhs to this->root
-  root = clone(rhs.root);
+  std::swap(root, rhs.root);
   return *this;
 }
-
-/** Default Destructor
- * @brief Destroy the Binary Search Tree:: Binary Search Tree object
- */
-BinarySearchTree::~BinarySearchTree()
-{
-  makeEmpty(root);
-}
-
 
 /********************************************************************************
 * Public Member Functions
@@ -52,9 +42,9 @@ BinarySearchTree::~BinarySearchTree()
  *
  * @return const int& The element of the BinaryNode that holds the lowest value in our tree
  */
-const int & BinarySearchTree::findMin() const
+int BinarySearchTree::findMin() const
 {
-  return findMin(root)->element;
+  return  findMin(root) != nullptr ? findMin(root)->element: INT32_MIN;
 }
 
 /** findMax
@@ -63,9 +53,9 @@ const int & BinarySearchTree::findMin() const
  *
  * @return const int& The element of the BinaryNode that holds the highest value in our tree
  */
-const int & BinarySearchTree::findMax() const
+int BinarySearchTree::findMax() const
 {
-  return findMax(root)->element;
+  return  findMax(root) != nullptr ? findMax(root)->element: INT32_MIN;
 }
 
 /** contains
@@ -84,12 +74,12 @@ bool BinarySearchTree::contains(const int &x) const
 /** isEmpty
  * @brief Determine whether or not the calling BST object is empty
  *
- * @return true If this->root node points to an empty tree (NULL)
+ * @return true If this->root node points to an empty tree (nullptr)
  * @return false If this->root node points to a constructed BinaryNode
  */
 bool BinarySearchTree::isEmpty() const
 {
-  return root == NULL;
+  return root == nullptr;
 }
 
 /** insert
@@ -167,7 +157,7 @@ void BinarySearchTree::printPreOrder() const
 BinarySearchTree::BinaryNode * BinarySearchTree::clone(BinaryNode *t) const
 {
   // If there is nothing to copy
-  if (t == NULL) return NULL;
+  if (t == nullptr) return nullptr;
 
   // Construct all child nodes through recursion, return root node
   return new BinaryNode(t->element, clone(t->left), clone(t->right));
@@ -181,14 +171,10 @@ BinarySearchTree::BinaryNode * BinarySearchTree::clone(BinaryNode *t) const
  */
 void BinarySearchTree::insert(const int &x, BinarySearchTree::BinaryNode *&t) const
 {
-  if (t == NULL)
-    t = new BinaryNode(x, NULL, NULL);
-  else if (x < t->element)
-    insert (x, t->left);
-  else if (x > t->element)
-    insert (x, t->right);
-  else
-    return;
+  if (t == nullptr) t = new BinaryNode(x, nullptr, nullptr);
+  else if (x < t->element) insert (x, t->left);
+  else if (x > t->element) insert (x, t->right);
+  else return;
 }
 
 /** remove
@@ -199,14 +185,11 @@ void BinarySearchTree::insert(const int &x, BinarySearchTree::BinaryNode *&t) co
  */
 void BinarySearchTree::remove(const int &x, BinarySearchTree::BinaryNode *&t) const
 {
-  if (t == NULL)
-    return;
+  if (t == nullptr) return;
 
-  if (x < t->element)
-    remove(x, t->left);
-  else if (x > t->element)
-    remove(x, t->right);
-  else if (t->left != NULL && t->right != NULL) {
+  if (x < t->element) remove(x, t->left);
+  else if (x > t->element) remove(x, t->right);
+  else if (t->left != nullptr && t->right != nullptr) {
     // If we found the node and there are two branches
     t->element = findMin(t->right)->element;
     std::cout << "Removing [" << t->element << "]...\n";
@@ -215,7 +198,7 @@ void BinarySearchTree::remove(const int &x, BinarySearchTree::BinaryNode *&t) co
   else {
     // If we found the value and there is only one branch
     BinaryNode *oldNode = t;
-    t = (t->left != NULL) ? t->left : t->right;
+    t = (t->left != nullptr) ? t->left : t->right;
     std::cout << "Removing [" << oldNode->element << "]...\n";
     delete oldNode;
   }
@@ -225,40 +208,32 @@ void BinarySearchTree::remove(const int &x, BinarySearchTree::BinaryNode *&t) co
  * @brief Find the minimum value within the BST of the given BinaryNode
  *
  * @param t The root BinaryNode to begin checking values
- * @return BinarySearchTree::BinaryNode* The BinaryNode which contains the smallest value (returns NULL if BST is empty)
+ * @return BinarySearchTree::BinaryNode* The BinaryNode which contains the smallest value (returns nullptr if BST is empty)
  */
 BinarySearchTree::BinaryNode * BinarySearchTree::findMin(BinarySearchTree::BinaryNode *t) const
 {
-  while (t != NULL)
-    t = t->left;
 
   // If our tree is empty
-  if (t == NULL)
-    return NULL;
+  if (t == nullptr) return nullptr;
 
-  // If current node has no smaller children, it is min
-  if (t->left == NULL)
-    return t;
+  while (t->left != nullptr) t = t->left;
 
-  // Move down the left side of our tree and check again
-  return findMin(t->left);
+  return t;
 }
 
 /** findMax
  * @brief Find the maximum value within the BST of the given BinaryNode
  *
  * @param t The root BinaryNode to begin checking values
- * @return BinarySearchTree::BinaryNode* The BinaryNode which contains the largest value (returns NULL if BST is empty)
+ * @return BinarySearchTree::BinaryNode* The BinaryNode which contains the largest value (returns nullptr if BST is empty)
  */
 BinarySearchTree::BinaryNode * BinarySearchTree::findMax(BinarySearchTree::BinaryNode *t) const
 {
   // If our tree is empty
-  if (t == NULL)
-    return NULL;
+  if (t == nullptr) return nullptr;
 
   // If current node has no larger children, it is max
-  if (t->right == NULL)
-    return t;
+  if (t->right == nullptr) return t;
 
   // Move down the right side of our tree and check again
   return findMax(t->right);
@@ -274,14 +249,13 @@ BinarySearchTree::BinaryNode * BinarySearchTree::findMax(BinarySearchTree::Binar
  */
 bool BinarySearchTree::contains(const int &x, BinarySearchTree::BinaryNode *t) const
 {
-  if (t == NULL) // If tree is empty
-    return false;
-  else if (x < t->element) // If x is smaller than our current value
-    return contains(x, t->left);// Check left node
-  else if (x > t->element) // If x is larger than our current value
-    return contains(x, t->right); // Check right node
-  else
-    return true;
+  // If tree is empty
+  if (t == nullptr) return false;
+  // If x is smaller than our current value
+  else if (x < t->element) return contains(x, t->left);
+  // If x is larger than our current value, check the right node
+  else if (x > t->element) return contains(x, t->right);
+  else return true;
 }
 
 /** makeEmpty
@@ -291,12 +265,12 @@ bool BinarySearchTree::contains(const int &x, BinarySearchTree::BinaryNode *t) c
  */
 void BinarySearchTree::makeEmpty(BinarySearchTree::BinaryNode * & t)
 {
-  if (t != NULL) {
+  if (t != nullptr) {
     makeEmpty(t->left);
     makeEmpty(t->right);
     delete t;
   }
-  t = NULL;
+  t = nullptr;
 }
 
 /** printInOrder
@@ -306,7 +280,7 @@ void BinarySearchTree::makeEmpty(BinarySearchTree::BinaryNode * & t)
  */
 void BinarySearchTree::printInOrder(BinaryNode *t) const
 {
-  if(t != NULL) {
+  if(t != nullptr) {
     printInOrder(t->left);
     std::cout << t->element << " ";
     printInOrder(t->right);
@@ -320,7 +294,7 @@ void BinarySearchTree::printInOrder(BinaryNode *t) const
  */
 void BinarySearchTree::printPostOrder(BinaryNode *t) const
 {
-  if (t != NULL) {
+  if (t != nullptr) {
     printPostOrder(t->left);
     printPostOrder(t->right);
     std::cout << t->element << " ";
@@ -328,13 +302,13 @@ void BinarySearchTree::printPostOrder(BinaryNode *t) const
 }
 
 /** printPreOrder
- * @brief Output the value of the noot nodes before their subtrees
+ * @brief Output the value of the root nodes before their subtrees
  *
  * @param t The root BinaryNode to begin the 'Pre Order' output
  */
 void BinarySearchTree::printPreOrder(BinaryNode *t) const
 {
-  if (t != NULL) {
+  if (t != nullptr) {
     std::cout << t->element << " ";
     printPreOrder(t->left);
     printPreOrder(t->right);

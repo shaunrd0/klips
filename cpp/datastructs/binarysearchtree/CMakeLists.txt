@@ -8,9 +8,14 @@
 #
 cmake_minimum_required(VERSION 3.15)
 
-# Define the project name
-project(BinarySearchTree)
-# Define source files
-set(SRC driver.cpp bst.cpp)
-# Build an executable
-add_executable(BSTDriver ${SRC})
+project (
+    #[[NAME]]   BinaryTree
+    VERSION     1.0
+    DESCRIPTION "A project for testing a basic implementation of a BST"
+    LANGUAGES   CXX
+)
+
+add_library(lib-bst "bst.cpp")
+
+add_executable(test-bst "driver.cpp")
+target_link_libraries(test-bst lib-bst)
