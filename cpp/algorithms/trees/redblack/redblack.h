@@ -30,13 +30,13 @@ public:
                  RedBlackNode *lt, RedBlackNode *rt, RedBlackNode *p)
         :element(el), color(c), left(lt), right(rt), parent(p) {};
     // Ctor for copying a node and any downstream nodes
-    explicit RedBlackNode(RedBlackNode * toCopy);
+    RedBlackNode(const RedBlackNode &toCopy);
   };
   static RedBlackNode *nil;
 
   RedBlackTree() : root(nil) {};
   RedBlackTree(const RedBlackTree &rhs);;
-  RedBlackTree& operator=(const RedBlackTree& rhs);
+  RedBlackTree& operator=(RedBlackTree rhs);
   ~RedBlackTree() { makeEmpty(root);};
   // Inlined functions provide less verbose interface for using the RBT
   inline RedBlackNode * getRoot() const { return root;}

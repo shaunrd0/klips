@@ -17,51 +17,48 @@
 *******************************************************************************/
 
 /** BinarySearchTree Copy Assignment Operator
- * @brief Empty the calling object's root BinaryNode, and copy the rhs data
+ * @brief Empty the calling object's root BinaryNode, and swap the rhs data
+ * + Utilizes the copy-swap-idiom
  *
- * Runs in O( n ) time, since we visit each node in the BST once
- * + Where n is the total number of nodes within the BST
- *
- * makeEmpty() and clone() are both O( n ), and we call each sequentially
- * + This would appear to be O( 2n ), but we drop the constant of 2
+ * Runs in O( n ) time, since we call makeEmpty() which runs is O( n )
  *
  * @param rhs The BST to copy, beginning from its root BinaryNode
- * @return const BinarySearchTree& The copied BinarySearchTree object
+ * @return BinarySearchTree The copied BinarySearchTree object
  */
-BinarySearchTree& BinarySearchTree::operator=(const BinarySearchTree &rhs)
+BinarySearchTree& BinarySearchTree::operator=(BinarySearchTree rhs)
 {
   // If the objects are already equal, do nothing
   if (this == &rhs) return *this;
-
   // Empty this->root
   makeEmpty(root);
   // Copy rhs to this->root
-  root = clone(rhs.root);
+  std::swap(root, rhs.root);
   return *this;
 }
 
 /*  BinaryNode Copy Constructor
+ * @brief Recursively copy rhs node and all child nodes
  *
  * Runs in O( n ) time, since we visit each node in the BST once
  * + Where n is the total number of nodes within the BST
  *
  * @param rhs An existing BST to initialize this node (and children) with
  */
-BinarySearchTree::BinaryNode::BinaryNode(BinaryNode * toCopy)
+BinarySearchTree::BinaryNode::BinaryNode(const BinaryNode &rhs)
 {
   // Base case, breaks recursion when we hit a null node
   // + Returns to the previous call in the stack
-  if (toCopy == nullptr) return;
+  if (isEmpty(this)) return;
   // Set the element of this BinaryNode to the value in toCopy->element
-  element = toCopy->element;
+  element = rhs.element;
   // If there is a left / right node, copy it using recursion
   //  + If there is no left / right node, set them to nullptr
-  if (toCopy->left != nullptr) {
-    left = new BinaryNode(toCopy->left);
+  if (rhs.left != nullptr) {
+    left = new BinaryNode(*rhs.left);
     left->parent = this;
   }
-  if (toCopy->right != nullptr) {
-    right = new BinaryNode(toCopy->right);
+  if (rhs.right != nullptr) {
+    right = new BinaryNode(*rhs.right);
     right->parent = this;
   }
 }
@@ -111,19 +108,6 @@ void BinarySearchTree::makeEmpty(BinarySearchTree::BinaryNode * & tree)
     delete tree;
     tree = nullptr;
   }
-}
-
-/** isEmpty
- * @brief Determine whether or not the calling BST object is empty
- *
- * Runs in constant time, O( 1 )
- *
- * @return true If this->root node points to an empty tree (nullptr)
- * @return false If this->root node points to a constructed BinaryNode
- */
-bool BinarySearchTree::isEmpty() const
-{
-  return root == nullptr;
 }
 
 /** insert
@@ -268,6 +252,7 @@ BinarySearchTree::BinaryNode *BinarySearchTree::search(
   if (start == nullptr || start->element == value) return start;
   else if (start->element < value) return search(value, start->right);
   else if (start->element > value) return search(value, start->left);
+  else return nullptr;
 }
 
 /** findMin
@@ -382,7 +367,7 @@ BinarySearchTree::BinaryNode * BinarySearchTree::clone(BinaryNode *start)
   if (start == nullptr) return nullptr;
 
   // Construct all child nodes through recursion, return root node
-  return new BinaryNode(start);
+  return new BinaryNode(*start);
 }
 
 /** transplant

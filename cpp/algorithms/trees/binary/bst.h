@@ -27,12 +27,13 @@ public:
     BinaryNode(const int &el, BinaryNode *lt, BinaryNode *rt, BinaryNode *p)
         :element(el), left(lt), right(rt), parent(p) {};
     // Ctor for a node and any downstream nodes
-    explicit BinaryNode(BinaryNode * toCopy);
+    BinaryNode(const BinaryNode &rhs);
   };
 
   BinarySearchTree() : root(nullptr) {};
-  BinarySearchTree(const BinarySearchTree &rhs) : root(rhs.clone(rhs.root)) {};
-  BinarySearchTree& operator=(const BinarySearchTree& rhs);
+  BinarySearchTree(const BinarySearchTree &rhs) :
+      root(BinarySearchTree::clone(rhs.root)) {};
+  BinarySearchTree& operator=(BinarySearchTree rhs);
   ~BinarySearchTree() { makeEmpty(root);};
   inline BinaryNode * getRoot() const { return root;}
 
@@ -44,7 +45,8 @@ public:
   inline void makeEmpty() { makeEmpty(root);}
   void makeEmpty(BinaryNode *&tree);
   // Checks if this BST is empty
-  bool isEmpty() const;
+  inline bool isEmpty() const { return isEmpty(root);}
+  static inline bool isEmpty(const BinaryNode *rhs) { return rhs == nullptr;}
 
   // Insert and remove values from a tree or subtree
   inline void insert(const int &x) { insert(x, root, nullptr);}
@@ -70,7 +72,11 @@ public:
   BinaryNode * findMin(BinaryNode *start) const;
   BinaryNode * findMax(BinaryNode *start) const;
 
+  inline BinaryNode * predecessor(const int &value) const
+  { return predecessor(search(value));}
   BinaryNode * predecessor(BinaryNode *startNode) const;
+  inline BinaryNode * successor(const int &value) const
+  { return successor(search(value));}
   BinaryNode * successor(BinaryNode *startNode) const;
 
 private:

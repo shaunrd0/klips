@@ -27,35 +27,35 @@ RedBlackTree::RedBlackNode *RedBlackTree::nil = new RedBlackTree::RedBlackNode()
  *
  * @param rhs An existing RBT to initialize this node (and children) with
  */
-RedBlackTree::RedBlackNode::RedBlackNode(RedBlackNode * toCopy)
+RedBlackTree::RedBlackNode::RedBlackNode(const RedBlackNode &toCopy)
 {
   // Base case, breaks recursion when we hit a null node
   // + Returns to the previous call in the stack
-  if (toCopy == nil) return;
+  if (&toCopy == nil) return;
   // Set the element of this RedBlackNode to the value in toCopy->element
-  element = toCopy->element;
+  element = toCopy.element;
   // If there is a left / right node, copy it using recursion
   //  + If there is no left / right node, set them to nullptr
-  if (toCopy->left != nil) {
-    left = new RedBlackNode(toCopy->left);
+  if (toCopy.left != nil) {
+    left = new RedBlackNode(*toCopy.left);
     left->parent = this;
   }
   else left = nil;
 
-  if (toCopy->right != nil) {
-    right = new RedBlackNode(toCopy->right);
+  if (toCopy.right != nil) {
+    right = new RedBlackNode(*toCopy.right);
     right->parent = this;
   }
   else right = nil;
 
-  if (toCopy->parent == nil) parent = nil;
+  if (toCopy.parent == nil) parent = nil;
 
-  // TODO: Fix the copying of the RBT
-  color = toCopy->color;
+  color = toCopy.color;
 }
 
 /** RedBlackTree Copy Assignment Operator
- * @brief Empty the calling object's root RedBlackNode, and copy the rhs data
+ * @brief Empty the calling object's root RedBlackNode, swap with the rhs data
+ * + Utilizes the copy-swap-idiom
  *
  * Runs in O( n ) time, since we visit each node in the RBT once
  * + Where n is the total number of nodes within the RBT
@@ -66,17 +66,15 @@ RedBlackTree::RedBlackNode::RedBlackNode(RedBlackNode * toCopy)
  * @param rhs The RBT to copy, beginning from its root RedBlackNode
  * @return RedBlackTree The copied RedBlackTree object
  */
-RedBlackTree& RedBlackTree::operator=(const RedBlackTree &rhs)
+RedBlackTree& RedBlackTree::operator=(RedBlackTree rhs)
 {
   // If the objects are already equal, do nothing
   if (this == &rhs) return *this;
 
   // Empty this->root
   makeEmpty(root);
-
-//  if (root == nil) root = new RedBlackNode();
   // Copy rhs to this->root
-  root = clone(rhs.root);
+  std::swap(root, rhs.root);
   return *this;
 }
 
@@ -119,7 +117,7 @@ bool RedBlackTree::contains(const int &value, RedBlackNode *start) const
  */
 void RedBlackTree::rotateLeft(RedBlackNode *pivotNode)
 {
-  // To rotateRight, we must relocate the rightChild node
+  // To rotateLeft, we must relocate the rightChild node
   RedBlackNode *rightChild = pivotNode->right;
 
   pivotNode->right = rightChild->left;
@@ -640,6 +638,7 @@ RedBlackTree::RedBlackNode *RedBlackTree::search(
   if (start == nil || start->element == value) return start;
   else if (start->element < value) return search(value, start->right);
   else if (start->element > value) return search(value, start->left);
+  else return nullptr;
 }
 
 /** findMin
@@ -756,7 +755,7 @@ RedBlackTree::RedBlackNode * RedBlackTree::clone(RedBlackNode *start)
   if (start == nil) return nil;
 
   // Construct all child nodes through recursion, return root node
-  return new RedBlackNode(start);
+  return new RedBlackNode(*start);
 }
 
 /** transplant

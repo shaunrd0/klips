@@ -15,12 +15,12 @@ project (
     LANGUAGES   CXX
 )
 
-add_subdirectory(merge)
-add_subdirectory(selection)
-add_subdirectory(insertion)
 add_subdirectory(bubble)
-add_subdirectory(heap)
-add_subdirectory(quick)
-add_subdirectory(count)
 add_subdirectory(bucket)
+add_subdirectory(count)
+add_subdirectory(heap)
+add_subdirectory(insertion)
+add_subdirectory(merge)
+add_subdirectory(quick)
 add_subdirectory(radix)
+add_subdirectory(selection)
