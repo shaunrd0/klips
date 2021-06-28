@@ -23,7 +23,7 @@ int main (const int argc, const char * argv[])
       {7, {3, 4, 6, 8}},
       {8, {4, 6}},
   };
-//  Graph bfsGraph(localNodes);
+  //  Graph bfsGraph(localNodes);
 
 
   std::cout << "\n\n##### Breadth First Search #####\n";
@@ -78,6 +78,8 @@ int main (const int argc, const char * argv[])
           {9, {}},
       }
   );
+
+
   // The graph traversed in this example is seen in MIT Intro to Algorithms
   // + Chapter 22, Figure 22.7 on Topological Sort
   // + Each node was replaced with a value from left-to-right, top-to-bottom
