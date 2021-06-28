@@ -13,33 +13,48 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
-#include <set>
 #include <utility>
 #include <vector>
 #include <queue>
-
-// A vertex can also be referred to as a node
-// + ... Unless you are a mathematician ^.^
-struct Vertex {
-  // This vertex's number
-  int number;
-  // A set of all vertices adjacent to this vertex
-  std::set<int> adjacent;
-};
+#include <unordered_set>
 
 enum Color {White, Gray, Black};
 
 struct Node {
 public:
-  Node(int num, std::set<int> adj) : number(num), adjacent(std::move(adj)) {}
+  Node(const Node &rhs) = default;
+  Node & operator=(Node rhs) {
+    if (this == &rhs) return *this;
+    swap(*this, rhs);
+    return *this;
+  }
+  friend void swap(Node &a, Node &b) {
+    std::swap(a.number, b.number);
+    std::swap(a.adjacent, b.adjacent);
+    std::swap(a.color, b.color);
+    std::swap(a.discoveryFinish, b.discoveryFinish);
+  }
+
+  Node(int num, std::vector<int> adj) :
+      number(num), adjacent(std::move(adj)) {}
   int number;
-  std::set<int> adjacent;
+  std::vector<int> adjacent;
   // Mutable so we can update the color of the nodes during traversal
   mutable Color color = White;
-  std::vector<int> predecessors;
+  // Create a pair to track discovery / finish time
+  // + Discovery time is the iteration the node is first discovered
+  // + Finish time is the iteration the node has been checked completely
+  // ++ A finished node has considered all adjacent nodes
+  mutable std::pair<int, int> discoveryFinish;
 
-//  bool operator<(const Node &node1) const { return number < node1.number;}
-  inline void setColor(Color newColor) const { color = newColor;}
+  // Define a comparator for std::sort
+  // + This will help to sort nodes by finished time after traversal
+  static bool FinishedSort(const Node &node1, const Node &node2)
+      { return node1.discoveryFinish.second < node2.discoveryFinish.second;}
+
+
+  // Define operator== for std::find
+  bool operator==(const Node &b) const { return this->number == b.number;}
 };
 
 class Graph {
@@ -49,10 +64,8 @@ public:
 
   void BFS(const Node& startNode) const;
   void DFS() const;
-  void DFSVisit(const Node& startNode) const;
+  void DFSVisit(int &time, const Node& startNode) const;
   std::vector<Node> TopologicalSort() const;
-  void TopologicalVisit(const Node &startNode, std::vector<Node> &order) const;
-
 };
 
 #endif // LIB_GRAPH_HPP

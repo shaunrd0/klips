@@ -52,6 +52,7 @@ void Graph::DFS() const
 {
   // Track the nodes we have discovered
   for (const auto &node : nodes_) node.color = White;
+  int time = 0;
 
   // Visit each node in the graph
   for (const auto& node : nodes_) {
@@ -60,69 +61,43 @@ void Graph::DFS() const
     if (node.color == White) {
       std::cout << "Found undiscovered node: " << node.number << std::endl;
       // Visiting the undiscovered node will check it's adjacent nodes
-      DFSVisit(node);
+      DFSVisit(time, node);
     }
   }
 
 }
 
-void Graph::DFSVisit(const Node& startNode) const
+void Graph::DFSVisit(int &time, const Node& startNode) const
 {
   startNode.color = Gray;
+  time++;
+  startNode.discoveryFinish.first = time;
   // Check the adjacent nodes of the startNode
   for (const auto &adjacent : startNode.adjacent) {
+    auto iter = std::find(nodes_.begin(), nodes_.end(),
+                          Node(adjacent, {}));
     // If the adjacentNode is undiscovered, visit it
     // + Offset by 1 to account for 0 index of discovered vector
-    if (nodes_[adjacent - 1].color == White) {
+    if (iter->color == White) {
       std::cout << "Found undiscovered adjacentNode: "
                 << nodes_[adjacent - 1].number << std::endl;
       // Visiting the undiscovered node will check it's adjacent nodes
-      DFSVisit(nodes_[adjacent - 1]);
+      DFSVisit(time, *iter);
     }
   }
   startNode.color = Black;
+  time++;
+  startNode.discoveryFinish.second = time;
 }
 
 std::vector<Node> Graph::TopologicalSort() const
 {
-  std::vector<Node> topologicalOrder;
+  DFS();
+  std::vector<Node> topological(nodes_);
 
-  // Track the nodes we have discovered
-  for (const auto &node : nodes_) node.color = White;
-
-  // Visit each node in the graph
-  for (const auto &node : nodes_) {
-    std::cout << "Visiting node " << node.number << std::endl;
-    // If the node is undiscovered, visit it
-    if (node.color == White) {
-      std::cout << "Found undiscovered node: " << node.number << std::endl;
-      // Visiting the undiscovered node will check it's adjacent nodes
-      TopologicalVisit(node, topologicalOrder);
-    }
-  }
+  std::sort(topological.begin(), topological.end(), Node::FinishedSort);
 
   // The topologicalOrder is read right-to-left in the final result
   // + Output is handled in main as FILO, similar to a stack
-  return topologicalOrder;
-}
-
-void Graph::TopologicalVisit(const Node &startNode,
-                             std::vector<Node> &order) const
-{
-  // Mark the node as visited so we don't visit it twice
-  startNode.color = Gray;
-
-  // Check the adjacent nodes of the startNode
-  for (const auto& adjacent : startNode.adjacent) {
-    // If the adjacentNode is undiscovered, visit it
-    if (nodes_[adjacent - 1].color == White) {
-      std::cout << "Found undiscovered adjacentNode: " << adjacent << std::endl;
-      // Visiting the undiscovered node will check it's adjacent nodes
-      TopologicalVisit(nodes_[adjacent - 1], order);
-    }
-  }
-  startNode.color = Black;
-
-  // Add startNode to the topologicalOrder
-  order.push_back(startNode);
+  return topological;
 }

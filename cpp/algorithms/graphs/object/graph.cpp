@@ -14,7 +14,7 @@
 int main (const int argc, const char * argv[])
 {
   // We could initialize the graph with some localNodes...
-  std::map<int, std::set<int>> localNodes{
+  std::map<int, std::vector<int>> localNodes{
       {1, {2, 5}}, // Node 1
       {2, {1, 6}}, // Node 2
       {3, {4, 6, 7}},
@@ -25,13 +25,6 @@ int main (const int argc, const char * argv[])
       {8, {4, 6}},
   };
 //  Graph bfsGraph(localNodes);
-
-//  Graph testGraph(
-//      {
-//          {Node(1, {2, 5})},
-////          {Node(1, {2, 5})},
-//       }
-//  )
 
 
   std::cout << "\n\n##### Breadth First Search #####\n";
@@ -77,19 +70,20 @@ int main (const int argc, const char * argv[])
   // Initialize an example graph for Depth First Search
   Graph topologicalGraph (
       {
-          {1, {4, 5}},
-          {2, {5}},
-          {3, {}},
-          {4, {5, 7}},
-          {5, {}},
-          {6, {7, 8}},
-          {7, {9}},
-          {8, {9}},
-          {9, {}},
+          {6, {8, 7}}, // shirt
+          {8, {9}},    // tie
+          {7, {9}},    // belt
+          {9, {}},     // jacket
+          {3, {}},     // watch
+          {1, {4, 5}}, // undershorts
+          {4, {5, 7}}, // pants
+          {5, {}},     // shoes
+          {2, {5}},    // socks
       }
   );
   // The graph traversed in this example is seen in MIT Intro to Algorithms
   // + Chapter 22, Figure 22.4 on DFS
+  // Unlike the simple-graph example, this final result matches MIT Algorithms
   std::vector<Node> order = topologicalGraph.TopologicalSort();
   std::cout << "\n\nTopological order: ";
   while (!order.empty()) {
