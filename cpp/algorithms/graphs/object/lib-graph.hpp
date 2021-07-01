@@ -18,16 +18,23 @@
 #include <queue>
 #include <unordered_set>
 
+// Color represents the discovery status of any given node
+// + White is undiscovered, Gray is in progress, Black is fully discovered
 enum Color {White, Gray, Black};
 
+/******************************************************************************/
+// Node structure for representing a graph
 struct Node {
 public:
+  // Constructors
   Node(const Node &rhs) = default;
   Node & operator=(Node rhs) {
     if (this == &rhs) return *this;
     swap(*this, rhs);
     return *this;
   }
+  Node(int num, std::vector<int> adj) : number(num), adjacent(std::move(adj)) {}
+
   friend void swap(Node &a, Node &b) {
     std::swap(a.number, b.number);
     std::swap(a.adjacent, b.adjacent);
@@ -35,13 +42,23 @@ public:
     std::swap(a.discoveryFinish, b.discoveryFinish);
   }
 
-  Node(int num, std::vector<int> adj) :
-      number(num), adjacent(std::move(adj)) {}
+  // Don't allow anyone to change these values when using a const reference
   int number;
   std::vector<int> adjacent;
-  // Mutable so we can update the color of the nodes during traversal
+
+  // Mutable members so we can update these values when using a const reference
+  // + Since they need to be modified during traversals
+
+  // Coloring of the nodes are used in both DFS and BFS
   mutable Color color = White;
-  // Create a pair to track discovery / finish time
+
+  // Used in BFS to represent distance from start node
+  mutable int distance = 0;
+  // Used in BFS to represent the parent node that discovered this node
+  // + If we use this node as the starting point, this will remain a nullptr
+  mutable Node *predecessor = nullptr;
+
+  // Create a pair to track discovery / finish time when using DFS
   // + Discovery time is the iteration the node is first discovered
   // + Finish time is the iteration the node has been checked completely
   // ++ A finished node has considered all adjacent nodes
@@ -51,21 +68,46 @@ public:
   // + This will help to sort nodes by finished time after traversal
   static bool FinishedSort(const Node &node1, const Node &node2)
       { return node1.discoveryFinish.second < node2.discoveryFinish.second;}
-
-
   // Define operator== for std::find
   bool operator==(const Node &b) const { return this->number == b.number;}
 };
 
+
+/******************************************************************************/
+// Graph class declaration
 class Graph {
 public:
+  // Constructor
   explicit Graph(std::vector<Node> nodes) : nodes_(std::move(nodes)) {}
-  std::vector<Node> nodes_;
 
+
+  // Breadth First Search
   void BFS(const Node& startNode) const;
+  std::deque<const Node *> PathBFS(const Node &start, const Node &finish) const;
+
+
+  // Depth First Search
   void DFS() const;
+  void DFS(const Node &startNode) const;
   void DFSVisit(int &time, const Node& startNode) const;
-  std::vector<Node> TopologicalSort() const;
+  // Topological sort, using DFS
+  std::vector<Node> TopologicalSort(const Node &startNode) const;
+
+
+  // Returns a copy of a node with the number i within the graph
+  inline Node GetNodeCopy(int i) { return GetNode(i);}
+  // Return a constant iterator for reading node values
+  inline std::vector<Node>::const_iterator NodeBegin() { return nodes_.begin();}
+
+private:
+  // A non-const accessor for direct access to a node with the number value i
+  inline Node & GetNode(int i)
+    { return *std::find(nodes_.begin(), nodes_.end(), Node(i, {}));}
+  // For use with const member functions to access mutable values
+  inline const Node & GetNode(int i) const
+    { return *std::find(nodes_.begin(), nodes_.end(), Node(i, {}));}
+
+  std::vector<Node> nodes_;
 };
 
 #endif // LIB_GRAPH_HPP

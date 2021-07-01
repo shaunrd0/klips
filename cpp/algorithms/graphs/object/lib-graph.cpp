@@ -14,13 +14,19 @@ void Graph::BFS(const Node& startNode) const
 {
   // Track the nodes we have discovered
   //  TODO: Do this at the end to maintain the state instead of at beginning?
-  for (const auto &node : nodes_) node.color = White;
+  for (const auto &node : nodes_) {
+    node.color = White;
+    node.distance = 0;
+    node.predecessor = nullptr;
+  }
 
   // Create a queue to visit discovered nodes in FIFO order
   std::queue<Node> visitQueue;
 
   // Mark the startNode as in progress until we finish checking adjacent nodes
   startNode.color = Gray;
+//  startNode.distance = 0;
+//  startNode.predecessor = nullptr;
 
   // Visit the startNode
   visitQueue.push(startNode);
@@ -34,18 +40,47 @@ void Graph::BFS(const Node& startNode) const
 
     // Check if we have already discovered all the adjacentNodes to thisNode
     for (const auto &adjacent : thisNode.adjacent) {
-      if (nodes_[adjacent - 1].color == White) {
+      if (GetNode(adjacent).color == White) {
         std::cout << "Found undiscovered adjacentNode: " << adjacent << "\n";
         // Mark the adjacent node as in progress
-        nodes_[adjacent - 1].color = Gray;
+        GetNode(adjacent).color = Gray;
+        GetNode(adjacent).distance = thisNode.distance + 1;
+        GetNode(adjacent).predecessor =
+            const_cast<Node *>(&GetNode(thisNode.number));
+
         // Add the discovered node the the visitQueue
-        visitQueue.push(nodes_[adjacent - 1]);
+        visitQueue.push(GetNode(adjacent));
       }
     }
     // We are finished with this node and the adjacent nodes; Mark it discovered
-    thisNode.color = Black;
+    GetNode(thisNode.number).color = Black;
   }
+}
 
+std::deque<const Node *> Graph::PathBFS(const Node &start, const Node &finish) const
+{
+  std::deque<const Node *> path;
+
+  BFS(start);
+  const Node * next = finish.predecessor;
+  bool isValid = false;
+  do {
+    // If we have reached the start node, we have found a valid path
+    if (*next == Node(start)) isValid = true;
+
+    // Add the node to the path as we check each node
+    path.push_front(next);
+
+    // Move to the next node
+    next = next->predecessor;
+  } while (next != nullptr);
+  path.push_back(new Node(finish));
+
+  // If we never found a valid path, erase all contents of the path
+  if (!isValid) path.erase(path.begin(), path.end());
+
+  // Return the path, the caller should handle empty paths accordingly
+  return path;
 }
 
 void Graph::DFS() const
@@ -67,6 +102,42 @@ void Graph::DFS() const
 
 }
 
+void Graph::DFS(const Node &startNode) const
+{
+  // Track the nodes we have discovered
+  for (const auto &node : nodes_) node.color = White;
+  int time = 0;
+
+  Node begin = startNode;
+  auto startIter = std::find(nodes_.begin(), nodes_.end(),
+                             Node(startNode.number, {})
+  );
+
+  // Visit each node in the graph
+  while (startIter != nodes_.end()) {
+    std::cout << "Visiting node " << startIter->number << std::endl;
+    // If the startIter is undiscovered, visit it
+    if (startIter->color == White) {
+      std::cout << "Found undiscovered node: " << startIter->number << std::endl;
+      // Visiting the undiscovered node will check it's adjacent nodes
+      DFSVisit(time, *startIter);
+    }
+    startIter++;
+  }
+  startIter = nodes_.begin();
+
+  while (! (*startIter == startNode)) {
+    std::cout << "Visiting node " << startIter->number << std::endl;
+    // If the startIter is undiscovered, visit it
+    if (startIter->color == White) {
+      std::cout << "Found undiscovered node: " << startIter->number << std::endl;
+      // Visiting the undiscovered node will check it's adjacent nodes
+      DFSVisit(time, *startIter);
+    }
+    startIter++;
+  }
+}
+
 void Graph::DFSVisit(int &time, const Node& startNode) const
 {
   startNode.color = Gray;
@@ -80,7 +151,7 @@ void Graph::DFSVisit(int &time, const Node& startNode) const
     // + Offset by 1 to account for 0 index of discovered vector
     if (iter->color == White) {
       std::cout << "Found undiscovered adjacentNode: "
-                << nodes_[adjacent - 1].number << std::endl;
+                << GetNode(adjacent).number << std::endl;
       // Visiting the undiscovered node will check it's adjacent nodes
       DFSVisit(time, *iter);
     }
@@ -90,9 +161,9 @@ void Graph::DFSVisit(int &time, const Node& startNode) const
   startNode.discoveryFinish.second = time;
 }
 
-std::vector<Node> Graph::TopologicalSort() const
+std::vector<Node> Graph::TopologicalSort(const Node &startNode) const
 {
-  DFS();
+  DFS(GetNode(startNode.number));
   std::vector<Node> topological(nodes_);
 
   std::sort(topological.begin(), topological.end(), Node::FinishedSort);
