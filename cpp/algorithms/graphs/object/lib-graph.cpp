@@ -12,54 +12,55 @@
 
 void Graph::BFS(const Node& startNode) const
 {
-  // Track the nodes we have discovered
-  //  TODO: Do this at the end to maintain the state instead of at beginning?
+  // Track the nodes we have discovered by their Color
   for (const auto &node : nodes_) {
     node.color = White;
+    // Track distance from the startNode
     node.distance = 0;
+    // Track predecessor using node that discovers this node
+    // + If this is the startNode, predecessor remains nullptr
     node.predecessor = nullptr;
   }
 
   // Create a queue to visit discovered nodes in FIFO order
-  std::queue<Node> visitQueue;
+  std::queue<const Node *> visitQueue;
 
   // Mark the startNode as in progress until we finish checking adjacent nodes
   startNode.color = Gray;
-//  startNode.distance = 0;
-//  startNode.predecessor = nullptr;
 
   // Visit the startNode
-  visitQueue.push(startNode);
+  visitQueue.push(&startNode);
 
   // Continue to visit nodes until there are none left in the graph
   while (!visitQueue.empty()) {
     // Remove thisNode from the visitQueue, storing its vertex locally
-    Node thisNode = visitQueue.front();
+    const Node * thisNode = visitQueue.front();
     visitQueue.pop();
-    std::cout << "Visiting node " << thisNode.number << std::endl;
+    std::cout << "Visiting node " << thisNode->number << std::endl;
 
     // Check if we have already discovered all the adjacentNodes to thisNode
-    for (const auto &adjacent : thisNode.adjacent) {
+    for (const auto &adjacent : thisNode->adjacent) {
       if (GetNode(adjacent).color == White) {
         std::cout << "Found undiscovered adjacentNode: " << adjacent << "\n";
         // Mark the adjacent node as in progress
         GetNode(adjacent).color = Gray;
-        GetNode(adjacent).distance = thisNode.distance + 1;
-        GetNode(adjacent).predecessor =
-            const_cast<Node *>(&GetNode(thisNode.number));
+        GetNode(adjacent).distance = thisNode->distance + 1;
+        GetNode(adjacent).predecessor = &GetNode(thisNode->number);
 
         // Add the discovered node the the visitQueue
-        visitQueue.push(GetNode(adjacent));
+        visitQueue.push(&GetNode(adjacent));
       }
     }
     // We are finished with this node and the adjacent nodes; Mark it discovered
-    GetNode(thisNode.number).color = Black;
+    GetNode(thisNode->number).color = Black;
   }
 }
 
-std::deque<const Node *> Graph::PathBFS(const Node &start, const Node &finish) const
+std::deque<Node> Graph::PathBFS(const Node &start, const Node &finish) const
 {
-  std::deque<const Node *> path;
+  // Store the path as copies of each node
+  // + If the caller modifies these, it will not impact the graph's data
+  std::deque<Node> path;
 
   BFS(start);
   const Node * next = finish.predecessor;
@@ -69,12 +70,14 @@ std::deque<const Node *> Graph::PathBFS(const Node &start, const Node &finish) c
     if (*next == Node(start)) isValid = true;
 
     // Add the node to the path as we check each node
-    path.push_front(next);
+    // + Use emplace_front to call the Node copy constructor
+    path.emplace_front(*next);
 
     // Move to the next node
     next = next->predecessor;
   } while (next != nullptr);
-  path.push_back(new Node(finish));
+  // Use emplace_back to call Node copy constructor
+  path.emplace_back(finish);
 
   // If we never found a valid path, erase all contents of the path
   if (!isValid) path.erase(path.begin(), path.end());
@@ -108,12 +111,11 @@ void Graph::DFS(const Node &startNode) const
   for (const auto &node : nodes_) node.color = White;
   int time = 0;
 
-  Node begin = startNode;
   auto startIter = std::find(nodes_.begin(), nodes_.end(),
                              Node(startNode.number, {})
   );
 
-  // Visit each node in the graph
+  // beginning at startNode, visit each node in the graph until we reach the end
   while (startIter != nodes_.end()) {
     std::cout << "Visiting node " << startIter->number << std::endl;
     // If the startIter is undiscovered, visit it
@@ -124,9 +126,12 @@ void Graph::DFS(const Node &startNode) const
     }
     startIter++;
   }
+
+  // Once we reach the last node, check the beginning for unchecked nodes
   startIter = nodes_.begin();
 
-  while (! (*startIter == startNode)) {
+  // Once we reach the initial startNode, we have checked all nodes
+  while (*startIter != startNode) {
     std::cout << "Visiting node " << startIter->number << std::endl;
     // If the startIter is undiscovered, visit it
     if (startIter->color == White) {
@@ -143,6 +148,7 @@ void Graph::DFSVisit(int &time, const Node& startNode) const
   startNode.color = Gray;
   time++;
   startNode.discoveryFinish.first = time;
+
   // Check the adjacent nodes of the startNode
   for (const auto &adjacent : startNode.adjacent) {
     auto iter = std::find(nodes_.begin(), nodes_.end(),

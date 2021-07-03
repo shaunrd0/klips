@@ -51,15 +51,15 @@ int main (const int argc, const char * argv[])
   // Test finding a path between two nodes using BFS
   auto path = bfsGraph.PathBFS(
       bfsGraph.GetNodeCopy(1), bfsGraph.GetNodeCopy(7)
-      );
+  );
   // If we were returned an empty path, it doesn't exist
   if (path.empty()) std::cout << "No valid path found!\n";
   else {
     // If we were returned a path, print it
-    std::cout << "\nValid path from " << path.front()->number
-              << " to " << path.back()->number << ": ";
+    std::cout << "\nValid path from " << path.front().number
+              << " to " << path.back().number << ": ";
     for (const auto &node : path) {
-      std::cout << node->number << " ";
+      std::cout << node.number << " ";
     }
     std::cout << std::endl;
   }
@@ -109,12 +109,12 @@ int main (const int argc, const char * argv[])
   // +  This is because the node is visited after all other nodes are finished
   std::vector<Node> order =
       topologicalGraph.TopologicalSort(topologicalGraph.GetNodeCopy(6));
-  std::cout << "\n\nTopological order: ";
+  std::cout << "\nTopological order: ";
   while (!order.empty()) {
     std::cout << order.back().number << " ";
     order.pop_back();
   }
-  std::cout << std::endl;
+  std::cout << std::endl << std::endl;
 
   // If we want the topological order to match what is seen in the book
   // + We have to initialize the graph carefully to get this result -
@@ -132,7 +132,7 @@ int main (const int argc, const char * argv[])
       }
   );
   auto order2 = topologicalGraph2.TopologicalSort(*topologicalGraph2.NodeBegin());
-  std::cout << "\n\nTopological order: ";
+  std::cout << "\nTopological order: ";
   while (!order2.empty()) {
     std::cout << order2.back().number << " ";
     order2.pop_back();
