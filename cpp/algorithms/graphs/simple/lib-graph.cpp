@@ -8,6 +8,7 @@
 ################################################################################
 */
 
+#include <algorithm>
 #include "lib-graph.hpp"
 
 
@@ -55,6 +56,7 @@ void Graph::DFS()
 {
   // Track the nodes we have discovered
   std::vector<bool> discovered(nodes_.size(), false);
+  int time = 0;
 
   // Visit each node in the graph
   for (const auto &node : nodes_) {
@@ -65,14 +67,55 @@ void Graph::DFS()
       // Mark the node as visited so we don't visit it twice
       discovered[node.first - 1] = true;
       // Visiting the undiscovered node will check it's adjacent nodes
-      DFSVisit(node.first, discovered);
+      DFSVisit(time, node.first, discovered);
     }
   }
 
 }
 
-void Graph::DFSVisit(int startNode, std::vector<bool> &discovered)
+void Graph::DFS(Node::iterator startIter)
 {
+  // Track the nodes we have discovered
+  std::vector<bool> discovered(nodes_.size(), false);
+  int time = 0;
+
+  auto startNode = GetNode(startIter->first);
+
+  // beginning at startNode, visit each node in the graph until we reach the end
+  while (startIter != nodes_.end()) {
+    std::cout << "Visiting node " << startIter->first << std::endl;
+    // If the startIter is undiscovered, visit it
+    if (!discovered[startIter->first - 1]) {
+      std::cout << "Found undiscovered node: " << startIter->first << std::endl;
+      // Visiting the undiscovered node will check it's adjacent nodes
+      discovered[startIter->first - 1] = true;
+      DFSVisit(time, startIter->first, discovered);
+    }
+    startIter++;
+  }
+
+  // Once we reach the last node, check the beginning for unchecked nodes
+  startIter = nodes_.begin();
+
+  // Once we reach the initial startNode, we have checked all nodes
+  while (startIter->first != startNode->first) {
+    std::cout << "Visiting node " << startIter->first << std::endl;
+    // If the startIter is undiscovered, visit it
+    if (!discovered[startIter->first - 1]) {
+      std::cout << "Found undiscovered node: " << startIter->first << std::endl;
+      // Visiting the undiscovered node will check it's adjacent nodes
+      discovered[startIter->first - 1] = true;
+      DFSVisit(time, startIter->first, discovered);
+    }
+    startIter++;
+  }
+}
+
+void Graph::DFSVisit(int &time, int startNode, std::vector<bool> &discovered)
+{
+  time++;
+  discoveryTime[startNode - 1] = std::make_pair(startNode, time);
+
   // Check the adjacent nodes of the startNode
   // + Do not offset startNode by 1, since we use it as a key to a map
   for (auto &adjacent : nodes_[startNode]) {
@@ -83,31 +126,25 @@ void Graph::DFSVisit(int startNode, std::vector<bool> &discovered)
       discovered[adjacent - 1] = true;
 
       // Visiting the undiscovered node will check it's adjacent nodes
-      DFSVisit(adjacent, discovered);
+      DFSVisit(time, adjacent, discovered);
     }
   }
 
+  time++;
+  finishTime[startNode - 1] = std::make_pair(startNode, time);
 }
 
-std::vector<int> Graph::TopologicalSort()
+std::vector<int> Graph::TopologicalSort(Node::iterator startNode)
 {
+  DFS(startNode);
+
   std::vector<int> topologicalOrder;
 
-  // Track the nodes we have discovered
-  std::vector<bool> discovered(nodes_.size(), false);
+  std::vector<std::pair<int, int>> finishOrder(finishTime);
 
-  // Visit each node in the graph
-  for (const auto &node : nodes_) {
-    std::cout << "Visiting node " << node.first << std::endl;
-    // If the node is undiscovered, visit it
-    // + Offset by 1 to account for 0 index of discovered vector
-    if (!discovered[node.first - 1]) {
-      std::cout << "Found undiscovered node: " << node.first << std::endl;
+  std::sort(finishOrder.begin(), finishOrder.end(), Graph::FinishedSort);
 
-      // Visiting the undiscovered node will check it's adjacent nodes
-      TopologicalVisit(node.first, discovered, topologicalOrder);
-    }
-  }
+  for (const auto &node : finishOrder) topologicalOrder.push_back(node.first);
 
   // The topologicalOrder is read right-to-left in the final result
   // + Output is handled in main as FILO, similar to a stack
