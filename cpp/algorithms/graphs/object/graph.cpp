@@ -45,7 +45,6 @@ int main (const int argc, const char * argv[])
   // The graph traversed in this example is seen in MIT Intro to Algorithms
   // + Chapter 22, Figure 22.3 on BFS
   bfsGraph.BFS(bfsGraph.GetNodeCopy(2));
-  Node test = bfsGraph.GetNodeCopy(3);
 
   std::cout << "\nTesting finding a path between two nodes using BFS...\n";
   // Test finding a path between two nodes using BFS

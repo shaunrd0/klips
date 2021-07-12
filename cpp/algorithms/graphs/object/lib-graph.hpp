@@ -17,10 +17,45 @@
 #include <vector>
 #include <queue>
 #include <unordered_set>
+#include <unordered_map>
 
+
+/******************************************************************************/
+// Structures for tracking information gathered from various traversals
+struct Node;
 // Color represents the discovery status of any given node
 // + White is undiscovered, Gray is in progress, Black is fully discovered
 enum Color {White, Gray, Black};
+
+// Information used in all searches
+struct SearchInfo {
+  // Coloring of the nodes is used in both DFS and BFS
+  Color discovered = White;
+};
+
+// Information that is only used in BFS
+struct BFS : SearchInfo {
+  // Used to represent distance from start node
+  int distance = 0;
+  // Used to represent the parent node that discovered this node
+  // + If we use this node as the starting point, this will remain a nullptr
+  const Node *predecessor = nullptr;
+};
+
+// Information that is only used in DFS
+struct DFS : SearchInfo {
+  // Create a pair to track discovery / finish time
+  // + Discovery time is the iteration the node is first discovered
+  // + Finish time is the iteration the node has been checked completely
+  // ++ A finished node has considered all adjacent nodes
+  std::pair<int, int> discoveryFinish;
+};
+
+// Store search information in unordered_maps so we can pass it around easily
+// + Allows each node to store relative information on the traversal
+using InfoBFS = std::unordered_map<int, struct BFS>;
+using InfoDFS = std::unordered_map<int, struct DFS>;
+
 
 /******************************************************************************/
 // Node structure for representing a graph
@@ -38,36 +73,10 @@ public:
   friend void swap(Node &a, Node &b) {
     std::swap(a.number, b.number);
     std::swap(a.adjacent, b.adjacent);
-    std::swap(a.color, b.color);
-    std::swap(a.discoveryFinish, b.discoveryFinish);
   }
 
-  // Don't allow anyone to change these values when using a const reference
   int number;
   std::vector<int> adjacent;
-
-  // Mutable members so we can update these values when using a const reference
-  // + Since they need to be modified during traversals
-
-  // Coloring of the nodes are used in both DFS and BFS
-  mutable Color color = White;
-
-  // Used in BFS to represent distance from start node
-  mutable int distance = 0;
-  // Used in BFS to represent the parent node that discovered this node
-  // + If we use this node as the starting point, this will remain a nullptr
-  mutable const Node *predecessor = nullptr;
-
-  // Create a pair to track discovery / finish time when using DFS
-  // + Discovery time is the iteration the node is first discovered
-  // + Finish time is the iteration the node has been checked completely
-  // ++ A finished node has considered all adjacent nodes
-  mutable std::pair<int, int> discoveryFinish;
-
-  // Define a comparator for std::sort
-  // + This will help to sort nodes by finished time after traversal
-  static bool FinishedSort(const Node &node1, const Node &node2)
-  { return node1.discoveryFinish.second < node2.discoveryFinish.second;}
 
   // Define operator== for std::find; And comparisons between nodes
   bool operator==(const Node &b) const { return this->number == b.number;}
@@ -83,24 +92,21 @@ public:
   // Constructor
   explicit Graph(std::vector<Node> nodes) : nodes_(std::move(nodes)) {}
 
-
   // Breadth First Search
-  void BFS(const Node& startNode) const;
+  InfoBFS BFS(const Node& startNode) const;
   std::deque<Node> PathBFS(const Node &start, const Node &finish) const;
 
-
   // Depth First Search
-  void DFS() const;
+  InfoDFS DFS() const;
   // An alternate DFS that checks each node of the graph beginning at startNode
-  void DFS(const Node &startNode) const;
+  InfoDFS DFS(const Node &startNode) const;
   // Visit function is used in both versions of DFS
-  void DFSVisit(int &time, const Node& startNode) const;
+  void DFSVisit(int &time, const Node& startNode, InfoDFS &searchInfo) const;
   // Topological sort, using DFS
   std::vector<Node> TopologicalSort(const Node &startNode) const;
 
-
   // Returns a copy of a node with the number i within the graph
-  // + This uses the private, non-const accessor GetNode()
+  // + This uses the private, non-const accessor GetNode() and returns a copy
   inline Node GetNodeCopy(int i) { return GetNode(i);}
   // Return a constant iterator for reading node values
   inline std::vector<Node>::const_iterator NodeBegin() { return nodes_.cbegin();}
@@ -109,7 +115,7 @@ private:
   // A non-const accessor for direct access to a node with the number value i
   inline Node & GetNode(int i)
   { return *std::find(nodes_.begin(), nodes_.end(), Node(i, {}));}
-  // For use with const member functions to access mutable values
+  // For grabbing a const qualified node
   inline const Node & GetNode(int i) const
   { return *std::find(nodes_.begin(), nodes_.end(), Node(i, {}));}
 
