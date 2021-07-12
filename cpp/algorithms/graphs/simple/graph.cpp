@@ -13,6 +13,9 @@
 int main (const int argc, const char * argv[])
 {
   // We could initialize the graph with some localNodes...
+  // This graph uses an unordered_(map/set), so initialization is reversed
+  // + So the final order of initialization is 1,2,3,4,5,6,7,8
+  // + Similarly, adjacent nodes are inserted at front (6,4 initializes to 4,6)
   std::unordered_map<int, std::unordered_set<int>> localNodes{
       {8, {6, 4}},
       {7, {8, 6, 4, 3}},
@@ -45,6 +48,17 @@ int main (const int argc, const char * argv[])
   // + Chapter 22, Figure 22.3 on BFS
   bfsGraph.BFS(2);
 
+  std::cout << "\nTesting finding a path between two nodes using BFS...\n";
+  auto path = bfsGraph.PathBFS(1, 7);
+  if (path.empty()) std::cout << "No valid path found!\n";
+  else {
+    std::cout << "\nValid path from " << path.front() << " to "
+              << path.back() << ": ";
+    for (const auto &node : path) {
+      std::cout << node << " ";
+    }
+    std::cout << std::endl;
+  }
 
   std::cout << "\n\n##### Depth First Search #####\n";
   // Initialize an example graph for Depth First Search
@@ -64,18 +78,22 @@ int main (const int argc, const char * argv[])
 
 
   std::cout << "\n\n##### Topological Sort #####\n";
+  // The graph traversed in this example is seen in MIT Intro to Algorithms
+  // + Chapter 22, Figure 22.4 on DFS
   // Initialize an example graph for Topological Sort
+  // + The final result will place node 3 (watch) at the beginning of the order
+  // + This is because node 3 has no connecting node
   Graph topologicalGraph (
       {
-          {9, {}},
-          {8, {9}},
-          {7, {9}},
-          {6, {7, 8}},
-          {5, {}},
-          {4, {7, 5}},
-          {3, {}},
-          {2, {5}},
-          {1, {5, 4}},
+          {9, {}},     // jacket
+          {8, {9}},    // tie
+          {7, {9}},    // belt
+          {6, {7, 8}}, // shirt
+          {5, {}},     // shoes
+          {4, {7, 5}}, // pants
+          {3, {}},     // watch
+          {2, {5}},    // socks
+          {1, {5, 4}}, // undershorts
       }
   );
   auto order = topologicalGraph.TopologicalSort(topologicalGraph.GetNode(6));
@@ -86,9 +104,9 @@ int main (const int argc, const char * argv[])
   }
   std::cout << std::endl << std::endl;
 
-  //   If we want the topological order to match what is seen in the book
+  // If we want the topological order to exactly match what is seen in the book
   // + We have to initialize the graph carefully to get this result -
-  // Because this is an unordered_(map/set) initialization is reversed
+  // This graph uses an unordered_(map/set), so initialization is reversed
   // + So the order of nodes on the container below is 6,7,8,9,3,1,4,5,2
   // + The same concept applies to their adjacent nodes (7,8 initializes to 8,7)
   // + In object-graph implementation, I use vectors this does not apply there
@@ -120,8 +138,6 @@ int main (const int argc, const char * argv[])
     std::cout << order2.back() << " ";
     order2.pop_back();
   }
-  std::cout << std::endl;
-
   std::cout << std::endl;
 
   return 0;

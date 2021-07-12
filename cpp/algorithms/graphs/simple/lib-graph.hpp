@@ -11,9 +11,7 @@
 #define LIB_GRAPH_HPP
 
 #include <iostream>
-#include <map>
 #include <queue>
-#include <set>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
@@ -26,9 +24,12 @@ public:
   {
     discoveryTime.resize(nodes_.size());
     finishTime.resize(nodes_.size(), std::make_pair(0,0));
+    predecessor.resize(nodes_.size(), std::make_pair(0, INT32_MIN));
+    distance.resize(nodes_.size(), std::make_pair(0, 0));
   }
 
   void BFS(int startNode);
+  std::deque<int> PathBFS(int start, int finish);
 
   void DFS();
   void DFS(Node::iterator startNode);
@@ -52,6 +53,8 @@ private:
   // Unordered to avoid container reorganizing elements
   // + Since this would alter the order nodes are traversed in
   Node nodes_;
+  std::vector<std::pair<int, int>> distance;
+  std::vector<std::pair<int, int>> predecessor;
 
   // Where the first element in the following two pairs is the node number
   // And the second element is the discovery / finish time

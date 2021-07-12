@@ -16,6 +16,9 @@ void Graph::BFS(int startNode)
 {
   // Track the nodes we have discovered
   std::vector<bool> discovered(nodes_.size(), false);
+  // Reset values of predecessor and distance JIC there was a previous traversal
+  for (auto &p : predecessor) p = std::make_pair(0, INT32_MIN);
+  for (auto &d : distance) d = std::make_pair(0, 0);
 
   // Create a queue to visit discovered nodes in FIFO order
   std::queue<int> visitQueue;
@@ -37,6 +40,14 @@ void Graph::BFS(int startNode)
     for (const auto &adjacent : nodes_[thisNode]) {
       if (!discovered[adjacent - 1]) {
         std::cout << "Found undiscovered adjacentNode: " << adjacent << "\n";
+
+        // Update the distance from the start node
+        distance[adjacent - 1] =
+            std::make_pair(adjacent, distance[thisNode - 1].second + 1);
+        // Update the predecessor for the adjacent node when we discover it
+        // + The node that first discovers the adjacent is the predecessor
+        predecessor[adjacent - 1] = std::make_pair(adjacent, thisNode);
+
         // Mark the adjacent node as discovered
         // + If this were done out of the for loop we could discover nodes twice
         // + This would result in visiting the node twice, since it appears
@@ -50,6 +61,32 @@ void Graph::BFS(int startNode)
 
   }
 
+}
+
+std::deque<int> Graph::PathBFS(int start, int finish)
+{
+  // Store the path as a deque of integers so we can push to the front and back
+  std::deque<int> path;
+  // Perform BFS on the start node, updating all possible predecessors
+  BFS(start);
+  // Begin at the finish node's predecessor
+  int next = predecessor[finish - 1].second;
+  bool isValid = false;
+  do {
+    // If the next node is the start node, we have found a valid path
+    if (next == start) isValid = true;
+    // Add the next node to the path
+    path.push_front(next);
+    // Move to the predecessor of the next node
+    next = predecessor[next - 1].second;
+  } while (next != INT32_MIN); // If we hit a node with no predecessor, break
+  // Push the finish node the end of the path
+  // + We could do this prior to the loop with push_front.. but, deques :)
+  path.push_back(finish);
+  // If we never found a valid path, erase the path
+  if (!isValid) path.erase(path.begin(), path.end());
+  // Return the path, the caller should handle the case where the path is empty
+  return path;
 }
 
 void Graph::DFS()
