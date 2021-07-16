@@ -33,18 +33,18 @@ InfoBFS Graph::BFS(const Node& startNode) const
 
     // Check if we have already discovered all the adjacentNodes to thisNode
     for (const auto &adjacent : thisNode->adjacent) {
-      if (searchInfo[adjacent.GetNumber()].discovered == White) {
-        std::cout << "Found undiscovered adjacentNode: " << adjacent.GetNumber()
+      if (searchInfo[adjacent.first].discovered == White) {
+        std::cout << "Found undiscovered adjacentNode: " << adjacent.first
                   << "\n";
         // Mark the adjacent node as in progress
-        searchInfo[adjacent.GetNumber()].discovered = Gray;
-        searchInfo[adjacent.GetNumber()].distance =
+        searchInfo[adjacent.first].discovered = Gray;
+        searchInfo[adjacent.first].distance =
             searchInfo[thisNode->number].distance + 1;
-        searchInfo[adjacent.GetNumber()].predecessor =
+        searchInfo[adjacent.first].predecessor =
             &GetNode(thisNode->number);
 
         // Add the discovered node the the visitQueue
-        visitQueue.push(&GetNode(adjacent.GetNumber()));
+        visitQueue.push(&GetNode(adjacent.first));
       }
     }
     // We are finished with this node and the adjacent nodes; Mark it discovered
@@ -154,12 +154,12 @@ void Graph::DFSVisit(int &time, const Node& startNode, InfoDFS &searchInfo) cons
   // Check the adjacent nodes of the startNode
   for (const auto &adjacent : startNode.adjacent) {
     auto iter = std::find(nodes_.begin(), nodes_.end(),
-                          Node(adjacent.GetNumber(), {}));
+                          Node(adjacent.first, {}));
     // If the adjacentNode is undiscovered, visit it
     // + Offset by 1 to account for 0 index of discovered vector
     if (searchInfo[iter->number].discovered == White) {
       std::cout << "Found undiscovered adjacentNode: "
-                << GetNode(adjacent.GetNumber()).number << std::endl;
+                << GetNode(adjacent.first).number << std::endl;
       // Visiting the undiscovered node will check it's adjacent nodes
       DFSVisit(time, *iter, searchInfo);
     }
@@ -185,5 +185,31 @@ std::vector<Node> Graph::TopologicalSort(const Node &startNode) const
   // The topologicalOrder is read right-to-left in the final result
   // + Output is handled in main as FILO, similar to a stack
   return order;
+}
+
+InfoMST Graph::KruskalMST() const
+{
+  InfoMST searchInfo(nodes_);
+  // The ctor for InfoMST initializes all edges within the graph into a multimap
+  // + Key for multimap is edge weight, so they're already sorted in ascending
+
+  // For each edge in the graph, check if they are part of the same tree
+  // + Since we do not want to create a cycle in the MST forest -
+  // + we don't connect nodes that are part of the same tree
+  for (const auto &edge : searchInfo.edges) {
+    // Two integers representing the node.number for the connected nodes
+    const int u = edge.second.first;
+    const int v = edge.second.second;
+    // Check if the nodes are of the same tree
+    if (searchInfo.FindSet(u) != searchInfo.FindSet(v)) {
+      // If they are not, add the edge to our MST
+      searchInfo.edgesMST.emplace(edge);
+      searchInfo.weightMST += edge.first;
+      // Update the forest to reflect this change
+      searchInfo.Union(u, v);
+    }
+  }
+
+  return searchInfo;
 }
 

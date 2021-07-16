@@ -1,7 +1,7 @@
 /*##############################################################################
 ## Author: Shaun Reed                                                         ##
 ## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
-## About: An example of an object graph implementation                        ##
+## About: An example of a weighted graph implementation                       ##
 ##        Algorithms in this example are found in MIT Intro to Algorithms     ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
@@ -15,14 +15,14 @@ int main (const int argc, const char * argv[])
 {
   // We could initialize the graph with some localNodes...
   std::vector<Node> localNodes{
-      {1, {2, 5}}, // Node 1
-      {2, {1, 6}}, // Node 2
-      {3, {4, 6, 7}},
-      {4, {3, 7, 8}},
-      {5, {1}},
-      {6, {2, 3, 7}},
-      {7, {3, 4, 6, 8}},
-      {8, {4, 6}},
+      {1, {{2, 0}, {5, 0}}}, // Node 1
+      {2, {{1, 0}, {6, 0}}}, // Node 2
+      {3, {{4, 0}, {6, 0}, {7, 0}}},
+      {4, {{3, 0}, {7, 0}, {8, 0}}},
+      {5, {{1, 0}}},
+      {6, {{2, 0}, {3, 0}, {7, 0}}},
+      {7, {{3, 0}, {4, 0}, {6, 0}, {8, 0}}},
+      {8, {{4, 0}, {6, 0}}},
   };
   Graph bfsGraphInit(localNodes);
 
@@ -32,14 +32,14 @@ int main (const int argc, const char * argv[])
   // Initialize a example graph for Breadth First Search
   Graph bfsGraph(
       {
-          {1, {2, 5}}, // Node 1
-          {2, {1, 6}}, // Node 2...
-          {3, {4, 6, 7}},
-          {4, {3, 7, 8}},
-          {5, {1}},
-          {6, {2, 3, 7}},
-          {7, {3, 4, 6, 8}},
-          {8, {4, 6}},
+          {1, {{2, 0}, {5, 0}}}, // Node 1
+          {2, {{1, 0}, {6, 0}}}, // Node 2...
+          {3, {{4, 0}, {6, 0}, {7, 0}}},
+          {4, {{3, 0}, {7, 0}, {8, 0}}},
+          {5, {{1, 0}}},
+          {6, {{2, 0}, {3, 0}, {7, 0}}},
+          {7, {{3, 0}, {4, 0}, {6, 0}, {8, 0}}},
+          {8, {{4, 0}, {6, 0}}},
       }
   );
   // The graph traversed in this example is seen in MIT Intro to Algorithms
@@ -68,12 +68,12 @@ int main (const int argc, const char * argv[])
   // Initialize an example graph for Depth First Search
   Graph dfsGraph(
       {
-          {1, {2, 4}},
-          {2, {5}},
-          {3, {5, 6}},
-          {4, {2}},
-          {5, {4}},
-          {6, {6}},
+          {1, {{2, 0}, {4, 0}}},
+          {2, {{5, 0}}},
+          {3, {{5, 0}, {6, 0}}},
+          {4, {{2, 0}}},
+          {5, {{4, 0}}},
+          {6, {{6, 0}}},
       }
   );
   // The graph traversed in this example is seen in MIT Intro to Algorithms
@@ -89,15 +89,15 @@ int main (const int argc, const char * argv[])
   // The book starts on the 'shirt' node (with the number 6, in this example)
   Graph topologicalGraph (
       {
-          {1, {4, 5}}, // undershorts
-          {2, {5}},    // socks
-          {3, {}},     // watch
-          {4, {5, 7}}, // pants
-          {5, {}},     // shoes
-          {6, {8, 7}}, // shirt
-          {7, {9}},    // belt
-          {8, {9}},    // tie
-          {9, {}},     // jacket
+          {1, {{4, 0}, {5, 0}}},  // undershorts
+          {2, {{5, 0}}},          // socks
+          {3, {}},                // watch
+          {4, {{5, 0}, {7, 0}}},  // pants
+          {5, {}},                // shoes
+          {6, {{8, 0}, {7, 0}}},  // shirt
+          {7, {{9, 0}}},          // belt
+          {8, {{9, 0}}},          // tie
+          {9, {}},                // jacket
       }
   );
 
@@ -119,15 +119,15 @@ int main (const int argc, const char * argv[])
   // + We have to initialize the graph carefully to get this result -
   Graph topologicalGraph2 (
       {
-          {6, {8, 7}}, // shirt
-          {8, {9}},    // tie
-          {7, {9}},    // belt
-          {9, {}},     // jacket
-          {3, {}},     // watch
-          {1, {4, 5}}, // undershorts
-          {4, {5, 7}}, // pants
-          {5, {}},     // shoes
-          {2, {5}},    // socks
+          {6, {{8, 0}, {7, 0}}},  // shirt
+          {8, {{9, 0}}},          // tie
+          {7, {{9, 0}}},          // belt
+          {9, {}},                // jacket
+          {3, {}},                // watch
+          {1, {{4, 0}, {5, 0}}},  // undershorts
+          {4, {{5, 0}, {7, 0}}},  // pants
+          {5, {}},                // shoes
+          {2, {{5, 0}}},          // socks
       }
   );
   auto order2 = topologicalGraph2.TopologicalSort(*topologicalGraph2.NodeBegin());
@@ -137,4 +137,31 @@ int main (const int argc, const char * argv[])
     order2.pop_back();
   }
   std::cout << std::endl;
+
+
+  std::cout << "\n\n##### Minimum Spanning Trees #####\n";
+  // This example graph is seen in MIT Algorithms chapter 23, figure 23.4
+  // + The result we produce is the same in total weight
+  // + Differs only in the connection of nodes (2->3) *instead of* (8->1)
+  // ++ Both of these edges have the same weight, and we do not create a cycle
+  Graph graphMST(
+      {
+          {1, {{2, 4}}},
+          {2, {{3, 8}}},
+          {3, {{4, 7}}},
+          {4, {{5, 9}}},
+          {5, {{6, 10}}},
+          {6, {{3, 4}, {4, 14}, {7, 2}}},
+          {7, {{8, 1}}},
+          {8, {{1, 8}, {2, 11}, {9, 7}}},
+          {9, {{3, 2}, {7, 6}}}
+      }
+  );
+  InfoMST resultMST = graphMST.KruskalMST();
+  std::cout << "Finding MST using Kruskal's...\n\nMST result: \n";
+  for (const auto &edge : resultMST.edgesMST) {
+    std::cout << "Connected nodes: " << edge.second.first << "->"
+              << edge.second.second << " with weight of " << edge.first << "\n";
+  }
+  std::cout << "Total MST weight: " << resultMST.weightMST << std::endl;
 }

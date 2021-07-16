@@ -51,6 +51,11 @@ struct DFS : SearchInfo {
   std::pair<int, int> discoveryFinish;
 };
 
+struct MST : SearchInfo {
+  int32_t parent = INT32_MIN;
+  int rank = 0;
+};
+
 // Store search information in unordered_maps so we can pass it around easily
 // + Allows each node to store relative information on the traversal
 using InfoBFS = std::unordered_map<int, struct BFS>;
@@ -59,7 +64,6 @@ using InfoDFS = std::unordered_map<int, struct DFS>;
 
 /******************************************************************************/
 // Node structure for representing a graph
-struct Link;
 
 struct Node {
 public:
@@ -70,7 +74,11 @@ public:
     swap(*this, rhs);
     return *this;
   }
-  Node(int num, std::vector<Link> adj) : number(num), adjacent(std::move(adj)) {}
+  Node(int num, const std::vector<std::pair<int, int>> &adj) : number(num)
+  {
+    // Place each adjacent node in vector into our unordered_map of edges
+    for (const auto &i : adj) adjacent.emplace(i.first, i.second);
+  }
 
   friend void swap(Node &a, Node &b) {
     std::swap(a.number, b.number);
@@ -78,7 +86,8 @@ public:
   }
 
   int number;
-  std::vector<Link> adjacent;
+  // Adjacent stored in an unordered_map<adj.number, edgeWeight>
+  std::unordered_map<int, int> adjacent;
 
   // Define operator== for std::find; And comparisons between nodes
   bool operator==(const Node &b) const { return this->number == b.number;}
@@ -86,12 +95,66 @@ public:
   bool operator!=(const Node &b) const { return this->number != b.number;}
 };
 
-struct Link {
-  explicit Link(Node *n, int w=0) : node(n), weight(w) {}
+using Edges = std::multimap<int, std::pair<int, int>>;
+struct InfoMST {
+  explicit InfoMST(const std::vector<Node> &nodes) {
+    for (const auto &node : nodes){
+      // Initialize the default values for forest tracked by this struct
+      // + This data is used in KruskalMST() to find the MST
+      MakeSet(node.number);
+      for (const auto adj : node.adjacent) {
+        // node.number is the number that represents this node
+        // adj.first is the node number that is connected to this node
+        // adj.second is the weight of the connected edge
+        edges.emplace(adj.second, std::make_pair(node.number, adj.first));
+        // So we initialize the multimap<weight, <nodeA.number, nodeB.number>>
+        // + Since a multimap sorts by key, we have sorted our edges by weight
+      }
+    }
+  }
 
-  Node *node;
-  int weight;
-  inline int GetNumber() const { return node->number;}
+  std::unordered_map<int, struct MST> searchInfo;
+  // All of the edges within our graph
+  // + Since each node stores its own edges, this is initialized in InfoMST ctor
+  Edges edges;
+
+  // A multimap of the edges found for our MST
+  Edges edgesMST;
+  // The total weight of our resulting MST
+  int weightMST = 0;
+
+  void MakeSet(int x)
+  {
+    searchInfo[x].parent = x;
+    searchInfo[x].rank = 0;
+  }
+
+  void Union(int x, int y)
+  {
+    Link(FindSet(x), FindSet(y));
+  }
+
+  void Link(int x, int y)
+  {
+    if (searchInfo[x].rank > searchInfo[y].rank) {
+      searchInfo[y].parent = x;
+    }
+    else {
+      searchInfo[x].parent = y;
+      if (searchInfo[x].rank == searchInfo[y].rank) {
+        searchInfo[y].rank += 1;
+      }
+    }
+  }
+
+  int FindSet(int x)
+  {
+    if (x != searchInfo[x].parent) {
+      searchInfo[x].parent = FindSet(searchInfo[x].parent);
+    }
+    return searchInfo[x].parent;
+  }
+
 };
 
 /******************************************************************************/
@@ -113,6 +176,8 @@ public:
   void DFSVisit(int &time, const Node& startNode, InfoDFS &searchInfo) const;
   // Topological sort, using DFS
   std::vector<Node> TopologicalSort(const Node &startNode) const;
+  // Kruskal's MST
+  InfoMST KruskalMST() const;
 
   // Returns a copy of a node with the number i within the graph
   // + This uses the private, non-const accessor GetNode() and returns a copy
