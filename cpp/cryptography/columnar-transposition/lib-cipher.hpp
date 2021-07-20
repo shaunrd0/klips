@@ -41,6 +41,11 @@ struct CipherData {
   std::string Decrypt(std::string message="");
 
 private:
+  // Used to make a valid keyword from an invalid keyWord
+  // + Still encrypts / decrypts with whatever the user inputs as keyWord
+  // + But technically the keyword is modified without the user knowing :)
+  void ValidateKeyword(const std::string &message);
+
   std::string keyWord_;
   std::vector<int> orderVect_;
 };

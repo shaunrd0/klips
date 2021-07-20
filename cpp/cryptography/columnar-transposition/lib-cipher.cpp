@@ -38,7 +38,7 @@ std::string CipherData::GetKey()
   std::string key;
   std::cout << "Enter the keyword: ";
   std::getline(std::cin, key);
-  std::cout << "Keyword entered: " << key << std::endl;
+  std::cout << "Keyword entered: \"" << key << "\"\n";
   return key;
 }
 
@@ -61,6 +61,17 @@ void CipherData::Transpose(const std::vector<std::string> &in,
   }
 }
 
+void CipherData::ValidateKeyword(const std::string &message)
+{
+  if (keyWord_.size() < message.size()) return;
+  // Pop letters from keyWord until it is < message.size()
+  while (keyWord_.size() >= message.size()) keyWord_.pop_back();
+  // Do not append order to a previous orderVect; Erase it first
+  orderVect_.erase(orderVect_.begin(), orderVect_.end());
+  // Reinitialize orderVect with a valid order for the new keyWord
+  InitOrder(keyWord_);
+}
+
 std::string CipherData::Encrypt(std::string message)
 {
   // If no message was provided, ask for one
@@ -69,6 +80,7 @@ std::string CipherData::Encrypt(std::string message)
     std::getline(std::cin, message);
     std::cout << "Encrypting message \"" << message << "\"\n";
   }
+  ValidateKeyword(message);
   std::string encryptedMessage;
   std::vector<std::string> rows;
 
@@ -95,7 +107,8 @@ std::string CipherData::Decrypt(std::string message)
     std::getline(std::cin, message);
     std::cout << "Decrypting message \"" << message << "\"\n";
   }
-  std::string result;
+  ValidateKeyword(message);
+  std::string decryptedMessage;
   std::vector<std::string> rows;
 
   // Split the message into rows equal to the length of our keyWord
@@ -122,6 +135,6 @@ std::string CipherData::Decrypt(std::string message)
   std::vector<std::string> transposed;
   Transpose(rows, transposed);
 
-  for (const auto &row : transposed) result += row;
-  return  result;
+  for (const auto &row : transposed) decryptedMessage += row;
+  return  decryptedMessage;
 }

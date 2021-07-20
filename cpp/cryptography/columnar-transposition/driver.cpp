@@ -23,6 +23,7 @@
 // Main program loop
 int main (const int argc, const char * argv[]) {
   // Left some test cases I used commented out :)
+  // + Keywords and messages can be URLs, include spaces, symbols, numbers, etc
 
   // Using example keyword from www.braingle.com
   // + The embedded example there doesn't seem to support numbers in keywords :(
@@ -47,7 +48,7 @@ int main (const int argc, const char * argv[]) {
         // Take input for encrypting a message
 //        result = cData.Encrypt();
 
-        std::cout << "Encrypted message: " << result << std::endl;
+        std::cout << "Encrypted message: \"" << result << "\"\n";
         exit = true;
         break;
 
@@ -60,7 +61,7 @@ int main (const int argc, const char * argv[]) {
         // Take input for previously encrypted message to decrypt
 //        result = cData.Decrypt();
 
-        std::cout << "Decrypted message: " << result << std::endl;
+        std::cout << "Decrypted message: \"" << result << "\"\n";
         exit = true;
         break;
 
