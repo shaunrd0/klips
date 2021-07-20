@@ -19,6 +19,7 @@ project(
 
 add_subdirectory(algorithms)
 add_subdirectory(cmake)
+add_subdirectory(cryptography)
 add_subdirectory(datastructs)
 add_subdirectory(graphics)
 add_subdirectory(patterns)

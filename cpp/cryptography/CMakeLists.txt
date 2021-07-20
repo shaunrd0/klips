@@ -1,7 +1,7 @@
 ###############################################################################
 ## Author: Shaun Reed                                                        ##
 ## Legal: All Content (c) 2021 Shaun Reed, all rights reserved               ##
-## About: A basic CMakeLists configuration to test BST implementation        ##
+## About: A root project for practicing cryptography in C++                  ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
@@ -9,13 +9,10 @@
 cmake_minimum_required(VERSION 3.15)
 
 project (
-    #[[NAME]]   BinaryTree
+    #[[NAME]]   Cryptography
     VERSION     1.0
-    DESCRIPTION "A project for testing BST algorithms"
+    DESCRIPTION "A project for practicing cryptography in C++"
     LANGUAGES   CXX
 )
 
-add_library(lib-bst-algo "bst.cpp")
-
-add_executable(test-bst-algo "driver.cpp")
-target_link_libraries(test-bst-algo lib-bst)
+add_subdirectory(columnar-transposition)
