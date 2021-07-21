@@ -1,0 +1,24 @@
+- hosts: nginx-server
+  become: yes
+  tasks:
+    - name: Copy custom fail2ban filters
+      synchronize:
+        mode: push
+        src: fail2ban/filter.d/
+        dest: /etc/fail2ban/filter.d/
+    - name: Copy custom fail2ban jail.local
+      synchronize:
+        mode: push
+        src: fail2ban/jail.local
+        dest: /etc/fail2ban/
+    - name: Reload fail2ban service
+      ansible.builtin.service:
+        name: fail2ban
+        state: reloaded
+    - name: Checking status of fail2ban service after restart
+      command: systemctl status fail2ban
+      register: result
+    - name: Showing fail2ban status report
+      debug:
+        var: result
+
