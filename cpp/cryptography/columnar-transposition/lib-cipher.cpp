@@ -10,8 +10,9 @@
 
 #include "lib-cipher.hpp"
 
-// Initializes orderVect to determine order columns should be used
-void CipherData::InitOrder(std::string temp)
+KeyData::~KeyData() {}
+
+void Columnar::InitOrder(std::string temp)
 {
   // Create a temp value sorted lexicographically, remove duplicate characters
   // https://en.cppreference.com/w/cpp/string/basic_string/operator_cmp
@@ -32,38 +33,8 @@ void CipherData::InitOrder(std::string temp)
 
 }
 
-// Allows getting keyWord when using CipherData default ctor
-std::string CipherData::GetKey()
+void Columnar::ValidateKeyword(const std::string &message)
 {
-  std::string key;
-  std::cout << "Enter the keyword: ";
-  std::getline(std::cin, key);
-  std::cout << "Keyword entered: \"" << key << "\"\n";
-  return key;
-}
-
-// Transpose a character matrix, using a vector of strings
-void CipherData::Transpose(const std::vector<std::string> &in,
-                           std::vector<std::string> &out)
-{
-  int cols = in[0].size();
-  // JIC some other row is larger than the first
-  for (const auto &row : in) cols = (row.size() > cols) ? row.size() : cols;
-  int rows = in.size();
-
-  out.resize(cols);
-
-  for (int i = 0; i < cols; i++) {
-    for (int j = 0; j < rows; j++) {
-      if (in[j].size() <= i) continue;
-      out[i] += in[j][i];
-    }
-  }
-}
-
-void CipherData::ValidateKeyword(const std::string &message)
-{
-  if (keyWord_.size() < message.size()) return;
   // Pop letters from keyWord until it is < message.size()
   while (keyWord_.size() >= message.size()) keyWord_.pop_back();
   // Do not append order to a previous orderVect; Erase it first
@@ -72,7 +43,25 @@ void CipherData::ValidateKeyword(const std::string &message)
   InitOrder(keyWord_);
 }
 
-std::string CipherData::Encrypt(std::string message)
+void Columnar::Transpose(const std::vector<std::string> &in,
+                         std::vector<std::string> &out)
+{
+  size_t cols = in[0].size();
+  // JIC some other row is larger than the first
+  for (const auto &row : in) cols = (row.size() > cols) ? row.size() : cols;
+  size_t rows = in.size();
+
+  out.resize(cols);
+
+  for (size_t i = 0; i < cols; i++) {
+    for (size_t j = 0; j < rows; j++) {
+      if (in[j].size() <= i) continue;
+      out[i] += in[j][i];
+    }
+  }
+}
+
+std::string Columnar::Encrypt(std::string message)
 {
   // If no message was provided, ask for one
   if (message.empty()) {
@@ -80,7 +69,7 @@ std::string CipherData::Encrypt(std::string message)
     std::getline(std::cin, message);
     std::cout << "Encrypting message \"" << message << "\"\n";
   }
-  ValidateKeyword(message);
+  if (keyWord_.size() >= message.size()) ValidateKeyword(message);
   std::string encryptedMessage;
   std::vector<std::string> rows;
 
@@ -99,7 +88,7 @@ std::string CipherData::Encrypt(std::string message)
   return encryptedMessage;
 }
 
-std::string CipherData::Decrypt(std::string message)
+std::string Columnar::Decrypt(std::string message)
 {
   // If no message was provided, ask for one
   if (message.empty()) {
@@ -107,7 +96,7 @@ std::string CipherData::Decrypt(std::string message)
     std::getline(std::cin, message);
     std::cout << "Decrypting message \"" << message << "\"\n";
   }
-  ValidateKeyword(message);
+  if (keyWord_.size() >= message.size()) ValidateKeyword(message);
   std::string decryptedMessage;
   std::vector<std::string> rows;
 

@@ -27,10 +27,10 @@ int main (const int argc, const char * argv[]) {
 
   // Using example keyword from www.braingle.com
   // + The embedded example there doesn't seem to support numbers in keywords :(
-  CipherData cData("ZEBRAS");
+  Columnar cData("ZEBRAS");
 
-  // Taking user input for keyword using CipherData ctor
-//  CipherData cData;
+  // Taking user input for keyword using Columnar ctor
+//  Columnar cData;
 
   int choice = 0;
   bool exit = false;

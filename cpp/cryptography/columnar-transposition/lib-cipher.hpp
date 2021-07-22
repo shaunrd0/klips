@@ -16,37 +16,58 @@
 #include<vector>
 
 /******************************************************************************/
-// CipherData struct to hold data and methods related to encrypting / decrypting
-struct CipherData {
+// KeyData struct to hold data related to key ciphers
+struct KeyData {
+  explicit KeyData(std::string key) : keyWord_(std::move(key)) {};
+  explicit KeyData() : keyWord_(GetKey()) {};
+  // Pure virtual dtor to make abstract class despite no pure virtual members
+  virtual ~KeyData() = 0;
+
+  // Allows getting keyWord when using KeyData default ctor
+  static std::string GetKey()
+  {
+    std::string key;
+    std::cout << "Enter the keyword: ";
+    std::getline(std::cin, key);
+    std::cout << "Keyword entered: \"" << key << "\"\n";
+    return key;
+  }
+
+protected:
+  std::string keyWord_;
+};
+// Definition of pure virtual dtor
+
+/******************************************************************************/
+// Columnar struct to define methods related to columnar transposition
+struct Columnar : KeyData {
   // Can't create this object without providing a keyWord to initialize order
-  explicit CipherData(std::string keyWord) : keyWord_(std::move(keyWord))
+  explicit Columnar(std::string keyWord) : KeyData(std::move(keyWord))
   {
     InitOrder(keyWord_);
   }
-  CipherData() : keyWord_(GetKey()) { InitOrder(keyWord_);}
+  // Inherit call to GetKey() from KeyData default ctor
+  Columnar() { InitOrder(keyWord_);}
 
-  /****************************************************************************/
-  // Member functions
-
-  // Initializes orderVect, pass by value to create local copy of keyWord
+  // Initializes orderVect to determine order columns should be used
   void InitOrder(std::string temp);
 
-  static std::string GetKey();
 
-  static void
-  Transpose(const std::vector<std::string> &in, std::vector<std::string> &out);
+  /****************************************************************************/
+  // Member function definitions
 
-  // Default values for param allows calling with no message
+  void ValidateKeyword(const std::string &message);
+
+  // Transpose a character matrix, using a vector of strings
+  static void Transpose(const std::vector<std::string> &in,
+                        std::vector<std::string> &out);
+
+  // Default parameter allows calling Encrypt() to take message input
   std::string Encrypt(std::string message="");
+  // Default parameter allows calling Decrypt() to take message input
   std::string Decrypt(std::string message="");
 
 private:
-  // Used to make a valid keyword from an invalid keyWord
-  // + Still encrypts / decrypts with whatever the user inputs as keyWord
-  // + But technically the keyword is modified without the user knowing :)
-  void ValidateKeyword(const std::string &message);
-
-  std::string keyWord_;
   std::vector<int> orderVect_;
 };
 

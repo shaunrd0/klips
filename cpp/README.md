@@ -4,6 +4,7 @@
 shaunrd0/klips/cpp/
 ├── algorithms  # Examples of various algorithms written in C++
 ├── cmake       # Example of using cmake to build and organize larger projects
+├── cryptography# Examples of encrypting / decrypting using ciphers in C++
 ├── datastructs # Collection of useful datastructures written in C++
 ├── graphics    # Examples of graphics projects written in C++
 ├── patterns    # Examples of various design patterns written in C++
