@@ -15,5 +15,7 @@ project (
     LANGUAGES   CXX
 )
 
-add_subdirectory(simple)
 add_subdirectory(object)
+add_subdirectory(simple)
+add_subdirectory(templated)
+add_subdirectory(weighted)
