@@ -9,8 +9,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(RadixSort LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 add_executable(radix-sort "radix-sort.cpp")
 
 add_library(lib-radix-counting "lib-counting.cpp")

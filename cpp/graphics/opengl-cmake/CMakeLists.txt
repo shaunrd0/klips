@@ -24,7 +24,6 @@ if (OPENGL_FOUND)
   # Link opengl-test executable to OpenGL
   target_include_directories(lib-opengl-test PUBLIC ${OPENGL_INCLUDE_DIR})
   target_link_libraries(lib-opengl-test PUBLIC ${OPENGL_LIBRARIES})
-
 else()
   message(
       "Error: CMake was unable to find the OpenGL package\n"
@@ -38,7 +37,6 @@ if (GLUT_FOUND)
   # Link lib-opengl-test executable to GLUT
   target_include_directories(lib-opengl-test PUBLIC ${GLUT_INCLUDE_DIR})
   target_link_libraries(lib-opengl-test PUBLIC ${GLUT_LIBRARIES})
-
 else()
   message(
       "Error: CMake was unable to find the GLUT package\n"

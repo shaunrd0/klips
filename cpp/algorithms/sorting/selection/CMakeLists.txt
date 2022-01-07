@@ -9,8 +9,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(SelectionSort LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 add_executable(select-sort "select-sort.cpp")
 
 add_library(lib-select "lib-select.cpp")

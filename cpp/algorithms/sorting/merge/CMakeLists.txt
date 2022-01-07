@@ -9,7 +9,6 @@
 cmake_minimum_required(VERSION 3.17)
 project(MergeSort LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_executable(merge-sort "merge-sort.cpp")
 
 add_library(lib-merge "lib-merge.cpp")

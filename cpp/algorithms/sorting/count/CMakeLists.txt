@@ -9,8 +9,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(CountingSort LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 add_executable(counting-sort "counting-sort.cpp")
 
 add_library(lib-counting "lib-counting.cpp")

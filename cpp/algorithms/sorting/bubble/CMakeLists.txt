@@ -9,8 +9,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(BubbleSort LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 add_executable(bubble-sort "bubble-sort.cpp")
 
 add_library(lib-bubble "lib-bubble.cpp")

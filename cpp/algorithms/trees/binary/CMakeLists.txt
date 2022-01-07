@@ -18,4 +18,4 @@ project (
 add_library(lib-bst-algo "bst.cpp")
 
 add_executable(test-bst-algo "driver.cpp")
-target_link_libraries(test-bst-algo lib-bst)
+target_link_libraries(test-bst-algo lib-bst-algo)
