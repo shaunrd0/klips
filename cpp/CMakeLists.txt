@@ -20,7 +20,7 @@ project(
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(algorithms)
-add_subdirectory(cmake)
+add_subdirectory(cmake-example)
 add_subdirectory(cryptography)
 add_subdirectory(datastructs)
 add_subdirectory(graphics)

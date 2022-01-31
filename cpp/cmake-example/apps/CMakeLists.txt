@@ -1,6 +1,6 @@
 ###############################################################################
 ## Author: Shaun Reed				                                      			     ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved	      	     ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved	      	     ##
 ##									                                                         ##
 ## Contact: shaunrd0@gmail.com	| URL: www.shaunreed.com | GitHub: shaunrd0  ##
 ##############################################################################
@@ -10,8 +10,8 @@
 set(APP_SRC say-hello.cpp)
 
 # Add our executable, naming it and linking it to our source code
-add_executable(execute-hello ${APP_SRC})
+add_executable(say-hello ${APP_SRC})
 
 # Link to our custom library, defined in c-cmake/src/
-target_link_libraries(execute-hello lib-klips)
+target_link_libraries(say-hello lib-klips)
 
