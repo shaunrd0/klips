@@ -1,0 +1,12 @@
+{
+  "inputs": 5,
+  "perceptrons": 8,
+  "outputs": 8,
+  "hidden_layers": 3,
+  "learn_rate": 0.25,
+  "fire_threshold": 0.25,
+  "error_threshold": 0.5,
+  "cycles": 10,
+  "spacing": 2.0,
+  "horizontal": true
+}
