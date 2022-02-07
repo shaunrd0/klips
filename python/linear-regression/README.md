@@ -32,20 +32,6 @@ optional arguments:
                         Optionally provide file for data to be read from. Each point must be on it's own line with format x,y 
 ```
 
-Running linear regression program
-```bash
-python3.9 linear-regression.py --file ./input.txt --silent
-Finding fitting line plot for given data [(1, 3), (2, 7), (3, 5), (4, 9), (5, 11), (6, 12), (7, 15)]
-points_avg: (5.117647058823529, 5.235294117647059)
-variance: (241.76470588235296, 193.05882352941177)
-sigma: (3.887196176892422, 3.4736402333270258)
-covariance: 0.8455882352941174
-correlation: 0.0626235432924427
-Our line Y = BX + A must pass through the point (5.117647058823529, 5.235294117647059)
-Y = (0.05596107055961069)X + 4.9489051094890515
-For X = 4.5, Y is predicted to be 5.200729927007299 
-```
-
 By default, the following linear regression is calculated and displayed 
 ```bash
 python3.9 linear-regression.py

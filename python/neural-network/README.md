@@ -8,10 +8,10 @@ python3.9 -m pip install -r requirements.txt
 Neural network implementation using Python CLI to dynamically generate a resizable network
  and then run a given number of learning cycles on the provided data set. 
 As an example, the IRIS dataset is used to classify flower types using petal measurements.
-Input layer perceptron count can be adjusted with `INPUTS` positional parameter
-Hidden layer perceptron count can be adjusted with `PERCEPTRONS` positional parameter
-Output layer perceptron count can be adjusted with `OUTPUTS` positional parameter
-Hidden layers can be added or removed using`--hidden-layers` option setting
+Input layer perceptron count can be adjusted with `INPUTS` positional parameter.
+Hidden layer perceptron count can be adjusted with `PERCEPTRONS` positional parameter.
+Output layer perceptron count can be adjusted with `OUTPUTS` positional parameter.
+Hidden layers can be added or removed using`--hidden-layers` option setting.
 Node bias can be initialized randomly or with provided data.
 Perceptron edge weight bias can be initialized randomly or with provided data.
 Threshold for perceptron fire can be initialized randomly or with provided data.
@@ -96,7 +96,7 @@ If the length of an input sequence does not match the number of input nodes requ
 If the length of possible label classifications does not match the number of output nodes requested, a warning will show.
 In both cases, the program corrects the node count to match the input data / labels, and not the requested node count.
 
-The total number of output labels provided must match the total number of the number of input sequences.
+The total number of output labels provided must match the total number of input sequences.
 
 Running NN program uses IRIS data set by default. 
 Warnings will be shown if input and output node count is changed without providing new input.

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_simple-shape</title>
+
+    <style>
+        .test {
+            background-color: gray;
+        }
+        canvas {
+            background-color: gray;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- Simple example of shader source code (WebGL Fundamentals) -->
+<script id="vertex-simple-shader" type="x-shader/x-vertex">
+attribute vec2 a_position;
+uniform vec2 u_resolution;
+
+void main() {
+  // Convert pixel coordinates to a float randing from 0.0 -> 1.0
+  vec2 zeroToOne = a_position / u_resolution;
+  // Convert from 0->1 to 0->2
+  vec2 zeroToTwo = zeroToOne * 2.0;
+  // Convert from 0->2 to -1.0->1.0
+  vec2 clipSpace = zeroToTwo - 1.0;
+
+  gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+}
+</script>
+<script id="fragment-simple-shader" type="x-shader/x-vertex">
+precision mediump float;
+uniform vec4 u_color;
+
+void main() {
+  gl_FragColor = u_color;
+}
+</script>
+
+<!-- HTML document -->
+<p class="test">This is test HTML with some CSS. Logging with JS...<br>The following block is an OpenGL canvas</p>
+<canvas id="canvas"></canvas>
+
+<!-- WebGL -->
+<script>
+    function main() {
+        //
+        // Boilerplate OpenGL helper functions
+        function createShader(gl, type, source) {
+            let shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            let success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+
+            console.log(gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+        }
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            // Add check to automatically compile shaders if Strings are provided
+            // + Strings should be equal to HTML script id attribute value for vertex and fragment shaders
+            if (typeof vertexShader == 'string') {
+                let vertexShaderSource = document.querySelector(vertexShader).text;
+                vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+            }
+            if (typeof fragmentShader == 'string') {
+                let fragmentShaderSource = document.querySelector(fragmentShader).text;
+                fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+            }
+
+            let program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            let success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+
+            console.log(gl.getProgramInfoLog(program));
+            gl.deleteProgram(program);
+        }
+
+        let canvas = document.querySelector("#canvas");
+        let gl = canvas.getContext('webgl');
+        if (!gl) {
+            console.log("ERROR: Unable to get OpenGL context");
+            return;
+        }
+        else {
+            console.log("Created OpenGL context on HTML canvas")
+        }
+
+        // Creating shader program and compiling shader source code
+        let program = createProgram(gl, "#vertex-simple-shader", "#fragment-simple-shader");
+
+        // look up where the vertex data needs to go.
+        let positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+        // look up uniform locations
+        let resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
+        let colorUniformLocation = gl.getUniformLocation(program, "u_color");
+
+        // Create a buffer to put three 2d clip space points in
+        let positionBuffer = gl.createBuffer();
+        // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        // Canvas setup
+        // Resize canvas to match client size
+        const width  = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        canvas.width  = width;
+        canvas.height = height;
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+        // Clear the canvas
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        // Tell OpenGL to use our shader program
+        gl.useProgram(program);
+        // Enable attribute; Bind gl.ARRAY_BUFFER for use with this attribute
+        gl.enableVertexAttribArray(positionAttributeLocation);
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
+        let size = 2;          // 2 components per iteration (X and Y value for each vertex position)
+        let type = gl.FLOAT;   // Each X and Y value is a 32bit float
+        let normalize = false; // don't normalize the data
+        let stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
+        let offset = 0;        // start at the beginning of the buffer
+        gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
+
+        // Initialize geometry data for a 2D triangle with 3 vertices
+        let triangle = new Float32Array([
+            350, 100,
+            500, 300,
+            200, 300,
+        ]);
+
+        // Write geometry data to positions array buffer
+        gl.bufferData(gl.ARRAY_BUFFER, triangle, gl.STATIC_DRAW);
+        // Set a random color
+        gl.uniform4f(colorUniformLocation, Math.random(), Math.random(), Math.random(), 1);
+        // set the resolution
+        gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+
+        // Draw the triangle with 0 offset and 3 total vertices
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    }
+    main();
+</script>
+
+</body>
+</html>

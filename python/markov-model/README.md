@@ -90,7 +90,7 @@ Final paths sorted by probability:
 (0, 2, 1, 0, 2) has probability:         0.001395
 ```
 
-By default, a random Hidden Markov Model and visualization will be generated
+By default, a random Hidden Markov Model and visualization will be generated and the sequence `[A, B, D, C]` will be used.
 
 ```bash
 python3.9 markov-model.py

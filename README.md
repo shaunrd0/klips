@@ -8,6 +8,8 @@ github.com/shaunrd0/klips/
 ├── blockchain  # Blockchain related project templates and examples
 ├── cpp         # C++ programs, datastructures, and other examples
 ├── figlet      # Figlet fonts I like :)
+├── javascript  # Javascript projects and examples
+├── python      # Python scripts or tools I've made   
 ├── README.md   
 └── scripts     # Bash scripts
 ```
