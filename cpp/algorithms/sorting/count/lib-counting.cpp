@@ -1,6 +1,6 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved               ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved               ##
 ## About: An example implementation of counting sort using a custom library  ##
 ##                                                                           ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
@@ -35,13 +35,17 @@ void CountingSort(std::vector<int> &array)
   // + Since each element stores its own count, just add the count at index i-1
   for (size_t i = 1; i <= maxValue; i++) {
     tempArray[i] += tempArray[i - 1];
+    // tempArray[i] - 1 now represents the sorted 0-index pos for each value i
   }
 
+  // Step through the array from right-to-left and place each value in their pos
+  // + As we run into values lookup their position with tempArray[value]
   for (ssize_t arrayIndex = array.size() - 1; arrayIndex >= 0; arrayIndex--) {
-    // Store as references; Changes reflect on actual values within each array
     const int &arrayValue = array[arrayIndex];
+    // Store as reference; Changes to valueCount reflect within tempArray
     int &valueCount = tempArray[arrayValue];
     sortedArray[valueCount - 1] = arrayValue;
+    // Subtract from tempArray[arrayValue] to update position of next occurrence
     valueCount = valueCount - 1;
   }
 

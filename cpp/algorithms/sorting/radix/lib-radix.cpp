@@ -1,3 +1,11 @@
+/*#############################################################################
+## Author: Shaun Reed                                                        ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved               ##
+## About: An example implementation of radix sort using a custom library     ##
+##                                                                           ##
+## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
+###############################################################################
+*/
 
 #include "lib-radix.hpp"
 #include "lib-counting.hpp"

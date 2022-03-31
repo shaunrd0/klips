@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#include "factory.hpp"
+#include "abstract-factory.hpp"
 
 int main(const int argc, const char * argv[]) {
   // Testing GearFactory

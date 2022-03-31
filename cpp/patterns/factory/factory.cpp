@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include "factory.hpp"
+#include "abstract-factory.hpp"
 
 Part* GearFactory::requestPart() {
   // Create a new part

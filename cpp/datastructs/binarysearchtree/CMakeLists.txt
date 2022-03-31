@@ -1,11 +1,11 @@
-###############################################################################
-## Author: Shaun Reed                                                        ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved               ##
-## About: A basic CMakeLists configuration to test BST implementation        ##
-##                                                                           ##
-## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
-##############################################################################
-#
+################################################################################
+## Author: Shaun Reed                                                         ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
+## About: A basic CMakeLists configuration to test BST implementation         ##
+##                                                                            ##
+## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
+################################################################################
+
 cmake_minimum_required(VERSION 3.15)
 
 project (
@@ -15,7 +15,7 @@ project (
     LANGUAGES   CXX
 )
 
-add_library(lib-bst "bst.cpp")
-
-add_executable(test-bst "driver.cpp")
-target_link_libraries(test-bst lib-bst)
+add_executable(
+    data-bst driver.cpp
+    bst.cpp bst.h
+)

@@ -5,7 +5,6 @@
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
 ################################################################################
-#
 
 cmake_minimum_required(VERSION 3.15)
 
@@ -16,7 +15,7 @@ project(
     LANGUAGES CXX
 )
 
-add_library(lib-cipher "lib-cipher.cpp")
-
-add_executable(columnar-transposition-test "driver.cpp")
-target_link_libraries(columnar-transposition-test lib-cipher)
+add_executable(
+    crypto-columnar-transposition driver.cpp
+    lib-cipher.cpp lib-cipher.hpp
+)

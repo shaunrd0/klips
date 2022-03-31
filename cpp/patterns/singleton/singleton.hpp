@@ -17,9 +17,15 @@ private:
   std::string message;
 
   // Don't allow copying of this class
+  // Ignore -Wreturn-type warnings; It's intentional for this pattern
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wreturn-type"
   Singleton() { message = "New singleton\n";}
   Singleton(const Singleton &) {}
   Singleton &operator=(const Singleton &) {}
+  // Unmatched pop reverts GCC to commandline options
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 };
 
 #endif // SINGLETON_H

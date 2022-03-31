@@ -15,7 +15,8 @@ project(
 )
 add_compile_options("-Wall")
 
-add_library(abstract-parts "parts.cpp")
-add_library(abstract-factory "factory.cpp")
-add_executable(abstract-factory-test "main.cpp")
-target_link_libraries(abstract-factory-test abstract-factory abstract-parts)
+add_executable(
+    patterns-abstract-factory main.cpp
+    parts.cpp parts.hpp
+    abstract-factory.cpp abstract-factory.hpp
+)

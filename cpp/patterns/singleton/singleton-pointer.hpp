@@ -19,7 +19,13 @@ private:
   ClassicSingleton(){ message = "New ClassicSingleton\n";}
   // Do not allow copying of this object
   ClassicSingleton(const ClassicSingleton&){}
+  // Ignore -Wreturn-type warnings; It's intentional for this pattern
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wreturn-type"
   ClassicSingleton& operator=(const ClassicSingleton&){}
+  // Unmatched pop reverts GCC to commandline options
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 
   // Static pointer to instance of this singleton
   static ClassicSingleton* instance;

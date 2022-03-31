@@ -1,10 +1,9 @@
-###############################################################################
-## Author: Shaun Reed                                                        ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved               ##
-##                                                                           ##
-## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0  ##
-##############################################################################
-#
+################################################################################
+## Author: Shaun Reed                                                         ##
+## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
+##                                                                            ##
+## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
+################################################################################
 
 # Define CMake version
 cmake_minimum_required(VERSION 3.15)
@@ -17,16 +16,15 @@ project(
 
 # Add Library
 add_library(
-    lib-sdl-test            # Library Name
-    "src/lib-sdl-test.cpp"  # Sources..
-    "src/lib-sdl-test.h"
+    graphics-lib-sdl                          # Library Name
+    src/lib-sdl-test.cpp  src/lib-sdl-test.h  # Sources..
 )
 
 target_include_directories(            # When calling library, include a directory
-    lib-sdl-test                       # Library name
+    graphics-lib-sdl                   # Library name
     PUBLIC                             # Visibility
-    "${CMAKE_CURRENT_SOURCE_DIR}/src"  # Source directory for library
-    )
+    ${CMAKE_CURRENT_SOURCE_DIR}/src    # Source directory for library
+)
 
 # Search for SDL2 package
 find_package(SDL2 REQUIRED sdl2)
@@ -35,20 +33,20 @@ find_package(SDL2 REQUIRED sdl2)
 if (SDL2_FOUND)
   # Any target that links with this library will also link to SDL2
   # + Because we choose PUBLIC visibility
-  target_include_directories(lib-sdl-test PUBLIC ${SDL2_INCLUDE_DIRS})
-  target_link_libraries(lib-sdl-test PUBLIC "${SDL2_LIBRARIES}")
+  target_include_directories(graphics-lib-sdl PUBLIC ${SDL2_INCLUDE_DIRS})
+  target_link_libraries(graphics-lib-sdl PUBLIC "${SDL2_LIBRARIES}")
 
   # Creating executable
   add_executable(
-      sdl-test              # Exe name
-      "apps/sdl-test.cpp"   # Exe Source(s)
+      graphics-cmake-sdl  # Exe name
+      apps/sdl-test.cpp   # Exe Source(s)
   )
 
   # Linking the exe to library
   target_link_libraries(
-      sdl-test              # Executable to link
+      graphics-cmake-sdl    # Executable to link
       PRIVATE               # Visibility
-      lib-sdl-test          # Library to link
+      graphics-lib-sdl      # Library to link
   )
 
 else()

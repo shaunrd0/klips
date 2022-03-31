@@ -9,7 +9,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(HeapSort LANGUAGES CXX)
 
-add_executable(heap-sort "heap-sort.cpp")
+add_executable(
+    algo-sort-heap heap-sort.cpp
+    lib-heap.cpp lib-heap.hpp
+)
 
-add_library(lib-heap "lib-heap.cpp")
-target_link_libraries(heap-sort lib-heap)

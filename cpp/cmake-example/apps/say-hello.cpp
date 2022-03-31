@@ -6,7 +6,7 @@
 ################################################################################
 */
 
-#include <lib-klips.hpp>
+#include <lib-example.hpp>
 #include <iostream>
 
 int main () {

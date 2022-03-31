@@ -1,6 +1,6 @@
 /*#############################################################################
 ## Author: Shaun Reed                                                        ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved               ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved               ##
 ## About: An example of a red-black tree implementation                      ##
 ##        The algorithms in this example are seen in MIT Intro to Algorithms ##
 ##                                                                           ##
