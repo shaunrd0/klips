@@ -15,7 +15,7 @@ void InsertionSort(std::vector<int> &array)
 {
   // For each value, move left until we find sortedPosition for keyValue
   // + Starting with keyValue at array[1], to check sortedPosition at array[0]
-  for (int keyIndex = 1; keyIndex <= array.size(); keyIndex++) {
+  for (size_t keyIndex = 1; keyIndex <= array.size(); keyIndex++) {
     // Save the current key value
     // + We will look for the sorted position of this value
     const int keyValue = array[keyIndex];

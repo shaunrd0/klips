@@ -12,10 +12,10 @@
 #include <vector>
 
 void SelectionSort(std::vector<int> &arr) {
-  for (int leftIndex = 0; leftIndex < arr.size(); leftIndex++) {
+  for (size_t leftIndex = 0; leftIndex < arr.size(); leftIndex++) {
     // Get the index for the minimum number in the unsorted set
-    int min = leftIndex;
-    for (int i = leftIndex; i < arr.size(); i++) {
+    size_t min = leftIndex;
+    for (size_t i = leftIndex; i < arr.size(); i++) {
       // Check if value at i is smaller than value at min index
       min = (arr[min] > arr[i]) ? i : min; // Update min value to i if true
     }

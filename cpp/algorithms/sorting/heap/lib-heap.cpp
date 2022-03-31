@@ -17,7 +17,7 @@ size_t Parent(const size_t &index) { return index / 2;}
 size_t Left(const size_t &index) { return 2 * index + 1;}
 size_t Right(const size_t &index) { return (2 * index) + 2;}
 
-void MaxHeapify(std::vector<int> &array, size_t thisIndex, const int &heapSize)
+void MaxHeapify(std::vector<int> &array, size_t thisIndex, const size_t &heapSize)
 {
   // Get an index for the left and right nodes attached to thisIndex
   size_t l = Left(thisIndex);

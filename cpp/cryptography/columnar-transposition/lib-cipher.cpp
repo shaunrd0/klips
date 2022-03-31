@@ -21,9 +21,9 @@ void Columnar::InitOrder(std::string temp)
   temp.erase(it, temp.end());
 
   // Step through each character in lexicographic order
-  for (int i = 0; i < temp.size(); i++) {
+  for (size_t i = 0; i < temp.size(); i++) {
     // Check each character in the keyWord for the current lexicographic char
-    for (int j = 0; j < keyWord_.size(); j++) {
+    for (size_t j = 0; j < keyWord_.size(); j++) {
       // If they are equal, push the index of the char in keyWord to orderVect
       if (keyWord_[j] == temp[i]) {
         orderVect_.push_back(j);
@@ -109,7 +109,7 @@ std::string Columnar::Decrypt(std::string message)
   rows.resize(orderVect_.size());
   // Track the ending position after each substring is taken
   int lastPos = 0;
-  for (int i = 0; i < orderVect_.size(); i++) {
+  for (size_t i = 0; i < orderVect_.size(); i++) {
     // If we are assigning to any row < fullRows, it should have + 1 character
     if (orderVect_[i] < fullRows) {
       rows[orderVect_[i]] = message.substr(lastPos, rowLength + 1);

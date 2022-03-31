@@ -18,6 +18,7 @@ project(
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+add_compile_options("-Wall")
 
 add_subdirectory(algorithms)
 add_subdirectory(cmake-example)

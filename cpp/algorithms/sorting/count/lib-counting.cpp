@@ -33,7 +33,7 @@ void CountingSort(std::vector<int> &array)
 
   // Count the values less than or equal to each element of tempArray
   // + Since each element stores its own count, just add the count at index i-1
-  for (size_t i = 1; i <= maxValue; i++) {
+  for (int32_t i = 1; i <= maxValue; i++) {
     tempArray[i] += tempArray[i - 1];
     // tempArray[i] - 1 now represents the sorted 0-index pos for each value i
   }

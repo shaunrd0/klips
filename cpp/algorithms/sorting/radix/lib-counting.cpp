@@ -41,7 +41,7 @@ void CountingSort(std::vector<int> &array, int placeValue)
 
   // Count the values less than or equal to each element of tempArray
   // + Since each element stores its own count, just add the count at index i-1
-  for (int i = 1; i < tempArray.size(); i++) {
+  for (size_t i = 1; i < tempArray.size(); i++) {
     tempArray[i] = tempArray[i] + tempArray[i - 1];
   }
 

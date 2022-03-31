@@ -50,7 +50,7 @@ size_t Partition(std::vector<int> &array, size_t begin, size_t end)
   // + Return this value when done, so we know where the lhs partition ends
   ssize_t lhsIndex = begin - 1;
   // For each value within this partition, check for values < keyValue
-  for (int j = begin; j <= end - 1; j++) {
+  for (size_t j = begin; j <= end - 1; j++) {
     if (array[j] <= keyValue) {
       // Swap all values < keyValue into the lhs portion of array
       std::swap(array[++lhsIndex], array[j]);
