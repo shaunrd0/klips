@@ -63,8 +63,8 @@ enum Color {
   Black
 };
 
-// Information used in all searches
-struct SearchInfo {
+// Information used in all searches tracked for each node
+struct NodeInfo {
   // Coloring of the nodes is used in both DFS and BFS
   Color discovered = White;
 };
@@ -73,8 +73,8 @@ struct SearchInfo {
 /******************************************************************************/
 // BFS search information struct
 
-// Information that is only used in BFS
-struct BFS : SearchInfo {
+// Node information that is only used in BFS
+struct BFS : NodeInfo {
   // Used to represent distance from start node
   int distance = 0;
   // Used to represent the parent node that discovered this node
@@ -90,8 +90,8 @@ using InfoBFS = std::unordered_map<int, struct BFS>;
 /******************************************************************************/
 // DFS search information struct
 
-// Information that is only used in DFS
-struct DFS : SearchInfo {
+// Node information that is only used in DFS
+struct DFS : NodeInfo {
   // Create a pair to track discovery / finish time
   // + Discovery time is the iteration the node is first discovered
   // + Finish time is the iteration the node has been checked completely
@@ -119,7 +119,7 @@ public:
   // An alternate DFS that checks each node of the graph beginning at startNode
   InfoDFS DFS(const Node &startNode) const;
   // Visit function is used in both versions of DFS
-  void DFSVisit(int &time, const Node& startNode, InfoDFS &searchInfo) const;
+  void DFSVisit(int &time, const Node& startNode, InfoDFS &dfs) const;
   // Topological sort, using DFS
   std::vector<Node> TopologicalSort(const Node &startNode) const;
 

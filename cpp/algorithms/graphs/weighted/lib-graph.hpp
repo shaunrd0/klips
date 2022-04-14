@@ -69,18 +69,29 @@ enum Color {
   Black
 };
 
-// Information used in all searches
-struct SearchInfo {
+// Information used in all searches tracked for each node
+struct NodeInfo {
   // Coloring of the nodes is used in both DFS and BFS
   Color discovered = White;
+};
+
+// Template for tracking graph information gathered during traversals
+// + Used for DFS, BFS, and MST
+template <typename T>
+struct GraphInfo {
+  // Store search information in unordered_maps so we can pass it around easily
+  // + Allows each node to store relative information on the traversal
+  std::unordered_map<int, T> nodeInfo;
+  // Track total weight for all traversals
+  int totalWeight = 0;
 };
 
 
 /******************************************************************************/
 // BFS search information struct
 
-// Information that is only used in BFS
-struct BFS : SearchInfo {
+// Node search information that is only used in BFS
+struct BFS : NodeInfo {
   // Used to represent distance from start node
   int distance = 0;
   // Used to represent the parent node that discovered this node
@@ -88,16 +99,14 @@ struct BFS : SearchInfo {
   const Node *predecessor = nullptr;
 };
 
-// Store search information in unordered_maps so we can pass it around easily
-// + Allows each node to store relative information on the traversal
-using InfoBFS = std::unordered_map<int, struct BFS>;
+struct InfoBFS : GraphInfo<BFS> {/* Members inherited from GraphInfo */};
 
 
 /******************************************************************************/
 // DFS search information struct
 
 // Information that is only used in DFS
-struct DFS : SearchInfo {
+struct DFS : NodeInfo {
   // Create a pair to track discovery / finish time
   // + Discovery time is the iteration the node is first discovered
   // + Finish time is the iteration the node has been checked completely
@@ -105,18 +114,19 @@ struct DFS : SearchInfo {
   std::pair<int, int> discoveryFinish;
 };
 
+struct InfoDFS : GraphInfo<DFS> {/* Members inherited from GraphInfo */};
+
 
 /******************************************************************************/
 // MST search information struct
 
-struct MST : SearchInfo {
+struct MST : NodeInfo {
   int32_t parent = INT32_MIN;
   int rank = 0;
 };
-using InfoDFS = std::unordered_map<int, struct DFS>;
 
 using Edges = std::multimap<int, std::pair<int, int>>;
-struct InfoMST {
+struct InfoMST : GraphInfo<MST>{
   explicit InfoMST(const std::vector<Node> &nodes)
   {
     for (const auto &node : nodes) {
@@ -134,20 +144,17 @@ struct InfoMST {
     }
   }
 
-  std::unordered_map<int, struct MST> searchInfo;
   // All of the edges within our graph
   // + Since each node stores its own edges, this is initialized in InfoMST ctor
   Edges edges;
 
   // A multimap of the edges found for our MST
   Edges edgesMST;
-  // The total weight of our resulting MST
-  int weightMST = 0;
 
   void MakeSet(int x)
   {
-    searchInfo[x].parent = x;
-    searchInfo[x].rank = 0;
+    nodeInfo[x].parent = x;
+    nodeInfo[x].rank = 0;
   }
 
   void Union(int x, int y)
@@ -157,23 +164,23 @@ struct InfoMST {
 
   void Link(int x, int y)
   {
-    if (searchInfo[x].rank > searchInfo[y].rank) {
-      searchInfo[y].parent = x;
+    if (nodeInfo[x].rank > nodeInfo[y].rank) {
+      nodeInfo[y].parent = x;
     }
     else {
-      searchInfo[x].parent = y;
-      if (searchInfo[x].rank == searchInfo[y].rank) {
-        searchInfo[y].rank += 1;
+      nodeInfo[x].parent = y;
+      if (nodeInfo[x].rank == nodeInfo[y].rank) {
+        nodeInfo[y].rank += 1;
       }
     }
   }
 
   int FindSet(int x)
   {
-    if (x != searchInfo[x].parent) {
-      searchInfo[x].parent = FindSet(searchInfo[x].parent);
+    if (x != nodeInfo[x].parent) {
+      nodeInfo[x].parent = FindSet(nodeInfo[x].parent);
     }
-    return searchInfo[x].parent;
+    return nodeInfo[x].parent;
   }
 };
 
@@ -195,7 +202,7 @@ public:
   // An alternate DFS that checks each node of the graph beginning at startNode
   InfoDFS DFS(const Node &startNode) const;
   // Visit function is used in both versions of DFS
-  void DFSVisit(int &time, const Node& startNode, InfoDFS &searchInfo) const;
+  void DFSVisit(int &time, const Node& startNode, InfoDFS &dfs) const;
   // Topological sort, using DFS
   std::vector<Node> TopologicalSort(const Node &startNode) const;
   // Kruskal's MST

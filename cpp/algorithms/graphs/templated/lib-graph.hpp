@@ -79,8 +79,8 @@ enum Color {
   Black
 };
 
-// Information used in all searches
-struct SearchInfo {
+// Information used in all searches tracked for each node
+struct NodeInfo {
   // Coloring of the nodes is used in both DFS and BFS
   Color discovered = White;
 };
@@ -89,9 +89,9 @@ struct SearchInfo {
 /******************************************************************************/
 // BFS search information struct
 
-// Information that is only used in BFS
+// Node information that is only used in BFS
 template <typename T>
-struct BFS : SearchInfo {
+struct BFS : NodeInfo {
   // Used to represent distance from start node
   int distance = 0;
   // Used to represent the parent node that discovered this node
@@ -107,8 +107,8 @@ template <typename T> using InfoBFS = std::unordered_map<T, struct BFS<T>>;
 /******************************************************************************/
 // DFS search information struct
 
-// Information that is only used in DFS
-struct DFS : SearchInfo {
+// Node information that is only used in DFS
+struct DFS : NodeInfo {
   // Create a pair to track discovery / finish time
   // + Discovery time is the iteration the node is first discovered
   // + Finish time is the iteration the node has been checked completely
@@ -125,7 +125,7 @@ template <typename T> using InfoDFS = std::unordered_map<T, struct DFS>;
 // Edges stored as multimap<weight, pair<nodeA.data_, nodeB.data_>>
 template <typename T> using Edges = std::multimap<int, std::pair<T, T>>;
 
-struct MST : SearchInfo {
+struct MST : NodeInfo {
   int32_t parent = INT32_MIN;
   int rank = 0;
 };

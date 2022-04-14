@@ -156,11 +156,19 @@ int main (const int argc, const char * argv[])
           {9, {{3, 2}, {7, 6}}}
       }
   );
+  std::cout << "\nChecking weight traversing graph from node 1 using DFS...\n";
+  InfoDFS resultDFS = graphMST.DFS(graphMST.GetNodeCopy(1));
+  std::cout << "DFS total weight traversed: " << resultDFS.totalWeight << std::endl;
+
+  std::cout << "\nChecking weight traversing graph from node 1 using BFS...\n";
+  InfoBFS resultBFS = graphMST.BFS(graphMST.GetNodeCopy(1));
+  std::cout << "BFS total weight traversed: " << resultBFS.totalWeight << std::endl;
+
   InfoMST resultMST = graphMST.KruskalMST();
-  std::cout << "Finding MST using Kruskal's...\n\nMST result: \n";
+  std::cout << "\n\nFinding MST using Kruskal's...\n\nMST result: \n";
   for (const auto &edge : resultMST.edgesMST) {
     std::cout << "Connected nodes: " << edge.second.first << "->"
               << edge.second.second << " with weight of " << edge.first << "\n";
   }
-  std::cout << "Total MST weight: " << resultMST.weightMST << std::endl;
+  std::cout << "Total MST weight: " << resultMST.totalWeight << std::endl;
 }
