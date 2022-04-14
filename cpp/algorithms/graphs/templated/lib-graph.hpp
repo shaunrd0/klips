@@ -1,7 +1,7 @@
 /*##############################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
-## About: An example of an object graph implementation                        ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
+## About: An example of a templated object graph implementation               ##
 ##        Algorithms in this example are found in MIT Intro to Algorithms     ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
@@ -10,24 +10,74 @@
 #ifndef LIB_GRAPH_HPP
 #define LIB_GRAPH_HPP
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <map>
+#include <queue>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
-#include <queue>
-#include <unordered_set>
-#include <unordered_map>
+
+
+/******************************************************************************/
+// Node structure for representing a graph
+
+template <typename T>
+struct Node {
+public:
+  template <typename> friend class Graph;
+  template <typename> friend class InfoMST;
+
+  // Constructors
+  Node(const Node &rhs) = default;
+  Node & operator=(Node rhs)
+  {
+    if (this == &rhs) return *this;
+    swap(*this, rhs);
+    return *this;
+  }
+  Node(T data, const std::vector<std::pair<T, int>> &adj) : data_(data)
+  {
+    // Place each adjacent node in vector into our unordered_map of edges
+    for (const auto &i : adj) adjacent_.emplace(i.first, i.second);
+  }
+
+  friend void swap(Node &a, Node &b)
+  {
+    std::swap(a.data_, b.data_);
+    std::swap(a.adjacent_, b.adjacent_);
+  }
+
+  // Operators
+  // Define operator== for std::find; And comparisons between nodes
+  bool operator==(const Node<T> &b) const { return this->data_ == b.data_;}
+  // Define an operator!= for comparing nodes for inequality
+  bool operator!=(const Node<T> &b) const { return this->data_ != b.data_;}
+
+  // Accessors
+  inline T GetData() const { return data_;}
+  inline std::unordered_map<int, int> GetAdjacent() const { return adjacent_;}
+
+private:
+  T data_;
+  // Adjacent stored in an unordered_map<adj.number, edgeWeight>
+  std::unordered_map<T, int> adjacent_;
+};
 
 
 /******************************************************************************/
 // Base struct for storing traversal information on all nodes
 
-template <typename T> struct Node;
-
 // Color represents the discovery status of any given node
-// + White is undiscovered, Gray is in progress, Black is fully discovered
-enum Color {White, Gray, Black};
+enum Color {
+  // Node is marked as undiscovered
+  White,
+  // Node discovery is in progress; Some adjacent nodes have not been checked
+  Gray,
+  // Node has been discovered; All adjacent nodes have been checked
+  Black
+};
 
 // Information used in all searches
 struct SearchInfo {
@@ -37,7 +87,7 @@ struct SearchInfo {
 
 
 /******************************************************************************/
-// BFS search information structs
+// BFS search information struct
 
 // Information that is only used in BFS
 template <typename T>
@@ -49,9 +99,13 @@ struct BFS : SearchInfo {
   const Node<T> *predecessor = nullptr;
 };
 
+// Store search information in unordered_maps so we can pass it around easily
+// + Allows each node to store relative information on the traversal
+template <typename T> using InfoBFS = std::unordered_map<T, struct BFS<T>>;
+
 
 /******************************************************************************/
-// DFS search information structs
+// DFS search information struct
 
 // Information that is only used in DFS
 struct DFS : SearchInfo {
@@ -62,20 +116,14 @@ struct DFS : SearchInfo {
   std::pair<int, int> discoveryFinish;
 };
 
+template <typename T> using InfoDFS = std::unordered_map<T, struct DFS>;
+
 
 /******************************************************************************/
-// Alias types for storing search information structures
+// MST search information struct
 
-// Store search information in unordered_maps so we can pass it around easily
-// + Allows each node to store relative information on the traversal
-template <typename T> using InfoBFS = std::unordered_map<T, struct BFS<T>>;
-template <typename T> using InfoDFS = std::unordered_map<T, struct DFS>;
 // Edges stored as multimap<weight, pair<nodeA.data_, nodeB.data_>>
 template <typename T> using Edges = std::multimap<int, std::pair<T, T>>;
-
-
-/******************************************************************************/
-// MST search information structs
 
 struct MST : SearchInfo {
   int32_t parent = INT32_MIN;
@@ -86,8 +134,9 @@ template <typename T>
 struct InfoMST {
   template <typename> friend class Graph;
 
-  explicit InfoMST(const std::vector<Node<T>> &nodes) {
-    for (const auto &node : nodes){
+  explicit InfoMST(const std::vector<Node<T>> &nodes)
+  {
+    for (const auto &node : nodes) {
       // Initialize the default values for forest tracked by this struct
       // + This data is used in KruskalMST() to find the MST
       MakeSet(node.data_);
@@ -158,58 +207,13 @@ private:
 
 
 /******************************************************************************/
-// Node structure for representing a graph
-
-template <typename T>
-struct Node {
-public:
-  template <typename> friend class Graph;
-  template <typename> friend class InfoMST;
-
-  // Constructors
-  Node(const Node &rhs) = default;
-  Node & operator=(Node rhs) {
-    if (this == &rhs) return *this;
-    swap(*this, rhs);
-    return *this;
-  }
-  Node(T data, const std::vector<std::pair<T, int>> &adj)
-  : data_(data)
-  {
-    // Place each adjacent node in vector into our unordered_map of edges
-    for (const auto &i : adj) adjacent_.emplace(i.first, i.second);
-  }
-
-  friend void swap(Node &a, Node &b) {
-    std::swap(a.data_, b.data_);
-    std::swap(a.adjacent_, b.adjacent_);
-  }
-
-  // Operators
-  // Define operator== for std::find; And comparisons between nodes
-  bool operator==(const Node<T> &b) const { return this->data_ == b.data_;}
-  // Define an operator!= for comparing nodes for inequality
-  bool operator!=(const Node<T> &b) const { return this->data_ != b.data_;}
-
-  // Accessors
-  inline T GetData() const { return data_;}
-  inline std::unordered_map<int, int> GetAdjacent() const { return adjacent_;}
-
-private:
-  T data_;
-  // Adjacent stored in an unordered_map<adj.number, edgeWeight>
-  std::unordered_map<T, int> adjacent_;
-};
-
-
-/******************************************************************************/
 // Templated graph class
 
 template <class T>
 class Graph {
 public:
   // Constructor
-  Graph(std::vector<Node<T>> nodes) : nodes_(std::move(nodes)) {}
+  explicit Graph(std::vector<Node<T>> nodes) : nodes_(std::move(nodes)) {}
 
   // Breadth First Search
   InfoBFS<T> BFS(const Node<T>& startNode) const;

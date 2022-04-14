@@ -1,7 +1,8 @@
 /*##############################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
-## About: Driver program to test object graph implementation                  ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
+## About: An example of a weighted graph implementation                       ##
+##        Algorithms in this example are found in MIT Intro to Algorithms     ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
 ################################################################################
@@ -212,4 +213,3 @@ InfoMST Graph::KruskalMST() const
 
   return searchInfo;
 }
-

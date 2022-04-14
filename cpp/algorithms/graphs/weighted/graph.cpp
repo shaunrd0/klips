@@ -1,8 +1,7 @@
 /*##############################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
-## About: An example of a weighted graph implementation                       ##
-##        Algorithms in this example are found in MIT Intro to Algorithms     ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
+## About: Driver program to test weighted graph implementation                ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
 ################################################################################
@@ -105,7 +104,7 @@ int main (const int argc, const char * argv[])
   // + Chapter 22, Figure 22.4 on DFS
   // Unlike the simple-graph example, this final result matches MIT Algorithms
   // + Aside from the placement of the watch node, which is not connected
-  // +  This is because the node is visited after all other nodes are finished
+  // + This is because the node is visited after all other nodes are finished
   std::vector<Node> order =
       topologicalGraph.TopologicalSort(topologicalGraph.GetNodeCopy(6));
   std::cout << "\nTopological order: ";

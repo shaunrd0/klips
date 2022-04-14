@@ -1,7 +1,7 @@
 /*##############################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
-## About: An example of an object graph implementation                        ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
+## About: An example of a weighted graph implementation                       ##
 ##        Algorithms in this example are found in MIT Intro to Algorithms     ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
@@ -10,56 +10,14 @@
 #ifndef LIB_GRAPH_HPP
 #define LIB_GRAPH_HPP
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <map>
+#include <queue>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
-#include <queue>
-#include <unordered_set>
-#include <unordered_map>
-
-
-/******************************************************************************/
-// Structures for tracking information gathered from various traversals
-struct Node;
-// Color represents the discovery status of any given node
-// + White is undiscovered, Gray is in progress, Black is fully discovered
-enum Color {White, Gray, Black};
-
-// Information used in all searches
-struct SearchInfo {
-  // Coloring of the nodes is used in both DFS and BFS
-  Color discovered = White;
-};
-
-// Information that is only used in BFS
-struct BFS : SearchInfo {
-  // Used to represent distance from start node
-  int distance = 0;
-  // Used to represent the parent node that discovered this node
-  // + If we use this node as the starting point, this will remain a nullptr
-  const Node *predecessor = nullptr;
-};
-
-// Information that is only used in DFS
-struct DFS : SearchInfo {
-  // Create a pair to track discovery / finish time
-  // + Discovery time is the iteration the node is first discovered
-  // + Finish time is the iteration the node has been checked completely
-  // ++ A finished node has considered all adjacent nodes
-  std::pair<int, int> discoveryFinish;
-};
-
-struct MST : SearchInfo {
-  int32_t parent = INT32_MIN;
-  int rank = 0;
-};
-
-// Store search information in unordered_maps so we can pass it around easily
-// + Allows each node to store relative information on the traversal
-using InfoBFS = std::unordered_map<int, struct BFS>;
-using InfoDFS = std::unordered_map<int, struct DFS>;
 
 
 /******************************************************************************/
@@ -69,7 +27,8 @@ struct Node {
 public:
   // Constructors
   Node(const Node &rhs) = default;
-  Node & operator=(Node rhs) {
+  Node & operator=(Node rhs)
+  {
     if (this == &rhs) return *this;
     swap(*this, rhs);
     return *this;
@@ -80,7 +39,8 @@ public:
     for (const auto &i : adj) adjacent.emplace(i.first, i.second);
   }
 
-  friend void swap(Node &a, Node &b) {
+  friend void swap(Node &a, Node &b)
+  {
     std::swap(a.number, b.number);
     std::swap(a.adjacent, b.adjacent);
   }
@@ -95,10 +55,71 @@ public:
   bool operator!=(const Node &b) const { return this->number != b.number;}
 };
 
+
+/******************************************************************************/
+// Base struct for storing traversal information on all nodes
+
+// Color represents the discovery status of any given node
+enum Color {
+  // Node is marked as undiscovered
+  White,
+  // Node discovery is in progress; Some adjacent nodes have not been checked
+  Gray,
+  // Node has been discovered; All adjacent nodes have been checked
+  Black
+};
+
+// Information used in all searches
+struct SearchInfo {
+  // Coloring of the nodes is used in both DFS and BFS
+  Color discovered = White;
+};
+
+
+/******************************************************************************/
+// BFS search information struct
+
+// Information that is only used in BFS
+struct BFS : SearchInfo {
+  // Used to represent distance from start node
+  int distance = 0;
+  // Used to represent the parent node that discovered this node
+  // + If we use this node as the starting point, this will remain a nullptr
+  const Node *predecessor = nullptr;
+};
+
+// Store search information in unordered_maps so we can pass it around easily
+// + Allows each node to store relative information on the traversal
+using InfoBFS = std::unordered_map<int, struct BFS>;
+
+
+/******************************************************************************/
+// DFS search information struct
+
+// Information that is only used in DFS
+struct DFS : SearchInfo {
+  // Create a pair to track discovery / finish time
+  // + Discovery time is the iteration the node is first discovered
+  // + Finish time is the iteration the node has been checked completely
+  // ++ A finished node has considered all adjacent nodes
+  std::pair<int, int> discoveryFinish;
+};
+
+
+/******************************************************************************/
+// MST search information struct
+
+struct MST : SearchInfo {
+  int32_t parent = INT32_MIN;
+  int rank = 0;
+};
+using InfoDFS = std::unordered_map<int, struct DFS>;
+
 using Edges = std::multimap<int, std::pair<int, int>>;
 struct InfoMST {
-  explicit InfoMST(const std::vector<Node> &nodes) {
-    for (const auto &node : nodes){
+  explicit InfoMST(const std::vector<Node> &nodes)
+  {
+    for (const auto &node : nodes) {
       // Initialize the default values for forest tracked by this struct
       // + This data is used in KruskalMST() to find the MST
       MakeSet(node.number);
@@ -154,11 +175,12 @@ struct InfoMST {
     }
     return searchInfo[x].parent;
   }
-
 };
+
 
 /******************************************************************************/
 // Graph class declaration
+
 class Graph {
 public:
   // Constructor

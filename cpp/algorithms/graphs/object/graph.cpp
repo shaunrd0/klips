@@ -1,8 +1,7 @@
 /*##############################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
-## About: An example of an object graph implementation                        ##
-##        Algorithms in this example are found in MIT Intro to Algorithms     ##
+## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
+## About: Driver program to test object graph implementation                  ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
 ################################################################################
