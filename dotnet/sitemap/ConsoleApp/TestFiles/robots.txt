@@ -1,0 +1,9 @@
+User-agent: *
+Disallow:
+Disallow: /dist/
+Disallow: /settings/
+Disallow: /register/
+Disallow: /login/
+Disallow: /uploads/
+Disallow: /export/
+Disallow: /search?

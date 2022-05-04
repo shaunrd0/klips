@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlipsLibrary", "KlipsLibrary\KlipsLibrary.csproj", "{58CB87C5-7D98-43F9-8AD8-C73766C06E51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlipsLibrary.Test", "KlipsLibrary.Test\KlipsLibrary.Test.csproj", "{3576A541-1B1E-42A1-A348-B0CAA3B5BC5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlipsConsole", "KlipsConsole\KlipsConsole.csproj", "{A1E88D77-4A17-47BF-BED4-CEB1821FB627}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58CB87C5-7D98-43F9-8AD8-C73766C06E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58CB87C5-7D98-43F9-8AD8-C73766C06E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58CB87C5-7D98-43F9-8AD8-C73766C06E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58CB87C5-7D98-43F9-8AD8-C73766C06E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3576A541-1B1E-42A1-A348-B0CAA3B5BC5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3576A541-1B1E-42A1-A348-B0CAA3B5BC5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3576A541-1B1E-42A1-A348-B0CAA3B5BC5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3576A541-1B1E-42A1-A348-B0CAA3B5BC5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E88D77-4A17-47BF-BED4-CEB1821FB627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E88D77-4A17-47BF-BED4-CEB1821FB627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E88D77-4A17-47BF-BED4-CEB1821FB627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E88D77-4A17-47BF-BED4-CEB1821FB627}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
