@@ -9,6 +9,7 @@ shaunrd0/klips/cpp/
 ├── graphics       # Examples of graphics projects written in C++
 ├── multithreading # Basic multithreading examples in C++
 ├── patterns       # Examples of various design patterns written in C++
+├── qt             # Qt project examples using C++
 └── README.md
 ```
 
