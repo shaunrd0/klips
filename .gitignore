@@ -10,4 +10,5 @@
 **/Makefile
 **/*.cbp
 **/node-modules/
-**/CmakeLists.txt.user
+**/CMakeLists.txt.user
+**/catch2/bin/
