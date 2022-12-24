@@ -10,19 +10,23 @@
 #ifndef KLIPS_TEXTVIEW_H
 #define KLIPS_TEXTVIEW_H
 
+#include "widget-plugin-library_export.h"
 #include <QPlainTextEdit>
 
-class TextView : public QPlainTextEdit {
+class WIDGET_PLUGIN_LIBRARY_EXPORT TextView : public QPlainTextEdit {
   Q_OBJECT
 
 public:
-  TextView(QWidget *parent = nullptr) {}
+  explicit TextView(QWidget *parent = nullptr) : QPlainTextEdit(parent) {
+    appendPlainText("This is an example of a custom QTextView widget.");
+  }
 
   ~TextView() = default;
 
+  QString includeFile() const { return QStringLiteral("text-view.h"); };
 public:
 signals:
-  void sendTest()QWidget;
+  void sendTest();
 
 private:
 signals:

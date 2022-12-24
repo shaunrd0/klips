@@ -7,34 +7,4 @@
 ################################################################################
 */
 
-#ifndef KLIPS_TEXTVIEW_H
-#define KLIPS_TEXTVIEW_H
-
-#include <QPlainTextEdit>
-
-class TextView : public QPlainTextEdit {
-  Q_OBJECT
-
-public:
-  TextView(QWidget *parent = nullptr) {}
-
-  ~TextView() = default;
-
-public:
-signals:
-  void sendTest()QWidget;
-
-private:
-signals:
-  void sentTestPrivate();
-
-public slots:
-  void test() { appendPlainText("Test signal received by TextView."); }
-
-  void testArgs(const QString &message) { appendPlainText(message); }
-
-private slots:
-  void testPrivate() {}
-};
-
-#endif // KLIPS_TEXTVIEW_H
+#include "textview.h"

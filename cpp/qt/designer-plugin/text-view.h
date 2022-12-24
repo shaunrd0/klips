@@ -16,13 +16,13 @@ class TextView : public QPlainTextEdit {
   Q_OBJECT
 
 public:
-  TextView(QWidget *parent = nullptr) {}
+  explicit TextView(QWidget *parent = nullptr) : QPlainTextEdit(parent) { }
 
   ~TextView() = default;
 
 public:
 signals:
-  void sendTest()QWidget;
+  void sendTest();
 
 private:
 signals:

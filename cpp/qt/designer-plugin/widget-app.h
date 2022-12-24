@@ -1,40 +1,38 @@
 /*##############################################################################
 ## Author: Shaun Reed                                                         ##
 ## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
-## About: Text viewer for signals and slots examples                          ##
+## About: Application that uses a custom Qt Designer widget plugin            ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
 ################################################################################
 */
 
-#ifndef KLIPS_TEXTVIEW_H
-#define KLIPS_TEXTVIEW_H
+#ifndef KLIPS_WIDGETAPP_H
+#define KLIPS_WIDGETAPP_H
 
+#include <QDockWidget>
+#include <QMainWindow>
 #include <QPlainTextEdit>
+#include <QVBoxLayout>
+#include <QWidget>
 
-class TextView : public QPlainTextEdit {
+#include "ui_widget-app.h"
+
+class WidgetApp : public QMainWindow {
   Q_OBJECT
 
 public:
-  TextView(QWidget *parent = nullptr) {}
+  WidgetApp(QWidget *parent = nullptr);
+  ~WidgetApp() = default;
 
-  ~TextView() = default;
+  Ui::MainWindow *m_ui;
 
 public:
 signals:
-  void sendTest()QWidget;
-
-private:
-signals:
-  void sentTestPrivate();
+  void sendTest();
 
 public slots:
-  void test() { appendPlainText("Test signal received by TextView."); }
-
-  void testArgs(const QString &message) { appendPlainText(message); }
-
-private slots:
-  void testPrivate() {}
+  void test(){};
 };
 
-#endif // KLIPS_TEXTVIEW_H
+#endif // KLIPS_WIDGETAPP_H

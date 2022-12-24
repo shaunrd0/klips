@@ -1,0 +1,6 @@
+#ifndef APPDIR_H_IN
+#define APPDIR_H_IN
+
+#define APP_DIR "@APP_DIR@"
+
+#endif // APPDIR_H_IN

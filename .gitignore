@@ -10,3 +10,4 @@
 **/Makefile
 **/*.cbp
 **/node-modules/
+**/CmakeLists.txt.user
