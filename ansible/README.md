@@ -1,4 +1,4 @@
-# Ansible 
+# ansible
 
 A few simple roles / plays I've put together in learning how to use Ansible can be found under their corresponding directories.
 

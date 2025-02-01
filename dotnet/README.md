@@ -1,4 +1,4 @@
-# Dotnet
+# dotnet
 
 ```bash
 shaunrd0/klips/dotnet/

@@ -1,3 +1,4 @@
+# blockchain
 
 A template project for getting started working on the Ethereum blockchain.
 This project comes with basic packages for compiling and deploying Solidity contracts with Truffle.
@@ -72,7 +73,7 @@ I explain how to configure metamask on ropsten on [Knoats - Solidity](https://kn
 
 Give yourself test Ethereum with the [Ropsten ETH Faucet](https://faucet.ropsten.be)
 
-To deploy to ropsten test network, and verify using `truffle-verify-plugin` - 
+To deploy to ropsten test network, and verify using `truffle-verify-plugin` -
 
 ```asm
 npx truffle migrate --network ropsten

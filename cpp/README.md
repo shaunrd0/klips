@@ -1,4 +1,4 @@
-# Cpp
+# cpp
 
 ```bash
 shaunrd0/klips/cpp/
@@ -13,11 +13,11 @@ shaunrd0/klips/cpp/
 └── README.md
 ```
 
-This directory contains a `CMakeLists.txt`, which can be selected to open as a 
+This directory contains a `CMakeLists.txt`, which can be selected to open as a
 project within your preferred IDE. From there, all nested examples can be built,
 debugged, and ran.
 
-Some of the more recent projects in this repository requires the latest CMake LTS. 
+Some of the more recent projects in this repository requires the latest CMake LTS.
 To install `cmake` LTS with `apt` we can follow [official instructions from kitware](https://apt.kitware.com/)
 Alternatively, we can install the LTS with python's `pip`.
 ```bash
@@ -34,7 +34,7 @@ cmake version 3.22.1
 
 Once cmake is installed, dependencies for all examples can be installed with the command below.
 ```bash
-sudo apt install libsdl2-dev freeglut3-dev 
+sudo apt install libsdl2-dev freeglut3-dev
 ```
 
 If we build from this directory, we build all C++ projects and examples
@@ -63,7 +63,7 @@ graph-test-object            sdl-test              visitor-test
 graph-test-simple            select-sort
 ```
 
-We can also build from subdirectories. 
+We can also build from subdirectories.
 To only build projects related to design patterns we build from the `patterns/` subdirectory, for example
 ```bash
 cd /path/to/klips/cpp/patterns
@@ -80,5 +80,5 @@ adapter-test           factory-test  prototype-test  state-test
 
 If cmake is not being used in a project, it can be built with `g++` manually using
 the commands outlined in `*/.vscode/tasks.json`, or by using VSCode to open the example
-and running the build task. 
+and running the build task.
 Check the header comments in the main source file for the example for instructions.
