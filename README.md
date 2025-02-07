@@ -3,7 +3,7 @@
 This repository is a collection of useful code snippets and configurations.
 
 ```bash
-github.com/shaunrd0/klips/
+shaunrd0/klips/
 ├── ansible     # Ansible roles, playbooks, and examples
 ├── blockchain  # Blockchain related project templates and examples
 ├── cpp         # C++ programs, datastructures, and other examples
@@ -12,6 +12,6 @@ github.com/shaunrd0/klips/
 ├── figlet      # Figlet fonts I like :)
 ├── javascript  # Javascript projects and examples
 ├── python      # Python scripts and tools I've made
-├── README.md
-└── scripts     # Bash scripts
+├── scripts     # Bash scripts
+└── README.md
 ```
