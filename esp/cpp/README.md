@@ -6,6 +6,7 @@ shaunrd0/klips/esp/
 ├── 02_led-button-web           # LED controlled by a button or within a web browser.
 ├── 03_temp-humidity-web        # Temperature and humidity sensor within a web browser.
 ├── 04_esp-idf-arduino          # CMake example instead of Arduino IDE for ESP development.
+├── 05_temp-humidity-web        # Temperature and humidity sensor within a web browser.
 ├── ESP32-basic-starter-kit.pdf # PDF for tutorials in ESP32 starter kit.
 ├── ESP32-dev-module.png
 └── README.md
