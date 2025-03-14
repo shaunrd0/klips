@@ -15,7 +15,7 @@
 
 I2C i2c(PIN_SDA, PIN_SCL, PIN_RST);
 
-void setup()
+extern "C" void app_main(void)
 {
   SSD1306 ssd1306(i2c);
   Display d(ssd1306);
@@ -37,5 +37,3 @@ void setup()
              LV_LABEL_LONG_CLIP,
              LV_ALIGN_BOTTOM_MID);
 }
-
-void loop() { }
