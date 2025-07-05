@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for practicing templated data structures in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_subdirectory(doublelist)
 add_subdirectory(queuelist)

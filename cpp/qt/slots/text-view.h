@@ -22,7 +22,7 @@ public:
 
 public:
 signals:
-  void sendTest()QWidget;
+  void sendTest();
 
 private:
 signals:

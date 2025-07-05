@@ -8,9 +8,8 @@
 ################################################################################
 */
 
-#include <algorithm>
 #include "lib-graph.hpp"
-
+#include <algorithm>
 
 void Graph::BFS(int startNode)
 {

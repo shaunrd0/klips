@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for practicing cryptography in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 

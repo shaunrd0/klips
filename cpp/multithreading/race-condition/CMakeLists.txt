@@ -14,6 +14,7 @@ project(
     DESCRIPTION "Example and solution for race conditions"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     multithread-race-condition driver.cpp

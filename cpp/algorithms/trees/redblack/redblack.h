@@ -12,6 +12,7 @@
 #define REDBLACK_H
 
 #include <iostream>
+#include <cstdint>
 
 enum Color {Black, Red};
 

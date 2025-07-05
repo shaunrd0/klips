@@ -10,6 +10,7 @@
 
 #include "circlesinglelist.h"
 
+#include <cstdint>
 
 /******************************************************************************
  * Constructors, Destructors, Operators

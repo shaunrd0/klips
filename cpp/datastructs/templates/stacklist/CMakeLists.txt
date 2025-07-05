@@ -14,5 +14,6 @@ project (
     DESCRIPTION "A project for practicing templated Stack implementations"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(data-templates-stack driver.cpp)

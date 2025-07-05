@@ -1,6 +1,6 @@
 ################################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
+## Legal: All Content (c) 2025 Shaun Reed, all rights reserved                ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
 ################################################################################
@@ -13,6 +13,7 @@ project(
     DESCRIPTION  "Example project for building SDL projects with CMake"
     LANGUAGES    CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 # Add Library
 add_library(
@@ -27,31 +28,30 @@ target_include_directories(            # When calling library, include a directo
 )
 
 # Search for SDL2 package
-find_package(SDL2 REQUIRED sdl2)
-
-# If SDL2 was found successfully, link to lib-sdl-test
-if (SDL2_FOUND)
-  # Any target that links with this library will also link to SDL2
-  # + Because we choose PUBLIC visibility
-  target_include_directories(graphics-lib-sdl PUBLIC ${SDL2_INCLUDE_DIRS})
-  target_link_libraries(graphics-lib-sdl PUBLIC "${SDL2_LIBRARIES}")
-
-  # Creating executable
-  add_executable(
-      graphics-cmake-sdl  # Exe name
-      apps/sdl-test.cpp   # Exe Source(s)
-  )
-
-  # Linking the exe to library
-  target_link_libraries(
-      graphics-cmake-sdl    # Executable to link
-      PRIVATE               # Visibility
-      graphics-lib-sdl      # Library to link
-  )
-
-else()
-  message(
-      "Error: CMake was unable to find SDL2 package.\n"
-      "Please install the libsdl2-dev package and try again.\n"
+find_package(SDL2 QUIET)
+if (NOT SDL2_FOUND)
+  message(FATAL_ERROR
+      "[Klips] Failed to find SDL2.\n"
+      "On Ubuntu 24.04 SDL2 can be installed using apt:\n"
+      "  sudo apt install libsdl2-dev\n"
   )
 endif()
+message(STATUS "[Klips] Found SDL2: ${SDL2_INCLUDE_DIRS}")
+
+# Any target that links with this library will also link to SDL2
+# + Because we choose PUBLIC visibility
+target_include_directories(graphics-lib-sdl PUBLIC ${SDL2_INCLUDE_DIRS})
+target_link_libraries(graphics-lib-sdl PUBLIC "${SDL2_LIBRARIES}")
+
+# Creating executable
+add_executable(
+    graphics-cmake-sdl  # Exe name
+    apps/sdl-test.cpp   # Exe Source(s)
+)
+
+# Linking the exe to library
+target_link_libraries(
+    graphics-cmake-sdl    # Executable to link
+    PRIVATE               # Visibility
+    graphics-lib-sdl      # Library to link
+)

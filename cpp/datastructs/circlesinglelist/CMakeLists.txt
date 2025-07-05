@@ -14,6 +14,7 @@ project (
     DESCRIPTION "Project for testing circular singly linked list implementation"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     data-circular-singly-linked-list driver.cpp

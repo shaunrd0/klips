@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for testing BST algorithms"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     algo-trees-bst driver.cpp

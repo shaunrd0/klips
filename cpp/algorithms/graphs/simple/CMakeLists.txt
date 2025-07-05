@@ -14,6 +14,7 @@ project(
     DESCRIPTION "Practice implementing and using simple graphs in C++"
     LANGUAGES CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     algo-graphs-simple graph.cpp

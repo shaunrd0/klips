@@ -14,6 +14,7 @@ project (
     DESCRIPTION "Project for testing queue implementation"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     data-queue driver.cpp

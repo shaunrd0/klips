@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for testing a basic implementation of a BST"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     data-bst driver.cpp

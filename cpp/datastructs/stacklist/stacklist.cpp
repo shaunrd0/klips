@@ -10,6 +10,7 @@
 
 #include "stacklist.h"
 
+#include <cstdint>
 
 /******************************************************************************
  * Constructors, Destructors, Operators

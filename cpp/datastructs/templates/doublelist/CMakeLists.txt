@@ -14,5 +14,6 @@ project (
     DESCRIPTION "A project for practicing templated doubly linked list implementations"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(data-templates-doubly-linked-list driver.cpp)

@@ -22,6 +22,7 @@ project (
     DESCRIPTION "A basic CMake template for C++ projects"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 # Include any directories the compiler may need
 include_directories(./include)

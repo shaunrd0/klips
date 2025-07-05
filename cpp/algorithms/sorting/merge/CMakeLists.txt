@@ -14,6 +14,8 @@ project (
     DESCRIPTION "A project for practicing merge sort in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
+
 add_executable(
     algo-sort-merge merge-sort.cpp
     lib-merge.cpp lib-merge.h

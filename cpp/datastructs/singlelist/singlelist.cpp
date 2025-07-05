@@ -10,6 +10,7 @@
 
 #include "singlelist.h"
 
+#include <cstdint>
 
 /******************************************************************************
  * Constructors, Destructors, Operators

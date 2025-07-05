@@ -14,5 +14,6 @@ project(
     DESCRIPTION "Practice implementing and using templated graphs in C++"
     LANGUAGES CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(algo-graphs-templated graph.cpp)

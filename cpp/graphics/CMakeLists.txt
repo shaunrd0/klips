@@ -1,6 +1,6 @@
 ################################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
+## Legal: All Content (c) 2025 Shaun Reed, all rights reserved                ##
 ## About: A root project for practicing C++                                   ##
 ##        This project can be built to debug and run all nested projects      ##
 ##        Or, any subdirectory with a project() statement can be selected     ##
@@ -16,6 +16,7 @@ project(
     DESCRIPTION "A root project for practicing graphics programming in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 

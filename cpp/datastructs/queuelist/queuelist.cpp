@@ -10,6 +10,7 @@
 
 #include "queuelist.h"
 
+#include <cstdint>
 
 /******************************************************************************
  * Constructors, Destructors, Operators

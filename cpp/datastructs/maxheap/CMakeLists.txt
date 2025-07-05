@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for testing a max heap implementation"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     data-max-heap driver.cpp

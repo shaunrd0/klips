@@ -14,6 +14,7 @@ project (
     DESCRIPTION "Project for testing circular doubly linked list implementation"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     data-circular-doubly-linked-list driver.cpp

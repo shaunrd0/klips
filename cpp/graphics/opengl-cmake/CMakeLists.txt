@@ -1,6 +1,6 @@
 ################################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2021 Shaun Reed, all rights reserved                ##
+## Legal: All Content (c) 2025 Shaun Reed, all rights reserved                ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
 ################################################################################
@@ -8,40 +8,46 @@
 # Define CMake version
 cmake_minimum_required(VERSION 3.15)
 
+include(FetchContent)
 project(
     #[[NAME]]    OpenGL-Cmake
     DESCRIPTION  "Example project for building OpenGL projects with CMake"
     LANGUAGES    CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_library(graphics-lib-opengl src/lib-opengl-test.cpp)
 target_include_directories(graphics-lib-opengl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # Find OpenGL package
-find_package(OpenGL REQUIRED)
-if (OPENGL_FOUND)
-  # Link opengl-test executable to OpenGL
-  target_include_directories(graphics-lib-opengl PUBLIC ${OPENGL_INCLUDE_DIR})
-  target_link_libraries(graphics-lib-opengl PUBLIC ${OPENGL_LIBRARIES})
-else()
+find_package(OpenGL)
+if (NOT OPENGL_FOUND)
   message(
-      "Error: CMake was unable to find the OpenGL package\n"
-      "Please install OpenGL and try again\n"
+      "[Klips] Error: CMake was unable to find OpenGL.\n"
+      "On Ubuntu 24.04 OpenGL can be installed using apt:\n"
+      "  sudo apt install libopengl-dev libgl1-mesa-dev mesa-common-dev libglu1-mesa-dev\n"
   )
 endif()
+# Link opengl-test executable to OpenGL
+message(STATUS "[Klips] Found OpenGL: ${OPENGL_INCLUDE_DIR}")
+target_include_directories(graphics-lib-opengl PUBLIC ${OPENGL_INCLUDE_DIR})
+target_link_libraries(graphics-lib-opengl PUBLIC ${OPENGL_LIBRARIES})
 
-# Find GLUT package
-find_package(GLUT REQUIRED)
-if (GLUT_FOUND)
-  # Link lib-opengl-test executable to GLUT
-  target_include_directories(graphics-lib-opengl PUBLIC ${GLUT_INCLUDE_DIR})
-  target_link_libraries(graphics-lib-opengl PUBLIC ${GLUT_LIBRARIES})
-else()
+find_package(GLUT QUIET)
+if(NOT GLUT_FOUND)
   message(
-      "Error: CMake was unable to find the GLUT package\n"
-      "Please install GLUT (freeglut3-dev) and try again\n"
+      FATAL_ERROR
+      "[Klips] Failed to fetch GLUT. Could not find dependency X11 input libraries.\n"
+      "On Ubuntu 24.04 Xi can be installed using apt:\n"
+      "  sudo apt install libxi-dev\n"
+      "Alternatively, on Ubuntu 24.04 GLUT can be installed with apt:\n"
+      "  sudo apt install freeglut3-dev\n"
   )
 endif()
+message(STATUS "[Klips] Found GLUT: ${GLUT_INCLUDE_DIR}")
+# Link lib-opengl-test executable to GLUT
+target_include_directories(graphics-lib-opengl PUBLIC ${GLUT_INCLUDE_DIR})
+target_link_libraries(graphics-lib-opengl PUBLIC ${GLUT_LIBRARIES})
 
 # Add test executable
 add_executable(graphics-cmake-opengl apps/test-gl.cpp)

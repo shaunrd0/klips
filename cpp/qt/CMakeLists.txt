@@ -14,6 +14,7 @@ project(
     DESCRIPTION "A root project for several small Qt6 practice projects"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_compile_options("-Wall")

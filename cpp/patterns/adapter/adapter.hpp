@@ -2,6 +2,7 @@
 #ifndef ADAPTER_HPP
 #define ADAPTER_HPP
 
+#include <ctime>
 #include <random>
 
 // Target implementation to adapt to a new interface

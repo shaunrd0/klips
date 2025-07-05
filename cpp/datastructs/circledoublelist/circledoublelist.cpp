@@ -10,6 +10,7 @@
 
 #include "circledoublelist.h"
 
+#include <cstdint>
 
 /******************************************************************************
  * Constructors, Destructors, Operators

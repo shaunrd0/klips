@@ -18,6 +18,7 @@ project(
     DESCRIPTION "Example and solution for deadlocks in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     multithread-deadlock driver.cpp

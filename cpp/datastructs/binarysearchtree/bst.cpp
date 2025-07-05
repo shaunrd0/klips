@@ -10,10 +10,11 @@
 
 #include "bst.h"
 
+#include <cstdint>
 
 /********************************************************************************
-* Constructors, Destructors, Operators
-*********************************************************************************/
+ * Constructors, Destructors, Operators
+ *********************************************************************************/
 
 /** Copy Assignment Operator
  * @brief Empty the calling object's root BinaryNode, and copy the rhs data

@@ -10,10 +10,11 @@
 
 #include "maxheap.h"
 
+#include <cstdint>
 
 /********************************************************************************
-* Constructors, Destructors, Operators
-*********************************************************************************/
+ * Constructors, Destructors, Operators
+ *********************************************************************************/
 
 /** default constructor
  *  Constructs a heap with the given default values

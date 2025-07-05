@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for practicing insertion sort in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     algo-sort-insertion insertion-sort.cpp

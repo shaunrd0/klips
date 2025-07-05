@@ -1,6 +1,6 @@
 ################################################################################
 ## Author: Shaun Reed                                                         ##
-## Legal: All Content (c) 2022 Shaun Reed, all rights reserved                ##
+## Legal: All Content (c) 2025 Shaun Reed, all rights reserved                ##
 ## About: Practice project for using Qt Designer with custom C++ widgets      ##
 ##                                                                            ##
 ## Contact: shaunrd0@gmail.com  | URL: www.shaunreed.com | GitHub: shaunrd0   ##
@@ -14,6 +14,7 @@ project(
     DESCRIPTION     "Practice using Qt designer for desktop applications"
     LANGUAGES       CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_compile_options(-Wall)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -28,7 +29,16 @@ set(QT_DIR "$ENV{HOME}/Code/Clones/Qt/6.3.1/gcc_64/" CACHE PATH "Path to Qt6")
 
 list(APPEND CMAKE_PREFIX_PATH "${QT_DIR}")
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 COMPONENTS Core Gui Widgets)
+if (NOT Qt6_FOUND)
+  message(
+      FATAL_ERROR
+      "[Klips] Error: CMake was unable to find Qt6 libraries.\n"
+      "The example will not be built until the build is configured with these packages installed.\n"
+      "On Ubuntu 24.04 Qt6 can be installed using apt:\n"
+      "  sudo apt-get install qt6-base-dev qt6-tools-dev\n"
+  )
+endif()
 
 qt_add_executable(designer
     designer.cpp designer.h designer.ui

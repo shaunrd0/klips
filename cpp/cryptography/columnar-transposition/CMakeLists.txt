@@ -14,6 +14,7 @@ project(
     DESCRIPTION "Practice implementing columnar transposition in C++"
     LANGUAGES CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     crypto-columnar-transposition driver.cpp

@@ -14,6 +14,7 @@ project(
     DESCRIPTION "An example of the singleton design pattern in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     patterns-singleton main.cpp

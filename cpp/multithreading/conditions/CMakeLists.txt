@@ -18,6 +18,7 @@ project(
     DESCRIPTION "Example of condition_variables in multithreaded C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     multithread-conditions driver.cpp

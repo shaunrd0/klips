@@ -10,6 +10,7 @@
 
 #include "doublelist.h"
 
+#include <cstdint>
 
 /******************************************************************************
  * Constructors, Destructors, Operators

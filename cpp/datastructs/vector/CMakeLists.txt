@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for testing a basic Vector implementation"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     data-vectors driver.cpp

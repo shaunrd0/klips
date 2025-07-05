@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#include "../bin/catch.hpp"
+#include "catch2/catch_all.hpp"
+
 #include "klips.hpp"
 #include "type_name.hpp"
 
@@ -139,7 +140,7 @@ template <> template <bool must_find> void test_config_get<std::string>::run() {
 TEMPLATE_PRODUCT_TEST_CASE("Test", "[test]", test_config_get,
                            (int, std::string)) {
   TT();
-  TestType t;
+  // TestType t;
   test_config_get<int> s;
   s.template run<true>();
   //  TestType t;

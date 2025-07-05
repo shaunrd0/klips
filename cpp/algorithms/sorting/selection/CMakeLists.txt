@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for practicing selection sort in C++"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     algo-sort-select select-sort.cpp

@@ -10,6 +10,7 @@
 
 #include "vector.h"
 
+#include <cstdint>
 
 /******************************************************************************
  * Constructors, Destructors, Operators

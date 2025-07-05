@@ -14,5 +14,6 @@ project (
     DESCRIPTION "A project for practicing templated queue implementations"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(data-templates-queue driver.cpp)

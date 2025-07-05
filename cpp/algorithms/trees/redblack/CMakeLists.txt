@@ -14,6 +14,7 @@ project (
     DESCRIPTION "A project for testing red-black tree algorithms"
     LANGUAGES   CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     algo-trees-redblack driver.cpp

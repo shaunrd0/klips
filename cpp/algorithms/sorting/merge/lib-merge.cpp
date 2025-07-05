@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <cstdint>
 
 void MergeSort(std::vector<int> &array, size_t lhs, size_t rhs)
 {

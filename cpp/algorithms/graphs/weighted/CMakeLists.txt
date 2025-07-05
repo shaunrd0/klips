@@ -14,6 +14,7 @@ project(
     DESCRIPTION "Practice implementing and using weighted graphs in C++"
     LANGUAGES CXX
 )
+message(STATUS "[Klips] Configuring example: ${PROJECT_NAME}")
 
 add_executable(
     algo-graphs-weighted graph.cpp
