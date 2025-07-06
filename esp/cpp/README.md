@@ -1,7 +1,7 @@
-# esp
+# esp/cpp
 
 ```bash
-shaunrd0/klips/esp/
+shaunrd0/klips/esp/cpp
 ├── 01_led-button               # Simple LED circuit controlled by an on board button.
 ├── 02_led-button-web           # LED controlled by a button or within a web browser.
 ├── 03_temp-humidity-web        # Temperature and humidity sensor within a web browser.
